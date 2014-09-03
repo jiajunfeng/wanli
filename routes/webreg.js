@@ -65,8 +65,6 @@ exports.onPostReg = function (req, res) {
 
     //查询数据库，获得吉凶值
 	db.getUserLastJxScore(userInfo, function (jxScore) {
-	    userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
-
         //  fix userInfo.wxBaseScore
         /*
         特殊规定如下：1、3颗财星，不足80分，统一调整80分。
@@ -90,6 +88,7 @@ exports.onPostReg = function (req, res) {
                 userInfo.wxBaseScore = wealth_stars_five_scores;
             }
         }
+        userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
 	    res.render('dateresult', {
 	        title: '日期结果',
 	        registAddress: aList[reqData.registAddress],			//注册地
