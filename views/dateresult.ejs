@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title><%= title %> - Microblog</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
+    <script src="javascripts/jquery.js"></script>
+  </head>
+  <body>
+    <label class="control-label">生成五行分值: 金<%=scwxNum[0]%>木<%=scwxNum[1]%>水<%=scwxNum[2]%>火<%=scwxNum[3]%></label>
+    <label class="control-label">本五行最终分值(已考虑四季，出生地影响): <%=bwxNum%></label>
+	<label class="control-label">飞星五行: <%=flyStarWx%></label>
+	
+	<label class="control-label">其余星五行分值(已考虑四季，出生地影响): 1:<%=wwxNum[0]%>---2:<%=wwxNum[1]%>---3:<%=wwxNum[2]%>---4:<%=wwxNum[3]%>---5:<%=wwxNum[4]%>---6:<%=wwxNum[5]%>---7:<%=wwxNum[6]%>---8:<%=wwxNum[7]%>---9:<%=wwxNum[8]%></label>
+	<label class="control-label">动态其余星五行分值(已考虑四季，出生地影响): 1:<%=dwwxNum[0]%>---2:<%=dwwxNum[1]%>---3:<%=dwwxNum[2]%>---4:<%=dwwxNum[3]%>---5:<%=dwwxNum[4]%>---6:<%=dwwxNum[5]%>---7:<%=dwwxNum[6]%>---8:<%=dwwxNum[7]%>---9:<%=dwwxNum[8]%></label>
+	<label class="control-label">四季五行: <%=sjIndex%></label>
+	<p/>
+	<label class="control-label">基础能量分: <%=wxBaseScore%></label>
+	<label class="control-label">原五行分值: <%=yuanWxScore%></label>
+	<label class="control-label">海拔高度: <%=hightScore%></label>
+	<label class="control-label">基础助运分: <%=baseZyScore%></label>
+	<label class="control-label">注册地: <%=registAddress%></label>
+	<label class="control-label">出生地: <%=birthAddress%> </label>
+	<label class="control-label">四季,出生地,时辰旺衰: <%=sjWS%><%=birthWS%><%=scWS%></label>
+	<label class="control-label">姓&nbsp;&nbsp;&nbsp;&nbsp;名: <%=username%></label>
+	<label class="control-label">性&nbsp;&nbsp;&nbsp;&nbsp;别: <%=sex%></label>
+	<label class="control-label">生&nbsp;&nbsp;&nbsp;&nbsp;日: <%=birthday%>&nbsp;<%=clock%>时</label>
+	<label class="control-label">飞星: <%=flystar%></label>
+	<label class="control-label">飞星: <br>&nbsp;&nbsp;&nbsp;&nbsp;<%=bigyun%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=smallyun%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=nianyun%><br>&nbsp;&nbsp;&nbsp;&nbsp;<%=yueyun%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=riyun%><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=shiyun%></label>
+	<label class="control-label">阳和数1: <%=yangSum1%></label>
+	<label class="control-label">阳和数2: <%=yangSum2%></label>
+	<label class="control-label">阳和数3: <%=yangSum3%></label>
+	<label class="control-label">缺&nbsp;&nbsp;&nbsp;&nbsp;数: <%=queNum%></label>
+	<label class="control-label">星月数: <%=starNum%></label>
+	<p/>
+	<label class="control-label">年干支: <%=ngz%> </label>
+	<label class="control-label">月干支: <%=ygz%> </label>
+	<label class="control-label">日干支: <%=rgz%> </label>
+	<label class="control-label">时干支: <%=sgz%> </label>
+	<label class="control-label">年太岁: <%=niants%> </label>
+	<label class="control-label">月太岁: <%=yuets%> </label>
+	<label class="control-label">日太岁: <%=rits%> </label>
+	<label class="control-label">时太岁: <%=shits%> </label>
+	<label class="control-label">年岁破: <%=niansp%> </label>
+	<label class="control-label">月岁破: <%=yuesp%> </label>
+	<label class="control-label">日岁破: <%=risp%> </label>
+	<label class="control-label">时岁破: <%=shisp%> </label>
+  </body>
+  <script src="/javascripts/bootstrap.js"></script>
+</html>
