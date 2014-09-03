@@ -638,7 +638,7 @@ operater.setUserDeviceId = function (info, cb) {
 }
 
 operater.getUserLastJxScore = function (info, cb) {
-    var sql = "select lastJxScore,baseZyScore from newming_table where sex = " + info.sex + " and flystar = '" + info.flystar + "'";
+    var sql = "select wealth_stars,lastJxScore,baseZyScore from newming_table where sex = " + info.sex + " and flystar = '" + info.flystar + "'";
     
 
     mysqlClient.query(sql, null, function (err, res) {
@@ -649,6 +649,7 @@ operater.getUserLastJxScore = function (info, cb) {
         }
         else {
             
+            info.wealth_stars = parseFloat(res[0]["wealth_stars"]);
             info.jxScore = parseFloat(res[0]["lastJxScore"]);
             info.baseZyScore = parseFloat(res[0]['baseZyScore']).toFixed(0);
             if (cb) {

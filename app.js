@@ -23,14 +23,14 @@ var deviceid = require('./routes/deviceid.js');
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(flash());
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
-//app.use(express.methodOverride()); //Ö§³Ö¶¨ÖÆhttp·½·¨£¬ÀýÈçPut,deleteµÈ£¬¶àÊýä¯ÀÀÆ÷²»Ö§³Ö
+//app.use(express.methodOverride()); //Ö§ï¿½Ö¶ï¿½ï¿½ï¿½httpï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Put,deleteï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
 app.use(express.cookieParser('your secret here'));
 
 app.use(express.session());
@@ -43,7 +43,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//³õÊ¼»¯Êý¾Ý
+//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
 comm.init();
 
 app.get('/', routes.index);

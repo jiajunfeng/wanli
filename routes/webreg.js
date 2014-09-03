@@ -67,8 +67,29 @@ exports.onPostReg = function (req, res) {
 	db.getUserLastJxScore(userInfo, function (jxScore) {
 	    userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
 
-        
-
+        //  fix userInfo.wxBaseScore
+        /*
+        特殊规定如下：1、3颗财星，不足80分，统一调整80分。
+              2、4颗财星，不足85分，统一调整85分。
+              3、5颗财星，不足92分，统一调整92分。
+        */
+        var wealth_stars = userInfo.wealth_stars;
+        var wealth_stars_three_scores = 80;
+        var wealth_stars_four_scores = 85;
+        var wealth_stars_five_scores = 92;
+        if(wealth_stars == 3){
+            if(userInfo.wxBaseScore < wealth_stars_three_scores){
+                userInfo.wxBaseScore = wealth_stars_three_scores;
+            }
+        }else if(wealth_stars == 4){
+            if(userInfo.wxBaseScore < wealth_stars_four_scores){
+                userInfo.wxBaseScore = wealth_stars_four_scores;
+            }
+        }else if(wealth_stars == 5){
+            if(userInfo.wxBaseScore < wealth_stars_five_scores){
+                userInfo.wxBaseScore = wealth_stars_five_scores;
+            }
+        }
 	    res.render('dateresult', {
 	        title: '日期结果',
 	        registAddress: aList[reqData.registAddress],			//注册地
@@ -112,6 +133,7 @@ exports.onPostReg = function (req, res) {
 	        queNum: userInfo.queNum,
 
 	        flystar: userInfo.flystar,
+	        wealth_stars: userInfo.wealth_stars,
 	        bwxNum: userInfo.bwxNum,
 	        scwxNum: userInfo.scwxNum,
 	        wwxNum: userInfo.wwxNum,
