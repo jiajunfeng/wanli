@@ -19,6 +19,7 @@ var khfk = require('./routes/khfk.js');
 var comm = require('./common.js');
 var userManager = require('./routes/userManager.js');
 var deviceid = require('./routes/deviceid.js');
+var participle = require('./routes/participle.js');
 
 var app = express();
 
@@ -58,7 +59,7 @@ app.post('/todayinfo', todayInfo.onGetInfo);
 app.get('/todayinfo', todayInfo.onGetInfo);
 app.post('/userinfo', userManager.onGetInfo);
 app.post('/khfk', khfk.onFk);
-
+app.post('/participle', participle.onParticiple);
 
 
 userManager.GetInstance();

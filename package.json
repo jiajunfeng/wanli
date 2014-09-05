@@ -11,7 +11,8 @@
     "stylus": "*",
 	"mysql":"2.4.3",
 	"connect-flash":"*",
-	"apn":"1.6.1",
-	"cron":"1.0.4"
+	"apn":"1.5.2",
+	"cron":"1.0.4",
+    "nodejieba ":"0.2.4"
   }
 }
