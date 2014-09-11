@@ -20,6 +20,10 @@ var comm = require('./common.js');
 var userManager = require('./routes/userManager.js');
 var deviceid = require('./routes/deviceid.js');
 var participle = require('./routes/participle.js');
+var voice_query = require('./routes/voice_query.js');
+
+var segment = require("nodejieba");
+segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
 
 var app = express();
 
@@ -31,7 +35,7 @@ app.use(flash());
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
-//app.use(express.methodOverride()); //֧�ֶ���http����������Put,delete�ȣ������������֧��
+app.use(express.methodOverride()); //֧�ֶ���http����������Put,delete�ȣ������������֧��
 app.use(express.cookieParser('your secret here'));
 
 app.use(express.session());
@@ -60,6 +64,7 @@ app.get('/todayinfo', todayInfo.onGetInfo);
 app.post('/userinfo', userManager.onGetInfo);
 app.post('/khfk', khfk.onFk);
 app.post('/participle', participle.onParticiple);
+app.post('/voice_query', voice_query.onVoiceQuery);
 
 
 userManager.GetInstance();
