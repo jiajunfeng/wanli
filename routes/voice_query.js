@@ -2,11 +2,56 @@
  * Created by King Lee on 14-9-10.
  */
 var segment = require("nodejieba");
+var keywords = require('../keywords');
+var db = require('./mysql/dboperator');
+var userInfo = require('./userInfo.js').userInfo;
+var analysis = require('./module/analysis');
+var consts = require('./util/consts');
+
 exports.onVoiceQuery = function(req,res){
-    var uid = req.body["uid"];
+    var uid = parseInt(req.body["uid"]);
     var voice_content = req.body["voice_content"];
-    var wordList = segment.cutSync(voice_content);
-    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    var result = { answer:"海拔高度5860,较高。这样的高度，命数很不错了，具备做大人物的先天福报，接下来就要看运气和努力程度了。即使运气一般，也不是凡夫走卒。想看一下自己的先天能量吗？  想 "};
-    res.end(JSON.stringify(result));
+    var version = req.body["version"];
+
+    var word_list = segment.cutSync(voice_content);
+    // just for tutorial, this is always be true
+    if (word_list.constructor == Array)
+    {
+        word_list.forEach(function(word) {
+            console.log(word);
+        });
+    }
+    //  keyword match: target time type style
+    var word_match = [];
+    word_list.forEach(function(word) {
+        for(var i = 0; i < keywords.length; ++i){
+            for(var j = 0; j < keywords[i].length; ++j){
+                if(word == keywords[i][j]){
+                    word_match.push(keywords[i][j]);
+                }
+            }
+        }
+    });
+    var luck_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
+    for(var m = 0; m < word_match.length; ++m){
+        if(word_match[m] == "今天" || word_match[m] == "今日"|| word_match[m] == "本日"|| word_match[m] == "当日"){
+            luck_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
+        }else if(word_match[m] == "今月" || word_match[m] == "这月"|| word_match[m] == "本月"|| word_match[m] == "当月"){
+            luck_type = consts.TYPE_TIME.TYPE_TIME_THIS_MONTH;
+        }else if(word_match[m] == "今年" || word_match[m] == "这年"|| word_match[m] == "本年"|| word_match[m] == "当年"){
+            luck_type = consts.TYPE_TIME.TYPE_TIME_THIS_YEAR;
+        }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时"){
+            luck_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
+        }
+    }
+    for(var m = 0; m < word_match.length; ++m){
+        if(word_match[m] == "运程"){
+            analysis.getLuck(uid,luck_type,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+        }
+    }
 };

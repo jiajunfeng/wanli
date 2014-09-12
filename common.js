@@ -34,7 +34,7 @@ function init(isChild_Process) {
     console.log("jsons loaded!");
 
     if (!isChild_Process) {
-        //´´½¨×Ó½ø³Ì
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½
         worker = child_process.fork('./routes/child_process.js');
         worker.on('message', function (m) {
             console.log('PARENT got message:', m);
@@ -49,22 +49,22 @@ exports.log = function (msg) {
     console.log(msg);
 }
 
-//»ñµÃ¶¬ÏÄÖÁµÄÊı¾İ½á¹¹
+//è·å¾—å†¬å¤è‡³çš„æ•°æ®ç»“æ„
 exports.getJqData = function () {
     return jqData;
 }
 
-//»ñµÃÅäÖÃµÄÊı¾İ½á¹¹
+//è·å¾—é…ç½®çš„æ•°æ®ç»“æ„
 exports.getDataJson = function () {
     return dataJson;
 }
 
-//»ñµÃÅäÖÃµÄÊı¾İ½á¹¹
+//è·å¾—é…ç½®çš„æ•°æ®ç»“æ„
 exports.getScoreJson = function () {
     return scoreJson;
 }
 
-//»ñµÃÎåĞĞ»ù´¡·ÖÖµÊı¾İ½á¹¹
+//è·å¾—äº”è¡ŒåŸºç¡€åˆ†å€¼æ•°æ®ç»“æ„
 exports.getWxBaseScoreJson = function () {
     return wxBaseScoreJson;
 }

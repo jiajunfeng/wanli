@@ -1,5 +1,5 @@
 module.exports = {
-	host : '115.29.42.238',
+	host : '192.168.22.61',
 	port : 3306,
 	user: 'root',
 	password: 'wanli',

@@ -146,6 +146,60 @@ operater.getUserInfo = function(info, cb){
     });
 }
 
+operater.getUserBaseInfo = function(info, cb){
+    var sql = "select * from user_table where user_id='" + info.uid + "';";
+    mysqlClient.query(sql, null, function (err, res) {
+        if (err) {
+            console.log("Error:1 ocuor when select userinfo from user_table;");
+            console.log(err);
+            cb.call(null, err);
+        }
+        else {
+            if (res.length <= 0) {
+                cb.call(null, "没有这个账号");
+            }
+            else {
+                info.name = res[0]['name'];
+                info.sex = res[0]['sex'];
+                info.birthday = res[0]['birthday'];
+                info.regTime = res[0]['regTime'];
+                info.registAddress = res[0]['regAddress'];
+                info.birthAddress = res[0]['birthAddress'];
+                info.vipLevel = res[0]['viplevel'];
+                info.flystar = res[0]['flystar'];
+                info.birthWS = res[0]['birthWs'];
+                info.sjWS = res[0]['sjWs'];
+                info.clockWS = res[0]['clockWs'];
+                info.gz = res[0]['gz'];
+                info.ts = res[0]['ts'];
+                info.sp = res[0]['sp'];
+                info.starNum = res[0]['starNum'];
+                info.yangSum = res[0]['yangSum'];
+                info.queNum = res[0]['queNum'];
+                cb(err);
+            }
+        }
+    });
+}
+
+operater.getFlyStarsByUID = function(uid,cb){
+    var sql = "select flystar from user_table where user_id='" + uid + "';";
+    mysqlClient.query(sql, null, function (err, res) {
+        if (err) {
+            console.log("Error:1 ocuor when select flystar from user_table;");
+            console.log(err);
+            cb.call(null, err);
+        }
+        else {
+            if (res.length <= 0) {
+                cb.call(null, "没有这个账号");
+            }
+            else {
+                cb(err,res[0]['flystar']);
+            }
+        }
+    });
+};
 
 //获得基础数据
 operater.getBaseNum = function(info,cb){
@@ -287,7 +341,7 @@ operater.getYearYun = function (info, star, cb) {
     if (info.version > 0) {
 
         var sql = "select sex,flystar from user_table where user_id='" + info.uid + "';";
-        //log(sql);
+        log(sql);
         mysqlClient.query(sql, null, function (err, res) {
             if (err) {
                 console.log("Error:1 ocuor when select userinfo from user_table;");
