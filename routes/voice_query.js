@@ -2,7 +2,7 @@
  * Created by King Lee on 14-9-10.
  */
 var segment = require("nodejieba");
-var keywords = require('../keywords');
+var keywords = require('../config/keywords');
 var db = require('./mysql/dboperator');
 var userInfo = require('./userInfo.js').userInfo;
 var analysis = require('./module/analysis');
@@ -46,7 +46,7 @@ exports.onVoiceQuery = function(req,res){
     }
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "运程"){
-            analysis.getLuck(uid,luck_type,function(answer){
+            analysis.getLuck2(uid,luck_type,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);

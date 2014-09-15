@@ -1201,7 +1201,6 @@ exports.getWwxNum = getWwxNum;
 /*在服务器在设置一个栏目，飞星五行。男士255、266、377，最终数值58分以上，为旺；251最终数值45分以下，269最终数值44分以下，374最终数值43分以下，为衰。其余为中。
 女士411、499、388，最终数值58分以上，为旺；384最终数值45分以下，496最终数值44分以下，385最终数值43分以下，为衰。其余为中。
 共有旺、中、衰3档。*/
-
 var getFlyStarWx = function(userInfo){
     var score = userInfo.bwxNum;
     var level = 1; //中
@@ -1226,3 +1225,4 @@ var getFlyStarWx = function(userInfo){
 
     return level;
 }
+exports.getFlyStarWx = getFlyStarWx;

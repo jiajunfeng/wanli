@@ -15,18 +15,18 @@ function init(isChild_Process) {
     if (jqData) {
         return;
     }
-    var inData = fs.readFileSync("./jqData.json");
+    var inData = fs.readFileSync("./config/jqData.json");
     jqData = JSON.parse(inData);
     
 
-    inData = fs.readFileSync("./scores.json");
+    inData = fs.readFileSync("./config/scores.json");
     scoreJson = JSON.parse(inData);
     
 
-    inData = fs.readFileSync("./data.json");
+    inData = fs.readFileSync("./config/data.json");
     dataJson = JSON.parse(inData);
 
-    inData = fs.readFileSync("./wxbasescore.json");
+    inData = fs.readFileSync("./config/wxbasescore.json");
     wxBaseScoreJson = JSON.parse(inData);
     
    
