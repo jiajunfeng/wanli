@@ -97,7 +97,7 @@ anylysis.getLuck2 = function(uid,luck_type,cb){
                 monthStar = user.getNvYun(monthStar);
                 yearStar = user.getNvYun(yearStar);
                 smallStar = user.getNvYun(smallStar);
-                bigStar = user.getBigStar(bigStar);
+                bigStar = user.getNvYun(bigStar);
             }
             var star_of_query = dayStar;
             var previous_star_of_query = monthStar;
@@ -156,21 +156,35 @@ anylysis.getLuck2 = function(uid,luck_type,cb){
                 if(luck_index_rows.length){
                     var range = luck_index_rows[i].range;
                     var range_array = range.split('-')
-                    if(luck_socres <= parseInt(range_array[0]) && luck_socres >  parseInt(range_array[1])){
+                    if(luck_socres < parseInt(range_array[0]) && luck_socres >=  parseInt(range_array[1])){
                         luck_index_row = luck_index_rows[i];
                     }
                 }
             }
+            var last_level_describe_index = 0;
+            if(luck_socres_previous >= 90 && luck_socres_previous < 98){
+                last_level_describe_index = 0;
+            }else if(luck_socres_previous >= 80 && luck_socres_previous < 89){
+                last_level_describe_index = 1;
+            }else if(luck_socres_previous >= 60 && luck_socres_previous < 79){
+                last_level_describe_index = 2;
+            }else if(luck_socres_previous >= 45 && luck_socres_previous < 59){
+                last_level_describe_index = 3;
+            }else if(luck_socres_previous >= 29 && luck_socres_previous < 44){
+                last_level_describe_index = 4;
+            }else if(luck_socres_previous >= 0 && luck_socres_previous < 28){
+                last_level_describe_index = 5;
+            }
             var answer = luck_socres + "分," +  luck_index_row.level + ".";
             if(consts.TYPE_TIME.TYPE_TIME_TODAY == luck_type){
-                answer += luck_index_row.today_last_level_describe[0];
+                answer += luck_index_row.today_last_level_describe[last_level_describe_index];
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == luck_type){
-                answer += luck_index_row.month_last_level_describe[0];
+                answer += luck_index_row.month_last_level_describe[last_level_describe_index];
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == luck_type){
-                answer += luck_index_row.year_last_level_describe[0];
+                answer += luck_index_row.year_last_level_describe[last_level_describe_index];
             }
             else if(consts.TYPE_TIME.TYPE_TIME_HOUR == luck_type){
-                answer += luck_index_row.now_last_level_describe[0];
+                answer += luck_index_row.now_last_level_describe[last_level_describe_index];
             }
             answer += "想看看运程趋势图么?";
             cb(answer);
