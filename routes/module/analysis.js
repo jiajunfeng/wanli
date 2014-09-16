@@ -156,7 +156,7 @@ anylysis.getLuck2 = function(uid,luck_type,cb){
                 if(luck_index_rows.length){
                     var range = luck_index_rows[i].range;
                     var range_array = range.split('-')
-                    if(luck_socres < parseInt(range_array[0]) && luck_socres >=  parseInt(range_array[1])){
+                    if(luck_socres <= parseInt(range_array[0]) && luck_socres >=  parseInt(range_array[1])){
                         luck_index_row = luck_index_rows[i];
                     }
                 }
@@ -178,6 +178,7 @@ anylysis.getLuck2 = function(uid,luck_type,cb){
             var answer = luck_socres + "分," +  luck_index_row.level + ".";
             if(consts.TYPE_TIME.TYPE_TIME_TODAY == luck_type){
                 answer += luck_index_row.today_last_level_describe[last_level_describe_index];
+                answer += "想看看今日运程趋势图么?";
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == luck_type){
                 answer += luck_index_row.month_last_level_describe[last_level_describe_index];
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == luck_type){
@@ -185,8 +186,9 @@ anylysis.getLuck2 = function(uid,luck_type,cb){
             }
             else if(consts.TYPE_TIME.TYPE_TIME_HOUR == luck_type){
                 answer += luck_index_row.now_last_level_describe[last_level_describe_index];
+                answer += "想看看今日运程趋势图么?";
             }
-            answer += "想看看运程趋势图么?";
+
             cb(answer);
         }
     });
