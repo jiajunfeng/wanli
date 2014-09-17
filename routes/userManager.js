@@ -66,13 +66,13 @@ exports.GetInstance = function () {
     return ThisMgr;
 }
 
-//µ±ÓÃ»§ÒªÓÃ»§ĞÅÏ¢Ê±µ÷ÓÃ
+//å½“ç”¨æˆ·è¦ç”¨æˆ·ä¿¡æ¯æ—¶è°ƒç”¨
 exports.onGetInfo = function (req, res) {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
     result = { error: "" };
 
-    //ÏÈ²»»º´æ°É£¬Ã»¶àÉÙÈË£¬Èç¹ûÈË¶àÁË£¬Ò²ÒªÓÃmemcacheÖ®ÀàµÄ£¬·ñÔòÄÚ´æ¾Í±¬ÁË
-    //Èç¹û»º´æ£¬¿ÉÒÔÔÚÕâÀïÅĞ¶ÏUMÖĞÊÇ·ñÓĞ£¬Èç¹ûÃ»ÓĞ²é³öÀ´ºó¼ÓÉÏ
+    //å…ˆä¸ç¼“å­˜å§ï¼Œæ²¡å¤šå°‘äººï¼Œå¦‚æœäººå¤šäº†ï¼Œä¹Ÿè¦ç”¨memcacheä¹‹ç±»çš„ï¼Œå¦åˆ™å†…å­˜å°±çˆ†äº†
+    //å¦‚æœç¼“å­˜ï¼Œå¯ä»¥åœ¨è¿™é‡Œåˆ¤æ–­UMä¸­æ˜¯å¦æœ‰ï¼Œå¦‚æœæ²¡æœ‰æŸ¥å‡ºæ¥ååŠ ä¸Š
 
     var info = new userInfo();
     info.uid = req.body['uid'];
@@ -90,7 +90,7 @@ exports.onGetInfo = function (req, res) {
         case 0:
             {
                 db.getUserInfo(info, function (err) {
-                    //²éÑ¯Ê§°Ü
+                    //æŸ¥è¯¢å¤±è´¥
                     if (err) {
                         result.error = err.toString();
                         res.end(JSON.stringify(result));
@@ -107,7 +107,7 @@ exports.onGetInfo = function (req, res) {
         case 1:
             {
                 db.getYearYun(info, star, function (err) {
-                    //²éÑ¯Ê§°Ü
+                    //æŸ¥è¯¢å¤±è´¥
                     if (err) {
                         result.error = err.toString();
                         res.end(JSON.stringify(result));
@@ -124,7 +124,7 @@ exports.onGetInfo = function (req, res) {
         case 2:
             {
                 db.getMonthYun(info, star, function (err) {
-                    //²éÑ¯Ê§°Ü
+                    //æŸ¥è¯¢å¤±è´¥
                     if (err) {
                         result.error = err.toString();
                         res.end(JSON.stringify(result));
