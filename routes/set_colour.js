@@ -8,6 +8,12 @@ exports.onSetColour = function(req,res){
     var uid = parseInt(req.body["uid"]);
     var colour = parseInt(req.body["colour"]);
     var result = { error: "" };
-    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(JSON.stringify(result));
+    db.setColour(uid,colour,function(err){
+        if(err){
+            console.log(err);
+            result.err = err;
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify(result));
+    });
 };

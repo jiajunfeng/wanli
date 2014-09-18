@@ -138,6 +138,7 @@ operater.getUserInfo = function(info, cb){
                 info.starNum = res[0]['starNum'];
                 info.yangSum = res[0]['yangSum'];
                 info.queNum = res[0]['queNum'];
+                info.colour = 0;
 
                 //注册信息获取完毕，获取其他信息
                 operater.getBaseNum(info, cb);
@@ -711,4 +712,30 @@ operater.getUserLastJxScore = function (info, cb) {
             }
         }
     });
-}
+};
+
+/**
+ * set user's colour
+ * @param uid
+ * @param colour
+ */
+operater.setColour = function(uid,colour,cb){
+    var values = [colour,uid];
+    var sql = "update user_table set colour= ?  where user_id= ?;"
+    console.log(sql);
+    mysqlClient.update(sql, values, function (err) {
+        if (cb) {
+            cb.call(err);
+        }
+    });
+};
+
+operater.addFeedback = function(uid,content,cb){
+    var sql = "insert feedback_table(uid,content) value('" + uid + "','" + content + "')";
+    console.log(sql);
+    mysqlClient.insert(sql, null, function (err) {
+        if (cb) {
+            cb.call(err);
+        }
+    });
+};
