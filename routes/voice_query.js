@@ -75,7 +75,7 @@ exports.onVoiceQuery = function(req,res){
             });
         }else {
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            var answer = "此问题暂不支持查询，请亲换一个!";
+            var answer = "此问题暂不支持查询，目前仅支持运程，做事，能量，旅行，请亲换一个!";
             var result = { answer:answer};
             console.log(answer);
             res.end(JSON.stringify(result));
