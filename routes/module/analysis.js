@@ -16,7 +16,7 @@ anylysis.getLuck = function(uid,time_type,cb){
     info.uid = uid;
     db.getUserBaseInfo(info,function (err){
         if (err) {
-            console.log(err + " getYearsLuck");
+            console.log(err + " getLuck");
         }
         else {
             var birthYearStar = parseInt(info.flystar.substr(2, 1));
@@ -76,7 +76,7 @@ anylysis.getLuck2 = function(uid,time_type,cb){
     info.uid = uid;
     db.getUserBaseInfo(info,function (err){
         if (err) {
-            console.log(err + " getYearsLuck");
+            console.log(err + " getLuck2");
         }
         else {
             info.sjIndex = user.getWx(new Date());
@@ -157,7 +157,7 @@ anylysis.getLuck2 = function(uid,time_type,cb){
             for(i = 0; i < luck_index_rows.length; ++i){
                 if(luck_index_rows.length){
                     var range = luck_index_rows[i].range;
-                    var range_array = range.split('-')
+                    var range_array = range.split('-');
                     if(luck_socres <= parseInt(range_array[0]) && luck_socres >=  parseInt(range_array[1])){
                         luck_index_row = luck_index_rows[i];
                         break;
@@ -202,7 +202,7 @@ anylysis.getWork = function(uid,time_type,cb){
     info.uid = uid;
     db.getUserBaseInfo(info,function (err){
         if (err) {
-            console.log(err + " getYearsLuck");
+            console.log(err + " getWork");
         }
         else {
             info.sjIndex = user.getWx(new Date());
@@ -247,42 +247,42 @@ anylysis.getWork = function(uid,time_type,cb){
                 previous_star_of_query = dayStar;
                 star_of_query = hourStar;
             }
-            var luck_scores_class;
-            var luck_scores_class_previous;
-            var all_luck_scores = scores_new[4][info.sex][star_of_query];
-            for(var i = 0; i < all_luck_scores.length; ++i){
-                if(all_luck_scores[i].beforstar == previous_star_of_query){
-                    luck_scores_class = all_luck_scores[i];
+            var work_scores_class;
+            var work_scores_class_previous;
+            var all_work_scores = scores_new[4][info.sex][star_of_query];
+            for(var i = 0; i < all_work_scores.length; ++i){
+                if(all_work_scores[i].beforstar == previous_star_of_query){
+                    work_scores_class = all_work_scores[i];
                     break;
                 }
             }
-            var all_luck_scores_previous = scores_new[4][info.sex][previous_previous_star_of_query];
-            for(i = 0; i < all_luck_scores_previous.length; ++i){
-                if(all_luck_scores_previous[i].beforstar == previous_star_of_query){
-                    luck_scores_class_previous = all_luck_scores_previous[i];
+            var all_work_scores_previous = scores_new[4][info.sex][previous_previous_star_of_query];
+            for(i = 0; i < all_work_scores_previous.length; ++i){
+                if(all_work_scores_previous[i].beforstar == previous_star_of_query){
+                    work_scores_class_previous = all_work_scores_previous[i];
                     break;
                 }
             }
             var scores;
             var scores_previous;
             if(0 == info.flyStarWx){
-                scores = luck_scores_class.scores;
-                scores_previous = luck_scores_class_previous.scores;
+                scores = work_scores_class.scores;
+                scores_previous = work_scores_class_previous.scores;
             }else if(1 == info.flyStarWx){
-                scores = luck_scores_class.scores2;
-                scores_previous = luck_scores_class_previous.scores2;
+                scores = work_scores_class.scores2;
+                scores_previous = work_scores_class_previous.scores2;
             }else if(2 == info.flyStarWx){
-                scores = luck_scores_class.scores3;
-                scores_previous = luck_scores_class_previous.scores3;
+                scores = work_scores_class.scores3;
+                scores_previous = work_scores_class_previous.scores3;
             }
 
             var work_socres = scores[yearStar];
             var work_socres_previous = scores_previous[yearStar];
-            var luck_index_rows = alteration_index[0][1];
-            var luck_index_row;
-            for(i = 0; i < luck_index_rows.length; ++i){
-                if(luck_index_rows[i].level == work_socres){
-                    luck_index_row = luck_index_rows[i];
+            var work_index_rows = alteration_index[0][1];
+            var work_index_row;
+            for(i = 0; i < work_index_rows.length; ++i){
+                if(work_index_rows[i].level == work_socres){
+                    work_index_row = work_index_rows[i];
                 }
             }
             var last_level_describe_index = 0;
@@ -293,19 +293,136 @@ anylysis.getWork = function(uid,time_type,cb){
             }else if(work_socres_previous == "不宜"){
                 last_level_describe_index = 2;
             }
-            var answer = luck_index_row.level + ",";
+            var answer = work_index_row.level + ",";
             if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-                answer += luck_index_row.last_level_describe[last_level_describe_index];
+                answer += work_index_row.last_level_describe[last_level_describe_index];
                 answer += "想看看今日做事趋势图么?";
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-                answer += luck_index_row.last_level_describe[last_level_describe_index];
+                answer += work_index_row.last_level_describe[last_level_describe_index];
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-                answer += luck_index_row.last_level_describe[last_level_describe_index];
+                answer += work_index_row.last_level_describe[last_level_describe_index];
             }
             else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-                answer += luck_index_row.last_level_describe[last_level_describe_index];
+                answer += work_index_row.last_level_describe[last_level_describe_index];
                 answer += "想看看今日做事趋势图么?";
             }
+            cb(answer);
+        }
+    });
+};
+
+anylysis.getEnergy = function(uid,time_type,cb){
+    var info = new userInfo();
+    info.uid = uid;
+    db.getUserBaseInfo(info,function (err){
+        if (err) {
+            console.log(err + " getEnergy");
+        }
+        else {
+            info.sjIndex = user.getWx(new Date());
+            info.scwxNum = user.getScwxNum(info);
+            info.fxscore = user.getFxScore(info,true);
+            info.bwxNum = user.getWxNum(info, 2);
+            info.flyStarWx = user.getFlyStarWx(info);
+            var curDate = new Date();
+            var hourStar = user.getClockStar(curDate);
+            var dayStar = user.getDayStar(curDate);
+            var monthStar = user.getMonthStar(curDate);
+            var yearStar = parseInt(info["flystar"].charAt(2))/*user.getYearStar(curDate)*/;
+            var smallStar = user.getSmallStar(curDate);
+            var bigStar = user.getBigStar(curDate);
+            if (info.sex == 0) {
+                hourStar = user.getNvYun(hourStar);
+                dayStar = user.getNvYun(dayStar);
+                monthStar = user.getNvYun(monthStar);
+                yearStar = user.getNvYun(yearStar);
+                smallStar = user.getNvYun(smallStar);
+                bigStar = user.getNvYun(bigStar);
+            }
+            var star_of_query = dayStar;
+            var previous_star_of_query = monthStar;
+            var previous_previous_star_of_query = yearStar;
+            if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+                previous_previous_star_of_query = yearStar;
+                previous_star_of_query = monthStar;
+                star_of_query = dayStar;
+
+            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+                previous_previous_star_of_query = smallStar;
+                previous_star_of_query = yearStar;
+                star_of_query = monthStar;
+            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+                previous_previous_star_of_query = bigStar;
+                previous_star_of_query = smallStar;
+                star_of_query = yearStar;
+            }
+            else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+                previous_previous_star_of_query = smallStar;
+                previous_star_of_query = dayStar;
+                star_of_query = hourStar;
+            }
+            var energy_scores_class;
+            var energy_scores_class_previous;
+            var all_energy_scores = scores_new[3][info.sex][star_of_query];
+            for(var i = 0; i < all_energy_scores.length; ++i){
+                if(all_energy_scores[i].beforstar == previous_star_of_query){
+                    energy_scores_class = all_energy_scores[i];
+                    break;
+                }
+            }
+            var all_energy_scores_previous = scores_new[3][info.sex][previous_previous_star_of_query];
+            for(i = 0; i < all_energy_scores_previous.length; ++i){
+                if(all_energy_scores_previous[i].beforstar == previous_star_of_query){
+                    energy_scores_class_previous = all_energy_scores_previous[i];
+                    break;
+                }
+            }
+            var scores;
+            var scores_previous;
+            scores = energy_scores_class.scores;
+            scores_previous = energy_scores_class_previous.scores;
+            var energy_socres = scores[yearStar];
+            var energy_socres_previous = scores_previous[yearStar];
+            var energy_index_rows = alteration_index[0][2];
+            var energy_index_row;
+            for(i = 0; i < energy_index_rows.length; ++i){
+                if(energy_index_rows.length){
+                    var range = energy_index_rows[i].range;
+                    var range_array = range.split('-');
+                    if(energy_socres <= parseInt(range_array[0]) && energy_socres >=  parseInt(range_array[1])){
+                        energy_index_row = energy_index_rows[i];
+                        break;
+                    }
+                }
+            }
+            var last_level_describe_index = 0;
+            if(energy_socres_previous >= 90 && energy_socres_previous < 98){
+                last_level_describe_index = 0;
+            }else if(energy_socres_previous >= 80 && energy_socres_previous < 89){
+                last_level_describe_index = 1;
+            }else if(energy_socres_previous >= 60 && energy_socres_previous < 79){
+                last_level_describe_index = 2;
+            }else if(energy_socres_previous >= 45 && energy_socres_previous < 59){
+                last_level_describe_index = 3;
+            }else if(energy_socres_previous >= 29 && energy_socres_previous < 44){
+                last_level_describe_index = 4;
+            }else if(energy_socres_previous >= 0 && energy_socres_previous < 28){
+                last_level_describe_index = 5;
+            }
+            var answer = energy_socres + "分," +  energy_index_row.level + ".";
+            if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+                answer += energy_index_row.today_last_level_describe[last_level_describe_index];
+                answer += "想看看今日能量趋势图么?";
+            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+                answer += energy_index_row.month_last_level_describe[last_level_describe_index];
+            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+                answer += energy_index_row.year_last_level_describe[last_level_describe_index];
+            }
+            else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+                answer += energy_index_row.now_last_level_describe[last_level_describe_index];
+                answer += "想看看今日能量趋势图么?";
+            }
+
             cb(answer);
         }
     });
