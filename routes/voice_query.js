@@ -32,21 +32,28 @@ exports.onVoiceQuery = function(req,res){
             }
         }
     });
-    var luck_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
+    var time_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "今天" || word_match[m] == "今日"|| word_match[m] == "本日"|| word_match[m] == "当日"){
-            luck_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
+            time_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
         }else if(word_match[m] == "今月" || word_match[m] == "这月"|| word_match[m] == "本月"|| word_match[m] == "当月"){
-            luck_type = consts.TYPE_TIME.TYPE_TIME_THIS_MONTH;
+            time_type = consts.TYPE_TIME.TYPE_TIME_THIS_MONTH;
         }else if(word_match[m] == "今年" || word_match[m] == "这年"|| word_match[m] == "本年"|| word_match[m] == "当年"){
-            luck_type = consts.TYPE_TIME.TYPE_TIME_THIS_YEAR;
+            time_type = consts.TYPE_TIME.TYPE_TIME_THIS_YEAR;
         }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时"){
-            luck_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
+            time_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
         }
     }
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "运程"){
-            analysis.getLuck2(uid,luck_type,function(answer){
+            analysis.getLuck2(uid,time_type,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+        }else if(word_match[m] == "做事"){
+            analysis.getWork(uid,time_type,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);

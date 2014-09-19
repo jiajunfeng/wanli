@@ -729,7 +729,12 @@ operater.setColour = function(uid,colour,cb){
         }
     });
 };
-
+/**
+ * add feedback
+ * @param uid
+ * @param content
+ * @param cb
+ */
 operater.addFeedback = function(uid,content,cb){
     var sql = "insert feedback_table(uid,content) value('" + uid + "','" + content + "')";
     console.log(sql);
