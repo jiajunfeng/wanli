@@ -73,6 +73,12 @@ exports.onVoiceQuery = function(req,res){
                 console.log(answer);
                 res.end(JSON.stringify(result));
             });
+        }else {
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            var answer = "此问题暂不支持查询，请亲换一个!";
+            var result = { answer:answer};
+            console.log(answer);
+            res.end(JSON.stringify(result));
         }
     }
 };
