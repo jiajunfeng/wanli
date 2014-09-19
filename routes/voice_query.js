@@ -44,8 +44,10 @@ exports.onVoiceQuery = function(req,res){
             time_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
         }
     }
+    var find = false;
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "运程"){
+            find = true;
             analysis.getLuck2(uid,time_type,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
@@ -53,6 +55,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
         }else if(word_match[m] == "做事"){
+            find = true;
             analysis.getWork(uid,time_type,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
@@ -60,6 +63,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
         }else if(word_match[m] == "能量"){
+            find = true;
             analysis.getEnergy(uid,time_type,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
@@ -67,6 +71,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
         }else if(word_match[m] == "旅行"){
+            find = true;
             analysis.getTravel(uid,time_type,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
@@ -74,11 +79,14 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
         }else {
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            var answer = "此问题暂不支持查询，目前仅支持运程，做事，能量，旅行，请亲换一个!";
-            var result = { answer:answer};
-            console.log(answer);
-            res.end(JSON.stringify(result));
+
         }
+    }
+    if(!find){
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,请亲换一个!";
+        var result = { answer:answer};
+        console.log(answer);
+        res.end(JSON.stringify(result));
     }
 };
