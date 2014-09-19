@@ -71,6 +71,52 @@ anylysis.getLuck = function(uid,time_type,cb){
     });
 };
 
+anylysis.getQueryStar = function(info,time_type){
+    info.sjIndex = user.getWx(new Date());
+    info.scwxNum = user.getScwxNum(info);
+    info.fxscore = user.getFxScore(info,true);
+    info.bwxNum = user.getWxNum(info, 2);
+    info.flyStarWx = user.getFlyStarWx(info);
+    var curDate = new Date();
+    var hourStar = user.getClockStar(curDate);
+    var dayStar = user.getDayStar(curDate);
+    var monthStar = user.getMonthStar(curDate);
+    var yearStar = parseInt(info["flystar"].charAt(2))/*user.getYearStar(curDate)*/;
+    var smallStar = user.getSmallStar(curDate);
+    var bigStar = user.getBigStar(curDate);
+    if (info.sex == 0) {
+        hourStar = user.getNvYun(hourStar);
+        dayStar = user.getNvYun(dayStar);
+        monthStar = user.getNvYun(monthStar);
+        yearStar = user.getNvYun(yearStar);
+        smallStar = user.getNvYun(smallStar);
+        bigStar = user.getNvYun(bigStar);
+    }
+    var star_of_query = dayStar;
+    var previous_star_of_query = monthStar;
+    var previous_previous_star_of_query = yearStar;
+    if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+        previous_previous_star_of_query = yearStar;
+        previous_star_of_query = monthStar;
+        star_of_query = dayStar;
+
+    }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+        previous_previous_star_of_query = smallStar;
+        previous_star_of_query = yearStar;
+        star_of_query = monthStar;
+    }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+        previous_previous_star_of_query = bigStar;
+        previous_star_of_query = smallStar;
+        star_of_query = yearStar;
+    }
+    else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+        previous_previous_star_of_query = smallStar;
+        previous_star_of_query = dayStar;
+        star_of_query = hourStar;
+    }
+    return [star_of_query,previous_star_of_query,previous_previous_star_of_query];
+};
+
 anylysis.getLuck2 = function(uid,time_type,cb){
     var info = new userInfo();
     info.uid = uid;
@@ -79,48 +125,11 @@ anylysis.getLuck2 = function(uid,time_type,cb){
             console.log(err + " getLuck2");
         }
         else {
-            info.sjIndex = user.getWx(new Date());
-            info.scwxNum = user.getScwxNum(info);
-            info.fxscore = user.getFxScore(info,true);
-            info.bwxNum = user.getWxNum(info, 2);
-            info.flyStarWx = user.getFlyStarWx(info);
-            var curDate = new Date();
-            var hourStar = user.getClockStar(curDate);
-            var dayStar = user.getDayStar(curDate);
-            var monthStar = user.getMonthStar(curDate);
-            var yearStar = parseInt(info["flystar"].charAt(2))/*user.getYearStar(curDate)*/;
-            var smallStar = user.getSmallStar(curDate);
-            var bigStar = user.getBigStar(curDate);
-            if (info.sex == 0) {
-                hourStar = user.getNvYun(hourStar);
-                dayStar = user.getNvYun(dayStar);
-                monthStar = user.getNvYun(monthStar);
-                yearStar = user.getNvYun(yearStar);
-                smallStar = user.getNvYun(smallStar);
-                bigStar = user.getNvYun(bigStar);
-            }
-            var star_of_query = dayStar;
-            var previous_star_of_query = monthStar;
-            var previous_previous_star_of_query = yearStar;
-            if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-                previous_previous_star_of_query = yearStar;
-                previous_star_of_query = monthStar;
-                star_of_query = dayStar;
-
-            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-                previous_previous_star_of_query = smallStar;
-                previous_star_of_query = yearStar;
-                star_of_query = monthStar;
-            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-                previous_previous_star_of_query = bigStar;
-                previous_star_of_query = smallStar;
-                star_of_query = yearStar;
-            }
-            else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-                previous_previous_star_of_query = smallStar;
-                previous_star_of_query = dayStar;
-                star_of_query = hourStar;
-            }
+            var yearStar = parseInt(info["flystar"].charAt(2));
+            var query_star = anylysis.getQueryStar(info,time_type);
+            var star_of_query = query_star[0];
+            var previous_star_of_query = query_star[1];
+            var previous_previous_star_of_query = query_star[2];
             var luck_scores_class;
             var luck_scores_class_previous;
             var all_luck_scores = scores_new[0][info.sex][star_of_query];
@@ -205,48 +214,11 @@ anylysis.getWork = function(uid,time_type,cb){
             console.log(err + " getWork");
         }
         else {
-            info.sjIndex = user.getWx(new Date());
-            info.scwxNum = user.getScwxNum(info);
-            info.fxscore = user.getFxScore(info,true);
-            info.bwxNum = user.getWxNum(info, 2);
-            info.flyStarWx = user.getFlyStarWx(info);
-            var curDate = new Date();
-            var hourStar = user.getClockStar(curDate);
-            var dayStar = user.getDayStar(curDate);
-            var monthStar = user.getMonthStar(curDate);
-            var yearStar = parseInt(info["flystar"].charAt(2))/*user.getYearStar(curDate)*/;
-            var smallStar = user.getSmallStar(curDate);
-            var bigStar = user.getBigStar(curDate);
-            if (info.sex == 0) {
-                hourStar = user.getNvYun(hourStar);
-                dayStar = user.getNvYun(dayStar);
-                monthStar = user.getNvYun(monthStar);
-                yearStar = user.getNvYun(yearStar);
-                smallStar = user.getNvYun(smallStar);
-                bigStar = user.getNvYun(bigStar);
-            }
-            var star_of_query = dayStar;
-            var previous_star_of_query = monthStar;
-            var previous_previous_star_of_query = yearStar;
-            if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-                previous_previous_star_of_query = yearStar;
-                previous_star_of_query = monthStar;
-                star_of_query = dayStar;
-
-            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-                previous_previous_star_of_query = smallStar;
-                previous_star_of_query = yearStar;
-                star_of_query = monthStar;
-            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-                previous_previous_star_of_query = bigStar;
-                previous_star_of_query = smallStar;
-                star_of_query = yearStar;
-            }
-            else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-                previous_previous_star_of_query = smallStar;
-                previous_star_of_query = dayStar;
-                star_of_query = hourStar;
-            }
+            var yearStar = parseInt(info["flystar"].charAt(2));
+            var query_star = anylysis.getQueryStar(info,time_type);
+            var star_of_query = query_star[0];
+            var previous_star_of_query = query_star[1];
+            var previous_previous_star_of_query = query_star[2];
             var work_scores_class;
             var work_scores_class_previous;
             var all_work_scores = scores_new[4][info.sex][star_of_query];
@@ -319,48 +291,11 @@ anylysis.getEnergy = function(uid,time_type,cb){
             console.log(err + " getEnergy");
         }
         else {
-            info.sjIndex = user.getWx(new Date());
-            info.scwxNum = user.getScwxNum(info);
-            info.fxscore = user.getFxScore(info,true);
-            info.bwxNum = user.getWxNum(info, 2);
-            info.flyStarWx = user.getFlyStarWx(info);
-            var curDate = new Date();
-            var hourStar = user.getClockStar(curDate);
-            var dayStar = user.getDayStar(curDate);
-            var monthStar = user.getMonthStar(curDate);
-            var yearStar = parseInt(info["flystar"].charAt(2))/*user.getYearStar(curDate)*/;
-            var smallStar = user.getSmallStar(curDate);
-            var bigStar = user.getBigStar(curDate);
-            if (info.sex == 0) {
-                hourStar = user.getNvYun(hourStar);
-                dayStar = user.getNvYun(dayStar);
-                monthStar = user.getNvYun(monthStar);
-                yearStar = user.getNvYun(yearStar);
-                smallStar = user.getNvYun(smallStar);
-                bigStar = user.getNvYun(bigStar);
-            }
-            var star_of_query = dayStar;
-            var previous_star_of_query = monthStar;
-            var previous_previous_star_of_query = yearStar;
-            if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-                previous_previous_star_of_query = yearStar;
-                previous_star_of_query = monthStar;
-                star_of_query = dayStar;
-
-            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-                previous_previous_star_of_query = smallStar;
-                previous_star_of_query = yearStar;
-                star_of_query = monthStar;
-            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-                previous_previous_star_of_query = bigStar;
-                previous_star_of_query = smallStar;
-                star_of_query = yearStar;
-            }
-            else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-                previous_previous_star_of_query = smallStar;
-                previous_star_of_query = dayStar;
-                star_of_query = hourStar;
-            }
+            var yearStar = parseInt(info["flystar"].charAt(2));
+            var query_star = anylysis.getQueryStar(info,time_type);
+            var star_of_query = query_star[0];
+            var previous_star_of_query = query_star[1];
+            var previous_previous_star_of_query = query_star[2];
             var energy_scores_class;
             var energy_scores_class_previous;
             var all_energy_scores = scores_new[3][info.sex][star_of_query];
@@ -423,6 +358,76 @@ anylysis.getEnergy = function(uid,time_type,cb){
                 answer += "想看看今日能量趋势图么?";
             }
 
+            cb(answer);
+        }
+    });
+};
+
+anylysis.getTravel = function(uid,time_type,cb){
+    var info = new userInfo();
+    info.uid = uid;
+    db.getUserBaseInfo(info,function (err){
+        if (err) {
+            console.log(err + " getTravel");
+        }
+        else {
+            var yearStar = parseInt(info["flystar"].charAt(2));
+            var query_star = anylysis.getQueryStar(info,time_type);
+            var star_of_query = query_star[0];
+            var previous_star_of_query = query_star[1];
+            var previous_previous_star_of_query = query_star[2];
+            var travel_scores_class;
+            var travel_scores_class_previous;
+            var all_travel_scores = scores_new[3][info.sex][star_of_query];
+            for(var i = 0; i < all_travel_scores.length; ++i){
+                if(all_travel_scores[i].beforstar == previous_star_of_query){
+                    travel_scores_class = all_travel_scores[i];
+                    break;
+                }
+            }
+            var all_travel_scores_previous = scores_new[3][info.sex][previous_previous_star_of_query];
+            for(i = 0; i < all_travel_scores_previous.length; ++i){
+                if(all_travel_scores_previous[i].beforstar == previous_star_of_query){
+                    travel_scores_class_previous = all_travel_scores_previous[i];
+                    break;
+                }
+            }
+            var scores = travel_scores_class.scores;
+            var scores_previous = travel_scores_class_previous.scores;
+
+            var travel_socres = scores[yearStar];
+            var travel_socres_previous = scores_previous[yearStar];
+            var travel_index_rows = alteration_index[0][3];
+            var travel_index_row;
+            for(i = 0; i < travel_index_rows.length; ++i){
+                if(travel_index_rows.length){
+                    var range = travel_index_rows[i].range;
+                    var range_array = range.split('-');
+                    if(travel_socres <= parseInt(range_array[0]) && travel_socres >=  parseInt(range_array[1])){
+                        travel_index_row = travel_index_rows[i];
+                        break;
+                    }
+                }
+            }
+            var last_level_describe_index = 0;
+            if(travel_index_row.level == "宜"){
+                last_level_describe_index = 0;
+            }else if(travel_index_row.level == "中"){
+                last_level_describe_index = 1;
+            }else if(travel_index_row.level == "不宜"){
+                last_level_describe_index = 2;
+            }
+            var answer = travel_index_row.level + ",";
+            if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+                answer += travel_index_row.last_level_describe[last_level_describe_index];
+            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+                answer += travel_index_row.last_level_describe[last_level_describe_index];
+            }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+                answer += travel_index_row.last_level_describe[last_level_describe_index];
+            }
+            else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+                answer += travel_index_row.last_level_describe[last_level_describe_index];
+            }
             cb(answer);
         }
     });

@@ -66,6 +66,13 @@ exports.onVoiceQuery = function(req,res){
                 console.log(answer);
                 res.end(JSON.stringify(result));
             });
+        }else if(word_match[m] == "旅行"){
+            analysis.getTravel(uid,time_type,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
         }
     }
 };
