@@ -25,6 +25,7 @@ var set_colour = require('./routes/set_colour.js');
 var feedback = require('./routes/feedback.js');
 var contacts = require('./routes/contacts.js');
 var compass = require('./routes/compass.js');
+var select_date = require('./routes/select_date.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -73,7 +74,7 @@ app.post('/set_colour', set_colour.onSetColour);
 app.post('/feedback', feedback.onFeedback);
 app.post('/contacts', contacts.onContract);
 app.post('/compass', compass.onCompass);
-
+app.post('/select_date', select_date.onSelectDate);
 
 userManager.GetInstance();
 

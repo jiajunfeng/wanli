@@ -215,6 +215,19 @@ anylysis.getTendency = function(info,time_type,score_type){
     return tendency;
 };
 
+anylysis.getTendencyFuture = function(info,days,score_type){
+    var time_interval = 1000 * 60 * 60 * 24;
+    var tendency = [];
+    for(var i = 0; i < days; ++i){
+        var time = Date.now();
+        time += i * time_interval;
+        var time_tmp = new Date(time);
+        var scores = anylysis.getScore(info,consts.TYPE_TIME.TYPE_TIME_TODAY,score_type,time_tmp);
+        tendency.push(scores[0]);
+    }
+    return tendency;
+};
+
 anylysis.getLuck2 = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
@@ -903,49 +916,49 @@ anylysis.getCompassText = function(type,score){
     var text;
     switch (type){
         case consts.TYPE_COMPASS.TYPE_COMPASS_ENERGY:{
-            if(score > 90 && score <= 98){
+            if(score >= 90 && score <= 98){
                 text = "超高";
-            }else if(score > 80 && score <= 89){
+            }else if(score >= 80 && score <= 89){
                 text = "高";
-            }else if(score > 60 && score <= 79){
+            }else if(score >= 60 && score <= 79){
                 text = "中等";
-            }else if(score > 45 && score <= 59){
+            }else if(score >= 45 && score <= 59){
                 text = "较低";
-            }else if(score > 29 && score <= 44){
+            }else if(score >= 29 && score <= 44){
                 text = "很低";
-            }else if(score > 0 && score <= 28){
+            }else if(score >= 0 && score <= 28){
                 text = "最低";
             }
             break;
         }
         case consts.TYPE_COMPASS.TYPE_COMPASS_WEALTH:{
-            if(score > 90 && score <= 98){
+            if(score >= 90 && score <= 98){
                 text = "滚滚";
-            }else if(score > 80 && score <= 89){
+            }else if(score >= 80 && score <= 89){
                 text = "大利";
-            }else if(score > 60 && score <= 79){
+            }else if(score >= 60 && score <= 79){
                 text = "中等";
-            }else if(score > 45 && score <= 59){
+            }else if(score >= 45 && score <= 59){
                 text = "小损";
-            }else if(score > 29 && score <= 44){
+            }else if(score >= 29 && score <= 44){
                 text = "破财";
-            }else if(score > 0 && score <= 28){
+            }else if(score >= 0 && score <= 28){
                 text = "崩盘";
             }
             break;
         }
         case consts.TYPE_COMPASS.TYPE_COMPASS_LUCK:{
-            if(score > 90 && score <= 98){
+            if(score >= 90 && score <= 98){
                 text = "大顺";
-            }else if(score > 80 && score <= 89){
+            }else if(score >= 80 && score <= 89){
                 text = "顺";
-            }else if(score > 60 && score <= 79){
+            }else if(score >= 60 && score <= 79){
                 text = "一般";
-            }else if(score > 45 && score <= 59){
+            }else if(score >= 45 && score <= 59){
                 text = "不顺";
-            }else if(score > 29 && score <= 44){
+            }else if(score >= 29 && score <= 44){
                 text = "堵塞";
-            }else if(score > 0 && score <= 28){
+            }else if(score >= 0 && score <= 28){
                 text = "崩溃";
             }
             break;
@@ -953,15 +966,15 @@ anylysis.getCompassText = function(type,score){
         case consts.TYPE_COMPASS.TYPE_COMPASS_PEACH:{
             if(score > 90 && score <= 98){
                 text = "大旺";
-            }else if(score > 80 && score <= 89){
+            }else if(score >= 80 && score <= 89){
                 text = "旺";
-            }else if(score > 60 && score <= 79){
+            }else if(score >= 60 && score <= 79){
                 text = "中等";
-            }else if(score > 45 && score <= 59){
+            }else if(score >= 45 && score <= 59){
                 text = "凋谢";
-            }else if(score > 29 && score <= 44){
+            }else if(score >= 29 && score <= 44){
                 text = "残破";
-            }else if(score > 0 && score <= 28){
+            }else if(score >= 0 && score <= 28){
                 text = "落败";
             }
             break;
@@ -1032,5 +1045,184 @@ anylysis.getCompass = function(uid,type,cb){
         }
         console.log("%j",answer);
         cb(answer);
+    });
+};
+
+anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
+    anylysis.getInfo(uid, function (info) {
+        var days = 10;
+        if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
+            days = 10;
+        }else if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_THIRTY){
+            days = 30;
+        }else if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_THIRTY){
+            days = 90;
+        }
+        var date = "";
+        switch (select_date_type) {
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_DO_SOMETHING:
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_MOVING:
+            {
+                var tendency_work = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_WORK);
+                var tendency_luck = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_LUCK);
+                var tendency_energy = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_ENERGY);
+                var tendency_work_to_be_choose = [];
+                var tendency_energy_to_be_choose = [];
+                for(var i = 0; i < tendency_work.length; ++i){
+                    if("宜" == tendency_work[i]){
+                        tendency_work_to_be_choose.push(i);
+                    }
+                }
+                for(var j = 0; j < tendency_work_to_be_choose.length; ++j){
+                    if(tendency_luck[tendency_work_to_be_choose[j]] >= 90 && tendency_luck[tendency_work_to_be_choose[j]] <= 98){
+                        tendency_energy_to_be_choose.push(tendency_energy[tendency_work_to_be_choose[j]]*10 + tendency_work_to_be_choose[j]);
+                    }
+                }
+                if(!tendency_energy_to_be_choose.length){
+                    for(j = 0; j < tendency_work_to_be_choose.length; ++j){
+                        if(tendency_luck[tendency_work_to_be_choose[j]] >= 80 && tendency_luck[tendency_work_to_be_choose[j]] <= 89){
+                            tendency_energy_to_be_choose.push(tendency_energy[tendency_work_to_be_choose[j]]*10 + tendency_work_to_be_choose[j]);
+                        }
+                    }
+                }
+                var days_index_to_be_choose = tendency_work_to_be_choose.length ? tendency_work_to_be_choose[0] : 5;
+                if(tendency_energy_to_be_choose.length){
+                    tendency_energy_to_be_choose.sort();
+                    days_index_to_be_choose = tendency_energy_to_be_choose[tendency_energy_to_be_choose.length -1]%10;
+                }
+                console.log(tendency_work);
+                console.log(tendency_luck);
+                console.log(tendency_energy);
+                console.log(days_index_to_be_choose);
+                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                var date_to_be_choose = new Date(time_to_be_choose);
+                date = date_to_be_choose.toLocaleDateString();
+                break;
+            }
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_WEALTH:
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_TRADE:
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_OPENING:
+            {
+                var tendency_wealth = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_WEALTH);
+                console.log(tendency_wealth);
+                var tendency_wealth_to_be_choose = [];
+                for(i = 0; i < tendency_wealth.length; ++i){
+                    if(tendency_wealth[i] >= 90 && tendency_wealth[i] <= 98){
+                        tendency_wealth_to_be_choose.push(tendency_wealth[i]*10 + i);
+                    }
+                }
+                if(!tendency_wealth_to_be_choose){
+                    for(i = 0; i < tendency_wealth.length; ++i){
+                        if(tendency_wealth[i] >= 80 && tendency_wealth[i] <= 89){
+                            tendency_wealth_to_be_choose.push(tendency_wealth[i]*10 + i);
+                        }
+                    }
+                }
+                tendency_wealth_to_be_choose.sort();
+                var days_index_to_be_choose = tendency_wealth_to_be_choose.length ? tendency_wealth_to_be_choose[tendency_wealth_to_be_choose.length - 1] % 10: 5;
+                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                var date_to_be_choose = new Date(time_to_be_choose);
+                date = date_to_be_choose.toLocaleDateString();
+                break;
+            }
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_DATE:
+            {
+                var tendency_peach = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_PEACH);
+                console.log(tendency_peach);
+                var tendency_peach_to_be_choose = [];
+                for(i = 0; i < tendency_peach.length; ++i){
+                    if(tendency_peach[i] >= 90 && tendency_peach[i] <= 98){
+                        tendency_peach_to_be_choose.push(tendency_peach[i]*10 + i);
+                    }
+                }
+                if(!tendency_peach_to_be_choose){
+                    for(i = 0; i < tendency_peach.length; ++i){
+                        if(tendency_peach[i] >= 80 && tendency_peach[i] <= 89){
+                            tendency_peach_to_be_choose.push(tendency_peach[i]*10 + i);
+                        }
+                    }
+                }
+                tendency_peach_to_be_choose.sort();
+                var days_index_to_be_choose = tendency_peach_to_be_choose.length ? tendency_peach_to_be_choose[tendency_peach_to_be_choose.length - 1]  % 10: 5;
+                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                var date_to_be_choose = new Date(time_to_be_choose);
+                date = date_to_be_choose.toLocaleDateString();
+                break;
+            }
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_TALKING_SOMETHING:
+            {
+                var tendency_luck = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_LUCK);
+                console.log(tendency_luck);
+                var tendency_luck_to_be_choose = [];
+                for(i = 0; i < tendency_luck.length; ++i){
+                    if(tendency_luck[i] >= 90 && tendency_luck[i] <= 98){
+                        tendency_luck_to_be_choose.push(tendency_luck[i]*10 + i);
+                    }
+                }
+                if(!tendency_luck_to_be_choose){
+                    for(i = 0; i < tendency_luck.length; ++i){
+                        if(tendency_luck[i] >= 80 && tendency_luck[i] <= 89){
+                            tendency_luck_to_be_choose.push(tendency_luck[i]*10 + i);
+                        }
+                    }
+                }
+                tendency_luck_to_be_choose.sort();
+                var days_index_to_be_choose = tendency_luck_to_be_choose.length ? tendency_luck_to_be_choose[tendency_luck_to_be_choose.length - 1]  % 10: 5;
+                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                var date_to_be_choose = new Date(time_to_be_choose);
+                date = date_to_be_choose.toLocaleDateString();
+                break;
+            }
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_MEET_FRIEND:
+            {
+                var tendency_meet_friend = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_EMOTION);
+                console.log(tendency_meet_friend);
+                var tendency_meet_friend_to_be_choose = [];
+                for(i = 0; i < tendency_meet_friend.length; ++i){
+                    if(tendency_meet_friend[i] >= 90 && tendency_meet_friend[i] <= 98){
+                        tendency_meet_friend_to_be_choose.push(tendency_meet_friend[i]*10 + i);
+                    }
+                }
+                if(!tendency_meet_friend_to_be_choose){
+                    for(i = 0; i < tendency_meet_friend.length; ++i){
+                        if(tendency_meet_friend[i] >= 80 && tendency_meet_friend[i] <= 89){
+                            tendency_meet_friend_to_be_choose.push(tendency_meet_friend[i]*10 + i);
+                        }
+                    }
+                }
+                tendency_meet_friend_to_be_choose.sort();
+                var days_index_to_be_choose = tendency_meet_friend_to_be_choose.length ? tendency_meet_friend_to_be_choose[tendency_meet_friend_to_be_choose.length - 1]  % 10: 5;
+                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                var date_to_be_choose = new Date(time_to_be_choose);
+                date = date_to_be_choose.toLocaleDateString();
+                break;
+            }
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_TRIP:
+            case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_INTERVIEW:
+            {
+                var tendency_trip = anylysis.getTendencyFuture(info,days,consts.TYPE_SCORE.TYPE_SCORE_ENERGY);
+                console.log(tendency_trip);
+                var tendency_trip_to_be_choose = [];
+                for(i = 0; i < tendency_trip.length; ++i){
+                    if(tendency_trip[i] >= 90 && tendency_trip[i] <= 98){
+                        tendency_trip_to_be_choose.push(tendency_trip[i]*10 + i);
+                    }
+                }
+                if(!tendency_trip_to_be_choose){
+                    for(i = 0; i < tendency_trip.length; ++i){
+                        if(tendency_trip[i] >= 80 && tendency_trip[i] <= 89){
+                            tendency_trip_to_be_choose.push(tendency_trip[i]*10 + i);
+                        }
+                    }
+                }
+                tendency_trip_to_be_choose.sort();
+                var days_index_to_be_choose = tendency_trip_to_be_choose.length ? tendency_trip_to_be_choose[tendency_trip_to_be_choose.length - 1]  % 10: 5;
+                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                var date_to_be_choose = new Date(time_to_be_choose);
+                date = date_to_be_choose.toLocaleDateString();
+                break;
+            }
+        }
+        cb(date);
     });
 };
