@@ -44,5 +44,15 @@ module.exports = {
         TYPE_SCORE_WORK:4,
         TYPE_SCORE_LOST_WEALTH:5,
         TYPE_SCORE_PEACH:6
+    },
+    TYPE_MATCH:{
+        TYPE_MATCH_NATURE:0,
+        TYPE_MATCH_MARRIAGE:1,
+        TYPE_MATCH_LOVE:2,
+        TYPE_MATCH_ESTROUS:3,
+        TYPE_MATCH_PEACH:4,
+        TYPE_MATCH_FRIENDSHIP:5,
+        TYPE_MATCH_WEALTH:6,
+        TYPE_MATCH_LUCK:7
     }
 };

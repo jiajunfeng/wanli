@@ -371,7 +371,7 @@ function getYangSum(){
 	}
 	return sum;
 }
-
+exports.getYangSum = getYangSum;
 //获得缺数
 function getQueNum(){
 	var numList = [false,false,false,false,false,false,false,false,false,false,];
@@ -392,6 +392,7 @@ function getQueNum(){
 	}
 	return retStr;
 }
+exports.getQueNum = getQueNum;
 
 //获得四季旺衰
 function getSJWS(yearStar,aDate) {

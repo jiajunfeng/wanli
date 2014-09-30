@@ -26,6 +26,7 @@ var feedback = require('./routes/feedback.js');
 var contacts = require('./routes/contacts.js');
 var compass = require('./routes/compass.js');
 var select_date = require('./routes/select_date.js');
+var match = require('./routes/match.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -75,6 +76,7 @@ app.post('/feedback', feedback.onFeedback);
 app.post('/contacts', contacts.onContract);
 app.post('/compass', compass.onCompass);
 app.post('/select_date', select_date.onSelectDate);
+app.post('/match', match.onMatch);
 
 userManager.GetInstance();
 
