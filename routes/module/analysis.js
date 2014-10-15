@@ -1238,8 +1238,8 @@ anylysis.getLastYangSum = function(yangSum1,yangSum2,yangSum3){
     return the_last_yang_sum;
 };
 
-anylysis.getStarMonthNum = function(info){
-    var dateStr = info.birthday;
+anylysis.getStarMonthNum = function(birthday){
+    var dateStr = birthday;
     var clock = parseInt(dateStr.substr(8, 2));
     //如果是忘记时辰，就给默认成子时
     if (clock > 11 || clock == 0) {
@@ -1248,9 +1248,9 @@ anylysis.getStarMonthNum = function(info){
     else {
         clock = clock * 2 - 1;
     }
-    var year =  parseInt(info.birthday.substr(0, 4));
-    var month = parseInt(info.birthday.substr(4, 2));
-    var day = parseInt(info.birthday.substr(6, 2));
+    var year =  parseInt(birthday.substr(0, 4));
+    var month = parseInt(birthday.substr(4, 2));
+    var day = parseInt(birthday.substr(6, 2));
     var clock = parseInt(clock);
 
     var date = new Date(year + "/" + month + "/" + day + " " + clock + ":00:00");
@@ -1339,8 +1339,8 @@ anylysis.getMatch = function(uid,target_uid,type,cb){
                     var target_que_num_array = queNum.split("");
                     console.log(que_num_array);
                     console.log(target_que_num_array);
-                    var start_month_num = anylysis.getStarMonthNum(info);
-                    var target_star_month_num = anylysis.getStarMonthNum(target_info);
+                    var start_month_num = anylysis.getStarMonthNum(info.birthday);
+                    var target_star_month_num = anylysis.getStarMonthNum(target_info.birthday);
                     console.log(start_month_num);
                     console.log(target_star_month_num);
                     var complementary_level = -1;
@@ -1632,5 +1632,348 @@ anylysis.getMatch = function(uid,target_uid,type,cb){
             }
         });
 
+    });
+};
+
+anylysis.getMatch2 = function(uid,birthday,birthplace,sex,type,cb){
+    var answer ;
+    if (typeof birthday != 'string'){
+        birthday = birthday.toString();
+    }
+    anylysis.getInfo(uid,function(info){
+        var year =  parseInt(birthday.substr(0, 4));
+        var month = parseInt(birthday.substr(4, 2));
+        var day = parseInt(birthday.substr(6, 2));
+        var clock = 0;
+        var date = new Date(year + "/" + month + "/" + day + " " + clock + ":00:00");
+        var BigStar = parseInt(info["flystar"].charAt(0));
+        var target_BigStar = user.getBigStar(date);
+        var SmallStar = parseInt(info["flystar"].charAt(1));
+        var target_SmallStar = user.getSmallStar(date);
+        var yearStar = parseInt(info["flystar"].charAt(2));
+        var target_yearStar = user.getYearStar(date);
+        var monthStar = parseInt(info["flystar"].charAt(3));
+        var target_monthStar = user.getMonthStar(date);
+        var dayStar = parseInt(info["flystar"].charAt(4));
+        var target_dayStar = user.getDayStar(date);
+        var hourStar = parseInt(info["flystar"].charAt(5));
+        var target_hourStar = user.getClockStar(date);
+        var sex = info.sex;
+        var target_sex = sex;
+        switch(type){
+            case consts.TYPE_MATCH.TYPE_MATCH_NATURE:{
+                var birthday_year = Math.floor(info.birthday/1000000);
+                var birthday_month = Math.floor((info.birthday - birthday_year * 1000000)/10000);
+                var birthday_day = Math.floor((info.birthday - birthday_year * 1000000 - birthday_month * 10000)/100);
+                var target_birthday_year = Math.floor(birthday/1000000);
+                var target_birthday_month = Math.floor((birthday - target_birthday_year * 1000000)/10000);
+                var target_birthday_day = Math.floor((birthday - target_birthday_year * 1000000 - target_birthday_month * 10000)/100);
+                var yangSum1 = user.getYangSum(birthday_year,birthday_month,birthday_day);
+                var yangSum2 = user.getYangSum(yangSum1);
+                var yangSum3 = user.getYangSum(yangSum2);
+                var target_yangSum1 = user.getYangSum(target_birthday_year,target_birthday_month,target_birthday_day);
+                var target_yangSum2 = user.getYangSum(target_yangSum1);
+                var target_yangSum3 = user.getYangSum(target_yangSum2);
+                var queNum = user.getQueNum(birthday_year,birthday_month,birthday_day,yangSum1,yangSum2,yangSum3,yearStar);
+                var target_queNum = user.getQueNum(target_birthday_year,target_birthday_month,target_birthday_day,target_yangSum1,target_yangSum2,target_yangSum3,target_yearStar);
+                var last_yang_sum = anylysis.getLastYangSum(yangSum1,yangSum2,yangSum3);
+                var target_last_yang_sum = anylysis.getLastYangSum(target_yangSum1,target_yangSum2,target_yangSum3);
+                console.log("%d %d",queNum,last_yang_sum);
+                console.log("%d %d",target_queNum,target_last_yang_sum);
+                var que_num_array = queNum.split("");
+                var target_que_num_array = queNum.split("");
+                console.log(que_num_array);
+                console.log(target_que_num_array);
+                var start_month_num = anylysis.getStarMonthNum(info.birthday);
+                var target_star_month_num = anylysis.getStarMonthNum(birthday);
+                console.log(start_month_num);
+                console.log(target_star_month_num);
+                var complementary_level = -1;
+                var complementary = ["你的性格不足方面正是对方性格最显著特点，你俩在一起，对方性格对你的互补方面是最高级，真是人间少有。","你的性格不足方面，大部分都是对方性格的主要特点，你俩在一起，对方和你的互补方面是中上级，可以取长补短。","你的性格不足方面，有些是对方性格的特点，你俩在一起，对方和你的互补方面是中下级，对你有帮助。"];
+                //  互补
+                if(1 == que_num_array.length){
+                    //  本身缺数只有1个，对方最终阳和数或年飞星数是自己的缺数。
+                    if(parseInt(que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_last_yang_sum){
+                        complementary_level = 0
+                    }
+                    //  缺数是1个，对方其它阳和数与星月数中有自己缺数。
+                    else if(parseInt(que_num_array[0]) == target_star_month_num || parseInt(que_num_array[0]) == target_yangSum1 || parseInt(que_num_array[0]) == target_yangSum2 || parseInt(que_num_array[0]) == target_yangSum3){
+                        complementary_level = 1;
+                    }
+                }else if(2 == que_num_array.length){
+                    //  本身缺数2个，对方最终阳和数和年飞星数是自己的缺数（不能少一个）。
+                    if( (parseInt(que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_last_yang_sum) ||
+                        (parseInt(que_num_array[1]) == target_yearStar || parseInt(que_num_array[1]) == target_last_yang_sum) ){
+                        complementary_level = 0
+                    }
+                    //  缺数是2个，对方其它阳和数、年飞星与星月数中有自己缺数（个数不能少）。
+                    else  if( (parseInt(que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_star_month_num || parseInt(que_num_array[0]) == target_yangSum1 || parseInt(que_num_array[0]) == target_yangSum2 || parseInt(que_num_array[0]) == target_yangSum3 ) &&
+                        (parseInt(que_num_array[1]) == target_yearStar || parseInt(que_num_array[1]) == target_star_month_num || parseInt(que_num_array[1]) == target_yangSum1 || parseInt(que_num_array[1]) == target_yangSum2 || parseInt(que_num_array[1]) == target_yangSum3) ){
+                        complementary_level = 1
+                    }
+                    //  缺数是2个，其中1个在对方任意阳和数、年飞星与星月数中。
+                    else if( (parseInt(que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_star_month_num || parseInt(que_num_array[0]) == target_yangSum1 || parseInt(que_num_array[0]) == target_yangSum2 || parseInt(que_num_array[0]) == target_yangSum3 ) ||
+                        (parseInt(que_num_array[1]) == target_yearStar || parseInt(que_num_array[1]) == target_star_month_num || parseInt(que_num_array[1]) == target_yangSum1 || parseInt(que_num_array[1]) == target_yangSum2 || parseInt(que_num_array[1]) == target_yangSum3) ){
+                        complementary_level = 2
+                    }
+                }else if(3 == que_num_array.length){
+                    //  @@@缺数是3个及以上，对方任意阳和数，年飞星数和星月数是自己的缺数，不能少一个。
+                    if(
+                        parseInt( (que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_star_month_num || parseInt(que_num_array[0]) == target_yangSum1 || parseInt(que_num_array[0]) == target_yangSum2 || parseInt(que_num_array[0]) == target_yangSum3) &&
+                            (parseInt(que_num_array[1]) == target_yearStar || parseInt(que_num_array[1]) == target_star_month_num || parseInt(que_num_array[1]) == target_yangSum1 || parseInt(que_num_array[1]) == target_yangSum2 || parseInt(que_num_array[1]) == target_yangSum3 ) &&
+                            (parseInt(que_num_array[2]) == target_yearStar || parseInt(que_num_array[2]) == target_star_month_num || parseInt(que_num_array[2]) == target_yangSum1 || parseInt(que_num_array[2]) == target_yangSum2 || parseInt(que_num_array[2]) == target_yangSum3 )
+                        ){
+                        complementary_level = 0
+                    }
+                    //  @@@缺数是3个及以上，对方任意阳和数、年飞星与星月数中有自己缺数，3项可以少1项，4项可以少1项，5项可以少2项，6项可以少2项，7项及以上可以少3项。
+                    else if(
+                        parseInt( (que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_star_month_num || parseInt(que_num_array[0]) == target_yangSum1 || parseInt(que_num_array[0]) == target_yangSum2 || parseInt(que_num_array[0]) == target_yangSum3) ||
+                            (parseInt(que_num_array[1]) == target_yearStar || parseInt(que_num_array[1]) == target_star_month_num || parseInt(que_num_array[1]) == target_yangSum1 || parseInt(que_num_array[1]) == target_yangSum2 || parseInt(que_num_array[1]) == target_yangSum3 ) ||
+                            (parseInt(que_num_array[2]) == target_yearStar || parseInt(que_num_array[2]) == target_star_month_num || parseInt(que_num_array[2]) == target_yangSum1 || parseInt(que_num_array[2]) == target_yangSum2 || parseInt(que_num_array[2]) == target_yangSum3 )
+                        ){
+                        complementary_level = 1
+                    }
+                    //  @@@缺数是3个及以上，对方任意阳和数、年飞星与星月数中有自己缺数，3项可以少2项，4项可以少2项，5项可以少3项，6项可以少3项，7项及以上可以少4项。
+                    else if(
+                        parseInt( (que_num_array[0]) == target_yearStar || parseInt(que_num_array[0]) == target_star_month_num || parseInt(que_num_array[0]) == target_yangSum1 || parseInt(que_num_array[0]) == target_yangSum2 || parseInt(que_num_array[0]) == target_yangSum3) ||
+                            (parseInt(que_num_array[1]) == target_yearStar || parseInt(que_num_array[1]) == target_star_month_num || parseInt(que_num_array[1]) == target_yangSum1 || parseInt(que_num_array[1]) == target_yangSum2 || parseInt(que_num_array[1]) == target_yangSum3 ) ||
+                            (parseInt(que_num_array[2]) == target_yearStar || parseInt(que_num_array[2]) == target_star_month_num || parseInt(que_num_array[2]) == target_yangSum1 || parseInt(que_num_array[2]) == target_yangSum2 || parseInt(que_num_array[2]) == target_yangSum3 )
+                        ){
+                        complementary_level = 2
+                    }
+                    var overlapped_level = -1;
+                    var overlapped = ["你的性格特点与对方重度一致，就连缺点都一模一样。这样的性格重叠是最高级，人间难寻。"," 你的性格特点与对方高度一致，这样的性格重叠是较  高级，和你的性格太像了。"," 你的性格特点与对方比较一致，这样的性格重叠是中上级，和你的性格很像了。","你的性格特点与对方有些一致，这样的性格重叠是中下级，和你的性格有些像。"];
+                    //  重叠
+                    //  所有阳和数、年飞星数、缺数都相同。
+                    if(target_yangSum1 == yangSum1 && target_yangSum2 == yangSum2 && target_yangSum3 == yangSum3 && target_yearStar == yearStar && target_queNum == queNum){
+                        overlapped_level = 0;
+                    }
+                    //  所有阳和数相同。
+                    else if(target_yangSum1 == yangSum1 && target_yangSum2 == yangSum2 && target_yangSum3 == yangSum3){
+                        overlapped_level = 1;
+                    }
+                    //  其中阳和数（1、2、3）相同，并且年飞星相同。
+                    else if( (target_yangSum1 == yangSum1 || target_yangSum2 == yangSum2 || target_yangSum3 == yangSum3) &&
+                        target_yearStar == yearStar
+                        ){
+                        overlapped_level = 1;
+                    }
+                    //  最终阳和数，与对方最终阳和数相同，并且年飞星、星月数、缺数任意1项与对方年飞星、星月数、缺数相同。
+                    else if( (target_last_yang_sum == last_yang_sum) &&
+                        (target_yearStar == yearStar || target_star_month_num == start_month_num || target_queNum == queNum)
+                        ){
+                        overlapped_level = 1;
+                    }
+                    //  @@@最终阳和数与年飞星数，与对方的任意阳和数、年飞星数、星月数当中相同。（1个不能少）
+                    else if(target_last_yang_sum == last_yang_sum || target_yearStar == yearStar || target_star_month_num == start_month_num){
+                        overlapped_level = 2;
+                    }
+                    //  @@@任意阳和数、年飞星数、星月数，在对方的任意阳和数、年飞星数、星月数当中相同，2项以下不能少，3项可以少1项，4项可以少2项，5项及以上可以少3项。
+                    else if(target_last_yang_sum == last_yang_sum || target_yearStar == yearStar || target_star_month_num == start_month_num){
+                        overlapped_level = 3;
+                    }
+                    var different_level = -1;
+                    if(complementary_level == -1 && overlapped_level == -1){
+                        different_level = 1;
+                    }
+                    var different = "你们是属于性格不同的类型，既不互补，也不重叠，两种性格。";
+
+                    if(complementary_level != -1){
+                        answer = complementary[complementary_level];
+                    }else if(overlapped_level != -1){
+                        answer = overlapped[overlapped_level];
+                    }else{
+                        answer = different;
+                    }
+                }
+                cb(answer);
+                break;
+            }
+            case consts.TYPE_MATCH.TYPE_MATCH_MARRIAGE:{
+                if(sex == target_sex){
+                    answer = "性别不符合要求";
+                    break;
+                }
+                var  year_star_index = 0;
+                if(sex){
+                    year_star_index = yearStar - 1;
+                }
+                else{
+                    year_star_index = yearStar - 1 + 9;
+                }
+                var year_star_score = match[1][year_star_index][0][target_yearStar -1];
+                var big_star_score = match[1][year_star_index][1][target_BigStar - 1];
+                var small_star_score = match[1][year_star_index][1][target_SmallStar - 1];
+                var month_star_score = match[1][year_star_index][1][target_monthStar - 1];
+                var day_star_score = match[1][year_star_index][1][target_dayStar - 1];
+                var hour_star_score = match[1][year_star_index][1][target_hourStar - 1];
+                var socre_sum = year_star_score + big_star_score + small_star_score + month_star_score + day_star_score + hour_star_score;
+                var marriage = ["婚姻匹配度，第一级，最高，累世姻缘。","婚姻匹配度，第二级，很高，夫妻缘重。","婚姻匹配度，第三级，中等，缘分中等。","婚姻匹配度，第四级， 较低，夫妻缘轻。","婚姻匹配度，第五级， 很低，没有希望。","婚姻匹配度，第六级， 绝望，彻底灭绝。"];
+                var marriage_index = 2;
+                if(socre_sum <= 98 && socre_sum >= 90){
+                    marriage_index = 0;
+                }else if(socre_sum <= 89 && socre_sum >= 80){
+                    marriage_index = 1;
+                }else if(socre_sum <= 79 && socre_sum >= 60){
+                    marriage_index = 2;
+                }else if(socre_sum <= 59 && socre_sum >= 45){
+                    marriage_index = 3;
+                }else if(socre_sum <= 44 && socre_sum >= 29){
+                    marriage_index = 4;
+                }else if(socre_sum <= 28 && socre_sum >= 0){
+                    marriage_index = 5;
+                }else{
+                    marriage_index = 5;
+                }
+                answer = marriage[marriage_index];
+                cb(answer);
+                break;
+            }
+            case consts.TYPE_MATCH.TYPE_MATCH_LOVE:
+            case consts.TYPE_MATCH.TYPE_MATCH_ESTROUS:
+            case consts.TYPE_MATCH.TYPE_MATCH_PEACH:{
+                if(sex == target_sex){
+                    answer = "性别不符合要求";
+                    break;
+                }
+                var  year_star_index = 0;
+                if(sex){
+                    year_star_index = yearStar - 1;
+                }
+                else{
+                    year_star_index = yearStar - 1 + 9;
+                }
+                var year_star_score = match[1][year_star_index][0][target_yearStar -1];
+                var big_star_score = match[1][year_star_index][1][target_BigStar - 1];
+                var small_star_score = match[1][year_star_index][1][target_SmallStar - 1];
+                var month_star_score = match[1][year_star_index][1][target_monthStar - 1];
+                var day_star_score = match[1][year_star_index][1][target_dayStar - 1];
+                var hour_star_score = match[1][year_star_index][1][target_hourStar - 1];
+                var socre_sum = year_star_score + big_star_score + small_star_score + month_star_score + day_star_score + hour_star_score;
+                var love = ["爱情匹配度，第一级，最高，情爱无边。","爱情匹配度，第二级，很高，情爱绵绵。","爱情匹配度，第三级，中等，情爱适中。","爱情匹配度，第四级， 较低，感情一般。","爱情匹配度，第五级， 很低，形同路人。","爱情匹配度，第六级， 破灭，彻底破灭。"];
+                var estrous = ["    动情匹配度，第一级，最高，心潮澎湃。","    动情匹配度，第二级，很高，难以自控。","    动情匹配度，第三级，中等，稍有动情。","    动情匹配度，第四级，麻木，没有感觉。 ","    动情匹配度，第五级，很低，视而不见。 ","    动情匹配度，第六级，绝杀，心如死灰。 "];
+                var peach = ["桃花匹配度，第一级，最高，桃花满天。","桃花匹配度，第二级，很高，桃花开放。","桃花匹配度，第三级，中等，桃花初开。","桃花匹配度，第四级，凋谢，没有感觉。","桃花匹配度，第五级，残破，残花败柳。","桃花匹配度，第六级，落败，万念俱焚。"];
+                var index = 2;
+                if(socre_sum <= 98 && socre_sum >= 90){
+                    index = 0;
+                }else if(socre_sum <= 89 && socre_sum >= 80){
+                    index = 1;
+                }else if(socre_sum <= 79 && socre_sum >= 60){
+                    index = 2;
+                }else if(socre_sum <= 59 && socre_sum >= 45){
+                    index = 3;
+                }else if(socre_sum <= 44 && socre_sum >= 29){
+                    index = 4;
+                }else if(socre_sum <= 28 && socre_sum >= 0){
+                    index = 5;
+                }else{
+                    index = 5;
+                }
+                if(type == consts.TYPE_MATCH.TYPE_MATCH_LOVE){
+                    answer = love[index];
+                }else if (type == consts.TYPE_MATCH.TYPE_MATCH_ESTROUS){
+                    answer = estrous[index];
+                } else if (type == consts.TYPE_MATCH.TYPE_MATCH_PEACH){
+                    answer = peach[index];
+                }
+                cb(answer);
+                break;
+            }
+            case consts.TYPE_MATCH.TYPE_MATCH_FRIENDSHIP:{
+                var  year_star_index =  yearStar - 1;
+                var year_star_score = match[1][year_star_index][0][target_yearStar -1];
+                var big_star_score = match[1][year_star_index][1][target_BigStar - 1];
+                var small_star_score = match[1][year_star_index][1][target_SmallStar - 1];
+                var month_star_score = match[1][year_star_index][1][target_monthStar - 1];
+                var day_star_score = match[1][year_star_index][1][target_dayStar - 1];
+                var hour_star_score = match[1][year_star_index][1][target_hourStar - 1];
+                var socre_sum = year_star_score + big_star_score + small_star_score + month_star_score + day_star_score + hour_star_score;
+                var friendship = ["友情匹配度，第一级，最高，情意无边。","友情匹配度，第二级，很高，情意深厚。","友情匹配度，第三级，中等，感情适中。","友情匹配度，第四级， 较低，情意淡泊。","友情匹配度，第五级， 很低，感情破裂。","友情匹配度，第六级， 最低，无情无义。"];
+                var friendship_index = 2;
+                if(socre_sum <= 98 && socre_sum >= 90){
+                    friendship_index = 0;
+                }else if(socre_sum <= 89 && socre_sum >= 80){
+                    friendship_index = 1;
+                }else if(socre_sum <= 79 && socre_sum >= 60){
+                    friendship_index = 2;
+                }else if(socre_sum <= 59 && socre_sum >= 45){
+                    friendship_index = 3;
+                }else if(socre_sum <= 44 && socre_sum >= 29){
+                    friendship_index = 4;
+                }else if(socre_sum <= 28 && socre_sum >= 0){
+                    friendship_index = 5;
+                }else{
+                    friendship_index = 5;
+                }
+                answer = friendship[friendship_index];
+                cb(answer);
+                break;
+            }
+            case consts.TYPE_MATCH.TYPE_MATCH_WEALTH:{
+                var  year_star_index =  yearStar - 1;
+                var year_star_score = match[1][year_star_index][0][target_yearStar -1];
+                var big_star_score = match[1][year_star_index][1][target_BigStar - 1];
+                var small_star_score = match[1][year_star_index][1][target_SmallStar - 1];
+                var month_star_score = match[1][year_star_index][1][target_monthStar - 1];
+                var day_star_score = match[1][year_star_index][1][target_dayStar - 1];
+                var hour_star_score = match[1][year_star_index][1][target_hourStar - 1];
+                var socre_sum = year_star_score + big_star_score + small_star_score + month_star_score + day_star_score + hour_star_score;
+                var score_average = socre_sum / 5;
+                //   to be continie
+                var wealth = ["财运匹配度，第一级，最高，合作助你发大财。","财运匹配度，第二级，很高，合作财运好。","财运匹配度，第三级，中等，合作有财运。","财运匹配度，第四级， 较低，合作难有财。","财运匹配度，第五级， 很低，合作无财运。","财运匹配度，第六级， 最低，合作易破财。"];
+                var wealth_index = 2;
+                if(socre_sum <= 98 && socre_sum >= 90){
+                    wealth_index = 0;
+                }else if(socre_sum <= 89 && socre_sum >= 80){
+                    wealth_index = 1;
+                }else if(socre_sum <= 79 && socre_sum >= 60){
+                    wealth_index = 2;
+                }else if(socre_sum <= 59 && socre_sum >= 45){
+                    wealth_index = 3;
+                }else if(socre_sum <= 44 && socre_sum >= 29){
+                    wealth_index = 4;
+                }else if(socre_sum <= 28 && socre_sum >= 0){
+                    wealth_index = 5;
+                }else{
+                    wealth_index = 5;
+                }
+                answer = wealth[wealth_index];
+                cb(answer);
+                break;
+            }
+            case consts.TYPE_MATCH.TYPE_MATCH_LUCK:{
+                var  year_star_index =  yearStar - 1;
+                var year_star_score = match[1][year_star_index][0][target_yearStar -1];
+                var big_star_score = match[1][year_star_index][1][target_BigStar - 1];
+                var small_star_score = match[1][year_star_index][1][target_SmallStar - 1];
+                var month_star_score = match[1][year_star_index][1][target_monthStar - 1];
+                var day_star_score = match[1][year_star_index][1][target_dayStar - 1];
+                var hour_star_score = match[1][year_star_index][1][target_hourStar - 1];
+                var socre_sum = year_star_score + big_star_score + small_star_score + month_star_score + day_star_score + hour_star_score;
+                var score_average = socre_sum / 5;
+                //   to be continie
+                var luck = ["运程匹配度，第一级，最高，合作助你运程大顺。","运程匹配度，第二级，很高，合作助你运程较顺。","运程匹配度，第三级，中等，合作运程中等。","运程匹配度，第四级， 较低，合作后运程阻碍。","运程匹配度，第五级， 很低，合作后运程堵塞。","运程匹配度，第六级， 最低，合作后运程崩溃。"];
+                var luck_index = 2;
+                if(socre_sum <= 98 && socre_sum >= 90){
+                    luck_index = 0;
+                }else if(socre_sum <= 89 && socre_sum >= 80){
+                    luck_index = 1;
+                }else if(socre_sum <= 79 && socre_sum >= 60){
+                    luck_index = 2;
+                }else if(socre_sum <= 59 && socre_sum >= 45){
+                    luck_index = 3;
+                }else if(socre_sum <= 44 && socre_sum >= 29){
+                    luck_index = 4;
+                }else if(socre_sum <= 28 && socre_sum >= 0){
+                    luck_index = 5;
+                }else{
+                    luck_index = 5;
+                }
+                answer = luck[luck_index];
+                cb(answer);
+                break;
+            }
+
+        }
     });
 };

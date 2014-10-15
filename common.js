@@ -34,7 +34,7 @@ function init(isChild_Process) {
     console.log("jsons loaded!");
 
     if (!isChild_Process) {
-        //�����ӽ��
+        //创建子进程
         worker = child_process.fork('./routes/child_process.js');
         worker.on('message', function (m) {
             console.log('PARENT got message:', m);
