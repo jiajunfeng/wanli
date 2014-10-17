@@ -1076,23 +1076,16 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                 }
                 for(var j = 0; j < tendency_work_to_be_choose.length; ++j){
                     if(tendency_luck[tendency_work_to_be_choose[j]] >= 90 && tendency_luck[tendency_work_to_be_choose[j]] <= 98){
-                        tendency_energy_to_be_choose.push(tendency_energy[tendency_work_to_be_choose[j]]*10 + tendency_work_to_be_choose[j]);
+                        tendency_energy_to_be_choose.push(tendency_energy[tendency_work_to_be_choose[j]]*100 + tendency_work_to_be_choose[j]);
                     }
                 }
-                if(!tendency_energy_to_be_choose.length){
-                    for(j = 0; j < tendency_work_to_be_choose.length; ++j){
-                        if(tendency_luck[tendency_work_to_be_choose[j]] >= 80 && tendency_luck[tendency_work_to_be_choose[j]] <= 89){
-                            tendency_energy_to_be_choose.push(tendency_energy[tendency_work_to_be_choose[j]]*10 + tendency_work_to_be_choose[j]);
-                        }
-                    }
-                }
-                tendency_energy_to_be_choose.sort();
+                tendency_energy_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_energy_to_be_choose.length,n < 3; ++n){
-                    var days_index_to_be_choose = tendency_energy_to_be_choose[tendency_energy_to_be_choose.length - n - 1]%10;
+                    var days_index_to_be_choose = tendency_energy_to_be_choose[tendency_energy_to_be_choose.length - n - 1]%100;
                     time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
                     date_to_be_choose = new Date(time_to_be_choose);
                     date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
-                    if(days == 10){
+                    if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
                         break;
                     }
                 }
@@ -1111,23 +1104,16 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                 var tendency_wealth_to_be_choose = [];
                 for(i = 0; i < tendency_wealth.length; ++i){
                     if(tendency_wealth[i] >= 90 && tendency_wealth[i] <= 98){
-                        tendency_wealth_to_be_choose.push(tendency_wealth[i]*10 + i);
+                        tendency_wealth_to_be_choose.push(tendency_wealth[i]*100 + i);
                     }
                 }
-                if(!tendency_wealth_to_be_choose){
-                    for(i = 0; i < tendency_wealth.length; ++i){
-                        if(tendency_wealth[i] >= 80 && tendency_wealth[i] <= 89){
-                            tendency_wealth_to_be_choose.push(tendency_wealth[i]*10 + i);
-                        }
-                    }
-                }
-                tendency_wealth_to_be_choose.sort();
+                tendency_wealth_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_wealth_to_be_choose.length,n < 3; ++n){
-                    var days_index_to_be_choose = tendency_wealth_to_be_choose[tendency_wealth_to_be_choose.length - n - 1]%10;
+                    var days_index_to_be_choose = tendency_wealth_to_be_choose[tendency_wealth_to_be_choose.length - n - 1]%100;
                     time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
                     date_to_be_choose = new Date(time_to_be_choose);
                     date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
-                    if(days == 10){
+                    if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
                         break;
                     }
                 }
@@ -1140,23 +1126,16 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                 var tendency_peach_to_be_choose = [];
                 for(i = 0; i < tendency_peach.length; ++i){
                     if(tendency_peach[i] >= 90 && tendency_peach[i] <= 98){
-                        tendency_peach_to_be_choose.push(tendency_peach[i]*10 + i);
+                        tendency_peach_to_be_choose.push(tendency_peach[i]*100 + i);
                     }
                 }
-                if(!tendency_peach_to_be_choose){
-                    for(i = 0; i < tendency_peach.length; ++i){
-                        if(tendency_peach[i] >= 80 && tendency_peach[i] <= 89){
-                            tendency_peach_to_be_choose.push(tendency_peach[i]*10 + i);
-                        }
-                    }
-                }
-                tendency_peach_to_be_choose.sort();
+                tendency_peach_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_peach_to_be_choose.length,n < 3; ++n){
-                    var days_index_to_be_choose = tendency_peach_to_be_choose[tendency_peach_to_be_choose.length - n - 1]%10;
+                    var days_index_to_be_choose = tendency_peach_to_be_choose[tendency_peach_to_be_choose.length - n - 1]%100;
                     time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
                     date_to_be_choose = new Date(time_to_be_choose);
                     date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
-                    if(days == 10){
+                    if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
                         break;
                     }
                 }
@@ -1169,23 +1148,16 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                 var tendency_luck_to_be_choose = [];
                 for(i = 0; i < tendency_luck.length; ++i){
                     if(tendency_luck[i] >= 90 && tendency_luck[i] <= 98){
-                        tendency_luck_to_be_choose.push(tendency_luck[i]*10 + i);
+                        tendency_luck_to_be_choose.push(tendency_luck[i]*100 + i);
                     }
                 }
-                if(!tendency_luck_to_be_choose){
-                    for(i = 0; i < tendency_luck.length; ++i){
-                        if(tendency_luck[i] >= 80 && tendency_luck[i] <= 89){
-                            tendency_luck_to_be_choose.push(tendency_luck[i]*10 + i);
-                        }
-                    }
-                }
-                tendency_luck_to_be_choose.sort();
+                tendency_luck_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_luck_to_be_choose.length,n < 3; ++n){
-                    var days_index_to_be_choose = tendency_luck_to_be_choose[tendency_luck_to_be_choose.length - n - 1]%10;
+                    var days_index_to_be_choose = tendency_luck_to_be_choose[tendency_luck_to_be_choose.length - n - 1]%100;
                     time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
                     date_to_be_choose = new Date(time_to_be_choose);
                     date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
-                    if(days == 10){
+                    if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
                         break;
                     }
                 }
@@ -1198,23 +1170,16 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                 var tendency_meet_friend_to_be_choose = [];
                 for(i = 0; i < tendency_meet_friend.length; ++i){
                     if(tendency_meet_friend[i] >= 90 && tendency_meet_friend[i] <= 98){
-                        tendency_meet_friend_to_be_choose.push(tendency_meet_friend[i]*10 + i);
+                        tendency_meet_friend_to_be_choose.push(tendency_meet_friend[i]*100 + i);
                     }
                 }
-                if(!tendency_meet_friend_to_be_choose){
-                    for(i = 0; i < tendency_meet_friend.length; ++i){
-                        if(tendency_meet_friend[i] >= 80 && tendency_meet_friend[i] <= 89){
-                            tendency_meet_friend_to_be_choose.push(tendency_meet_friend[i]*10 + i);
-                        }
-                    }
-                }
-                tendency_meet_friend_to_be_choose.sort();
+                tendency_meet_friend_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_meet_friend_to_be_choose.length,n < 3; ++n){
-                    var days_index_to_be_choose = tendency_meet_friend_to_be_choose[tendency_meet_friend_to_be_choose.length - n - 1]%10;
+                    var days_index_to_be_choose = tendency_meet_friend_to_be_choose[tendency_meet_friend_to_be_choose.length - n - 1]%100;
                     time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
                     date_to_be_choose = new Date(time_to_be_choose);
                     date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
-                    if(days == 10){
+                    if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
                         break;
                     }
                 }
@@ -1228,23 +1193,16 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                 var tendency_trip_to_be_choose = [];
                 for(i = 0; i < tendency_trip.length; ++i){
                     if(tendency_trip[i] >= 90 && tendency_trip[i] <= 98){
-                        tendency_trip_to_be_choose.push(tendency_trip[i]*10 + i);
+                        tendency_trip_to_be_choose.push(tendency_trip[i]*100 + i);
                     }
                 }
-                if(!tendency_trip_to_be_choose){
-                    for(i = 0; i < tendency_trip.length; ++i){
-                        if(tendency_trip[i] >= 80 && tendency_trip[i] <= 89){
-                            tendency_trip_to_be_choose.push(tendency_trip[i]*10 + i);
-                        }
-                    }
-            }
-                tendency_trip_to_be_choose.sort();
+                tendency_trip_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_trip_to_be_choose.length,n < 3; ++n){
-                    var days_index_to_be_choose = tendency_trip_to_be_choose[tendency_trip_to_be_choose.length - n - 1]%10;
+                    var days_index_to_be_choose = tendency_trip_to_be_choose[tendency_trip_to_be_choose.length - n - 1]%100;
                     time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
                     date_to_be_choose = new Date(time_to_be_choose);
                     date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
-                    if(days == 10){
+                    if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
                         break;
                     }
                 }
