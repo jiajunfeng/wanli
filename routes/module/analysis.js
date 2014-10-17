@@ -1055,10 +1055,11 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
             days = 10;
         }else if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_THIRTY){
             days = 30;
-        }else if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_THIRTY){
+        }else if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_NINETY){
             days = 90;
         }
-        var date = "";
+        var date = [];
+        var time_to_be_choose;
         switch (select_date_type) {
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_DO_SOMETHING:
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_MOVING:
@@ -1085,18 +1086,20 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                         }
                     }
                 }
-                var days_index_to_be_choose = tendency_work_to_be_choose.length ? tendency_work_to_be_choose[0] : 5;
-                if(tendency_energy_to_be_choose.length){
-                    tendency_energy_to_be_choose.sort();
-                    days_index_to_be_choose = tendency_energy_to_be_choose[tendency_energy_to_be_choose.length -1]%10;
+                tendency_energy_to_be_choose.sort();
+                for(var n = 0; n < tendency_energy_to_be_choose.length,n < 3; ++n){
+                    var days_index_to_be_choose = tendency_energy_to_be_choose[tendency_energy_to_be_choose.length - n - 1]%10;
+                    time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                    date_to_be_choose = new Date(time_to_be_choose);
+                    date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
+                    if(days == 10){
+                        break;
+                    }
                 }
                 console.log(tendency_work);
                 console.log(tendency_luck);
                 console.log(tendency_energy);
                 console.log(days_index_to_be_choose);
-                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
-                var date_to_be_choose = new Date(time_to_be_choose);
-                date = date_to_be_choose.toLocaleDateString();
                 break;
             }
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_WEALTH:
@@ -1119,10 +1122,15 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     }
                 }
                 tendency_wealth_to_be_choose.sort();
-                var days_index_to_be_choose = tendency_wealth_to_be_choose.length ? tendency_wealth_to_be_choose[tendency_wealth_to_be_choose.length - 1] % 10: 5;
-                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
-                var date_to_be_choose = new Date(time_to_be_choose);
-                date = date_to_be_choose.toLocaleDateString();
+                for(var n = 0; n < tendency_wealth_to_be_choose.length,n < 3; ++n){
+                    var days_index_to_be_choose = tendency_wealth_to_be_choose[tendency_wealth_to_be_choose.length - n - 1]%10;
+                    time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                    date_to_be_choose = new Date(time_to_be_choose);
+                    date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
+                    if(days == 10){
+                        break;
+                    }
+                }
                 break;
             }
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_DATE:
@@ -1143,10 +1151,15 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     }
                 }
                 tendency_peach_to_be_choose.sort();
-                var days_index_to_be_choose = tendency_peach_to_be_choose.length ? tendency_peach_to_be_choose[tendency_peach_to_be_choose.length - 1]  % 10: 5;
-                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
-                var date_to_be_choose = new Date(time_to_be_choose);
-                date = date_to_be_choose.toLocaleDateString();
+                for(var n = 0; n < tendency_peach_to_be_choose.length,n < 3; ++n){
+                    var days_index_to_be_choose = tendency_peach_to_be_choose[tendency_peach_to_be_choose.length - n - 1]%10;
+                    time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                    date_to_be_choose = new Date(time_to_be_choose);
+                    date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
+                    if(days == 10){
+                        break;
+                    }
+                }
                 break;
             }
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_TALKING_SOMETHING:
@@ -1167,10 +1180,15 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     }
                 }
                 tendency_luck_to_be_choose.sort();
-                var days_index_to_be_choose = tendency_luck_to_be_choose.length ? tendency_luck_to_be_choose[tendency_luck_to_be_choose.length - 1]  % 10: 5;
-                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
-                var date_to_be_choose = new Date(time_to_be_choose);
-                date = date_to_be_choose.toLocaleDateString();
+                for(var n = 0; n < tendency_luck_to_be_choose.length,n < 3; ++n){
+                    var days_index_to_be_choose = tendency_luck_to_be_choose[tendency_luck_to_be_choose.length - n - 1]%10;
+                    time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                    date_to_be_choose = new Date(time_to_be_choose);
+                    date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
+                    if(days == 10){
+                        break;
+                    }
+                }
                 break;
             }
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_MEET_FRIEND:
@@ -1191,10 +1209,15 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     }
                 }
                 tendency_meet_friend_to_be_choose.sort();
-                var days_index_to_be_choose = tendency_meet_friend_to_be_choose.length ? tendency_meet_friend_to_be_choose[tendency_meet_friend_to_be_choose.length - 1]  % 10: 5;
-                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
-                var date_to_be_choose = new Date(time_to_be_choose);
-                date = date_to_be_choose.toLocaleDateString();
+                for(var n = 0; n < tendency_meet_friend_to_be_choose.length,n < 3; ++n){
+                    var days_index_to_be_choose = tendency_meet_friend_to_be_choose[tendency_meet_friend_to_be_choose.length - n - 1]%10;
+                    time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                    date_to_be_choose = new Date(time_to_be_choose);
+                    date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
+                    if(days == 10){
+                        break;
+                    }
+                }
                 break;
             }
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_TRIP:
@@ -1214,12 +1237,17 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                             tendency_trip_to_be_choose.push(tendency_trip[i]*10 + i);
                         }
                     }
-                }
+            }
                 tendency_trip_to_be_choose.sort();
-                var days_index_to_be_choose = tendency_trip_to_be_choose.length ? tendency_trip_to_be_choose[tendency_trip_to_be_choose.length - 1]  % 10: 5;
-                var time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
-                var date_to_be_choose = new Date(time_to_be_choose);
-                date = date_to_be_choose.toLocaleDateString();
+                for(var n = 0; n < tendency_trip_to_be_choose.length,n < 3; ++n){
+                    var days_index_to_be_choose = tendency_trip_to_be_choose[tendency_trip_to_be_choose.length - n - 1]%10;
+                    time_to_be_choose = Date.now() + 1000 * 60 * 60 * 24 * days_index_to_be_choose;
+                    date_to_be_choose = new Date(time_to_be_choose);
+                    date.push("" + date_to_be_choose.getFullYear() + '/' +  (date_to_be_choose.getMonth() + 1) + '/' + date_to_be_choose.getDate());
+                    if(days == 10){
+                        break;
+                    }
+                }
                 break;
             }
         }
