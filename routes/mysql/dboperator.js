@@ -744,3 +744,35 @@ operater.addFeedback = function(uid,content,cb){
         }
     });
 };
+
+operater.addToContract = function(uid,contracts_uid,contracts_name,cb){
+    var sql = "insert contracts_table(uid,contracts_uid,contracts_name) value('" + uid + "','" + contracts_uid + "','" + contracts_name + "');";
+    console.log(sql);
+    mysqlClient.insert(sql, null, function (err) {
+        if (cb) {
+            cb.call(err);
+        }
+    });
+};
+
+operater.delFromContract = function(uid,contracts_uid,cb){
+    var sql = "delete from contracts_table where uid='" + uid + "' and contracts_uid='" + contracts_uid + "'";
+    console.log(sql);
+    mysqlClient.delete(sql, null, function (err) {
+        if (cb) {
+            cb.call(err);
+        }
+    });
+};
+
+operater.getContract = function(uid,cb){
+    var sql = "select contracts_uid,contracts_name from contracts_table where uid='" + uid + "'";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        var contracts = [];
+        for(var i = 0; i < res.length; ++i){
+            contracts.push([res[i]["contracts_uid"],res[i]["contracts_name"]]);
+        }
+        cb(err,contracts)
+    });
+};

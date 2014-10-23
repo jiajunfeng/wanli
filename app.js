@@ -23,6 +23,7 @@ var participle = require('./routes/participle.js');
 var voice_query = require('./routes/voice_query.js');
 var set_colour = require('./routes/set_colour.js');
 var feedback = require('./routes/feedback.js');
+var contacts = require('./routes/contacts.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -69,6 +70,7 @@ app.post('/participle', participle.onParticiple);
 app.post('/voice_query', voice_query.onVoiceQuery);
 app.post('/set_colour', set_colour.onSetColour);
 app.post('/feedback', feedback.onFeedback);
+app.post('/contacts', contacts.onContract);
 
 
 userManager.GetInstance();
