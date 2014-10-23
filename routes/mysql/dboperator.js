@@ -138,7 +138,7 @@ operater.getUserInfo = function(info, cb){
                 info.starNum = res[0]['starNum'];
                 info.yangSum = res[0]['yangSum'];
                 info.queNum = res[0]['queNum'];
-                info.colour = 0;
+                info.colour = res[0]['colour'];
 
                 //注册信息获取完毕，获取其他信息
                 operater.getBaseNum(info, cb);

@@ -127,9 +127,9 @@ anylysis.getLuck2 = function(uid,time_type,cb){
         else {
             var yearStar = parseInt(info["flystar"].charAt(2));
             var query_star = anylysis.getQueryStar(info,time_type);
-            var star_of_query = query_star[0];
-            var previous_star_of_query = query_star[1];
-            var previous_previous_star_of_query = query_star[2];
+            var star_of_query = query_star[0] - 1;
+            var previous_star_of_query = query_star[1] - 1;
+            var previous_previous_star_of_query = query_star[2] - 1;
             var luck_scores_class;
             var luck_scores_class_previous;
             var all_luck_scores = scores_new[0][info.sex][star_of_query];
@@ -216,9 +216,9 @@ anylysis.getWork = function(uid,time_type,cb){
         else {
             var yearStar = parseInt(info["flystar"].charAt(2));
             var query_star = anylysis.getQueryStar(info,time_type);
-            var star_of_query = query_star[0];
-            var previous_star_of_query = query_star[1];
-            var previous_previous_star_of_query = query_star[2];
+            var star_of_query = query_star[0] - 1;
+            var previous_star_of_query = query_star[1] - 1;
+            var previous_previous_star_of_query = query_star[2] - 1;
             var work_scores_class;
             var work_scores_class_previous;
             var all_work_scores = scores_new[4][info.sex][star_of_query];
@@ -293,9 +293,9 @@ anylysis.getEnergy = function(uid,time_type,cb){
         else {
             var yearStar = parseInt(info["flystar"].charAt(2));
             var query_star = anylysis.getQueryStar(info,time_type);
-            var star_of_query = query_star[0];
-            var previous_star_of_query = query_star[1];
-            var previous_previous_star_of_query = query_star[2];
+            var star_of_query = query_star[0] - 1;
+            var previous_star_of_query = query_star[1] - 1;
+            var previous_previous_star_of_query = query_star[2] - 1;
             var energy_scores_class;
             var energy_scores_class_previous;
             var all_energy_scores = scores_new[3][info.sex][star_of_query];
@@ -373,9 +373,9 @@ anylysis.getTravel = function(uid,time_type,cb){
         else {
             var yearStar = parseInt(info["flystar"].charAt(2));
             var query_star = anylysis.getQueryStar(info,time_type);
-            var star_of_query = query_star[0];
-            var previous_star_of_query = query_star[1];
-            var previous_previous_star_of_query = query_star[2];
+            var star_of_query = query_star[0] - 1;
+            var previous_star_of_query = query_star[1] - 1;
+            var previous_previous_star_of_query = query_star[2] - 1;
             var travel_scores_class;
             var travel_scores_class_previous;
             var all_travel_scores = scores_new[3][info.sex][star_of_query];
