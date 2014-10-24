@@ -78,7 +78,7 @@ anylysis.getInfo = function(uid,cb){
     info.uid = uid;
     db.getUserBaseInfo(info,function (err){
         if (err) {
-            console.log(err + " getScore");
+            console.log(err + " getInfo");
         }
         else {
             cb(info);
@@ -132,9 +132,9 @@ anylysis.getQueryStar = function(info,time_type,date){
     return [star_of_query,previous_star_of_query,previous_previous_star_of_query];
 };
 
-anylysis.getScore = function(info,time_type,score_type){
+anylysis.getScore = function(info,time_type,score_type,date){
     var yearStar = parseInt(info["flystar"].charAt(2));
-    var query_star = anylysis.getQueryStar(info,time_type,new Date());
+    var query_star = anylysis.getQueryStar(info,time_type,date);
     var star_of_query = query_star[0] - 1;
     var previous_star_of_query = query_star[1] - 1;
     var previous_previous_star_of_query = query_star[2] - 1;
@@ -166,11 +166,11 @@ anylysis.getScore = function(info,time_type,score_type){
         scores = scores_class.scores3;
         scores_previous = scores_class_previous.scores3;
     }
-    return [scores[yearStar],scores_previous[yearStar]];
+    return [scores[yearStar -1],scores_previous[yearStar-1]];
 };
 
 anylysis.getLuck2 = function(uid,time_type,score_type,cb){
-    if(1){
+    if(0){
         var info = new userInfo();
         info.uid = uid;
         db.getUserBaseInfo(info,function (err){
@@ -212,8 +212,8 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
                     scores_previous = luck_scores_class_previous.scores3;
                 }
 
-                var luck_socres = scores[yearStar];
-                var luck_socres_previous = scores_previous[yearStar];
+                var luck_socres = scores[yearStar -1];
+                var luck_socres_previous = scores_previous[yearStar -1];
                 var luck_index_rows = alteration_index[0][0];
                 var luck_index_row;
                 for(i = 0; i < luck_index_rows.length; ++i){
@@ -259,7 +259,7 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
         });
     }else{
         anylysis.getInfo(uid,function(info){
-            var scores = anylysis.getScore(info,time_type,score_type);
+            var scores = anylysis.getScore(info,time_type,score_type,new Date());
             var luck_socres = scores[0];
             var luck_socres_previous = scores[1];
             var luck_index_rows = alteration_index[0][0];
@@ -308,7 +308,7 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
 
 anylysis.getWork = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
-        var scores = anylysis.getScore(info,time_type,score_type);
+        var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var work_socres = scores[0];
         var work_socres_previous = scores[1];
         var work_index_rows = alteration_index[0][1];
@@ -376,8 +376,8 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
             var scores_previous;
             scores = energy_scores_class.scores;
             scores_previous = energy_scores_class_previous.scores;
-            var energy_socres = scores[yearStar];
-            var energy_socres_previous = scores_previous[yearStar];
+            var energy_socres = scores[yearStar -1];
+            var energy_socres_previous = scores_previous[yearStar-1];
             var energy_index_rows = alteration_index[0][2];
             var energy_index_row;
             for(i = 0; i < energy_index_rows.length; ++i){
@@ -454,8 +454,8 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
             var scores = travel_scores_class.scores;
             var scores_previous = travel_scores_class_previous.scores;
 
-            var travel_socres = scores[yearStar];
-            var travel_socres_previous = scores_previous[yearStar];
+            var travel_socres = scores[yearStar -1];
+            var travel_socres_previous = scores_previous[yearStar -1];
             var travel_index_rows = alteration_index[0][3];
             var travel_index_row;
             for(i = 0; i < travel_index_rows.length; ++i){
