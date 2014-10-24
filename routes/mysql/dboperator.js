@@ -745,6 +745,13 @@ operater.addFeedback = function(uid,content,cb){
     });
 };
 
+/**
+ * add a user to contracts
+ * @param uid
+ * @param contracts_uid
+ * @param contracts_name
+ * @param cb
+ */
 operater.addToContract = function(uid,contracts_uid,contracts_name,cb){
     var sql = "insert contracts_table(uid,contracts_uid,contracts_name) value('" + uid + "','" + contracts_uid + "','" + contracts_name + "');";
     console.log(sql);
@@ -755,6 +762,12 @@ operater.addToContract = function(uid,contracts_uid,contracts_name,cb){
     });
 };
 
+/**
+ * delete a user from contracts
+ * @param uid
+ * @param contracts_uid
+ * @param cb
+ */
 operater.delFromContract = function(uid,contracts_uid,cb){
     var sql = "delete from contracts_table where uid='" + uid + "' and contracts_uid='" + contracts_uid + "'";
     console.log(sql);
@@ -765,6 +778,11 @@ operater.delFromContract = function(uid,contracts_uid,cb){
     });
 };
 
+/**
+ * get all contracts
+ * @param uid
+ * @param cb
+ */
 operater.getContract = function(uid,cb){
     var sql = "select contracts_uid,contracts_name from contracts_table where uid='" + uid + "'";
     console.log(sql);

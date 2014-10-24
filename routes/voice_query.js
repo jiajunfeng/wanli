@@ -54,6 +54,7 @@ exports.onVoiceQuery = function(req,res){
                 console.log(answer);
                 res.end(JSON.stringify(result));
             });
+            break;
         }else if(word_match[m] == "做事"){
             find = true;
             analysis.getWork(uid,time_type,function(answer){
@@ -62,6 +63,7 @@ exports.onVoiceQuery = function(req,res){
                 console.log(answer);
                 res.end(JSON.stringify(result));
             });
+            break;
         }else if(word_match[m] == "能量"){
             find = true;
             analysis.getEnergy(uid,time_type,function(answer){
@@ -70,6 +72,7 @@ exports.onVoiceQuery = function(req,res){
                 console.log(answer);
                 res.end(JSON.stringify(result));
             });
+            break;
         }else if(word_match[m] == "旅行"){
             find = true;
             analysis.getTravel(uid,time_type,function(answer){
@@ -78,13 +81,39 @@ exports.onVoiceQuery = function(req,res){
                 console.log(answer);
                 res.end(JSON.stringify(result));
             });
+            break;
+        }else if(word_match[m] == "方向" || word_match[m] == "最好" || word_match[m] == "最顺"){
+            find = true;
+            var type = 0;
+            for(var n = 0; n < word_match.length; ++n){
+                if(word_match[m] == "运程" || word_match[m] == "逛街" || word_match[m] == "购物"){
+                    type = consts.TYPE_COMPASS.TYPE_COMPASS_LUCK;
+                    break;
+                }else if(word_match[m] == "财富" || word_match[m] == "钱财" || word_match[m] == "求财" || word_match[m] == "挣钱" || word_match[m] == "打牌"){
+                    type = consts.TYPE_COMPASS.TYPE_COMPASS_WEALTH;
+                    break;
+                }else if(word_match[m] == "能量"|| word_match[m] == "旅行" || word_match[m] == "出游"){
+                    type = consts.TYPE_COMPASS.TYPE_COMPASS_ENERGY;
+                    break;
+                }else if(word_match[m] == "桃花" || word_match[m] == "约会"){
+                    type = consts.TYPE_COMPASS.TYPE_COMPASS_PEACH;
+                    break;
+                }
+            }
+            analysis.getCompassMaxScore(uid,type,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
         }else {
 
         }
     }
     if(!find){
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,请亲换一个!";
+        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,罗盘(我这天逛街向那个方向最顺？),请亲换一个!";
         var result = { answer:answer};
         console.log(answer);
         res.end(JSON.stringify(result));

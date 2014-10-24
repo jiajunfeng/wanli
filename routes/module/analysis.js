@@ -10,6 +10,8 @@ var consts = require('../util/consts');
 var alteration_index = require('../../config/alteration_index');
 var fixation_index = require('../../config/fixation_index');
 var scores_new = require('../../config/scores_new');
+var compass_fly_star = require('../../config/compass_fly_star');
+var compass = require('../../config/compass');
 
 anylysis.getLuck = function(uid,time_type,cb){
     var info = new userInfo();
@@ -428,6 +430,58 @@ anylysis.getTravel = function(uid,time_type,cb){
             else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
                 answer += travel_index_row.last_level_describe[last_level_describe_index];
             }
+            cb(answer);
+        }
+    });
+};
+
+anylysis.getCompassMaxScore = function(uid,type,cb){
+    var info = new userInfo();
+    info.uid = uid;
+    db.getUserBaseInfo(info,function (err){
+        if (err) {
+            console.log(err + "getLuckCompass");
+        }
+        else {
+            var yearStar = parseInt(info["flystar"].charAt(2));
+            info.sjIndex = user.getWx(new Date());
+            info.scwxNum = user.getScwxNum(info);
+            info.fxscore = user.getFxScore(info,true);
+            info.bwxNum = user.getWxNum(info, 2);
+            info.flyStarWx = user.getFlyStarWx(info);
+            var curDate = new Date();
+            var hourStar = user.getClockStar(curDate);
+            var dayStar = user.getDayStar(curDate);
+            var compass_fly_star_row = compass_fly_star[0][info.sex][dayStar -1][hourStar -1];
+            var compass_fly_star_scores = [];
+            var luck_compass_scores = compass[type][info.sex][yearStar -1];
+            //  fix luck_compass_scores
+            for(var m = 0; m < luck_compass_scores[1].scores.length; ++m){
+                if(!(m % 2)){
+                    luck_compass_scores[1].scores[m] = luck_compass_scores[1].scores[m]*10%10;
+                }
+            }
+            for(var i = 1; i < compass_fly_star_row.scores.length; ++i){
+                compass_fly_star_scores.push([compass_fly_star_row.scores[i], compass_fly_star_row.scores[++i]]);
+            }
+            var scores = [];
+            for(var j = 0; j < compass_fly_star_scores.length; ++j){
+                for(var k = 1; k < luck_compass_scores.length; ++k){
+                    if(compass_fly_star_scores[j][0] == luck_compass_scores[k].scores[0]){
+                        scores.push(luck_compass_scores[k].scores[j*2 + 1]);
+                    }
+                }
+            }
+            // sort scores
+            console.log("%j",scores);
+            for(var l = 0; l < scores.length; ++l){
+                scores[l] = scores[l]*100 + l;
+            }
+            scores.sort();
+            var index = scores[scores.length-1]%100;
+            var directions = ["正南","东南","正东","东北","正北","西北","正西","西南"];
+            var direction = directions[index-1];
+            var answer = direction + "," + ( scores[scores.length-1] - index ) / 100 + "分";
             cb(answer);
         }
     });
