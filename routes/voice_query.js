@@ -48,7 +48,7 @@ exports.onVoiceQuery = function(req,res){
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "运程"){
             find = true;
-            analysis.getLuck2(uid,time_type,function(answer){
+            analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
@@ -57,7 +57,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else if(word_match[m] == "做事"){
             find = true;
-            analysis.getWork(uid,time_type,function(answer){
+            analysis.getWork(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WORK,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
@@ -66,7 +66,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else if(word_match[m] == "能量"){
             find = true;
-            analysis.getEnergy(uid,time_type,function(answer){
+            analysis.getEnergy(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
@@ -75,7 +75,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else if(word_match[m] == "旅行"){
             find = true;
-            analysis.getTravel(uid,time_type,function(answer){
+            analysis.getTravel(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
