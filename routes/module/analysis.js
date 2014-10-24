@@ -169,6 +169,29 @@ anylysis.getScore = function(info,time_type,score_type,date){
     return [scores[yearStar -1],scores_previous[yearStar-1]];
 };
 
+anylysis.getTendency = function(info,time_type,score_type){
+    var time_interval = 0;
+    if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+        time_interval = 1000 * 60 * 60 * 24;
+    }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+        time_interval = 1000 * 60 * 60 * 24 * 30 ;
+    }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+        time_interval = 1000 * 60 * 60 * 24 * 365;
+    }
+    else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+        time_interval = 1000 * 60 * 60;
+    }
+    var tendency = [];
+    for(var i = -4; i < 5; ++i){
+        var time = Date.now();
+        time += i * time_interval;
+        var time_tmp = new Date(time);
+        var scores = anylysis.getScore(info,time_type,score_type,time_tmp);
+        tendency.push(scores[0]);
+    }
+    return tendency;
+};
+
 anylysis.getLuck2 = function(uid,time_type,score_type,cb){
     if(0){
         var info = new userInfo();
@@ -243,7 +266,6 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
                 var answer = luck_socres + "分," +  luck_index_row.level + ".";
                 if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
                     answer += luck_index_row.today_last_level_describe[last_level_describe_index];
-                    answer += "想看看今日运程趋势图么?";
                 }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
                     answer += luck_index_row.month_last_level_describe[last_level_describe_index];
                 }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
@@ -251,9 +273,7 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
                 }
                 else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
                     answer += luck_index_row.now_last_level_describe[last_level_describe_index];
-                    answer += "想看看今日运程趋势图么?";
                 }
-
                 cb(answer);
             }
         });
@@ -291,7 +311,6 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
             var answer = luck_socres + "分," +  luck_index_row.level + ".";
             if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
                 answer += luck_index_row.today_last_level_describe[last_level_describe_index];
-                answer += "想看看今日运程趋势图么?";
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
                 answer += luck_index_row.month_last_level_describe[last_level_describe_index];
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
@@ -299,8 +318,9 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
             }
             else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
                 answer += luck_index_row.now_last_level_describe[last_level_describe_index];
-                answer += "想看看今日运程趋势图么?";
             }
+            var tendency = anylysis.getTendency(info,time_type,score_type);
+            console.log("%j",tendency);
             cb(answer);
         });
     }
@@ -329,7 +349,6 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
         var answer = work_index_row.level + ",";
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer += work_index_row.last_level_describe[last_level_describe_index];
-            answer += "想看看今日做事趋势图么?";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
             answer += work_index_row.last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
@@ -337,8 +356,9 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
             answer += work_index_row.last_level_describe[last_level_describe_index];
-            answer += "想看看今日做事趋势图么?";
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
         cb(answer);
     });
 };
@@ -407,7 +427,6 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
             var answer = energy_socres + "分," +  energy_index_row.level + ".";
             if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
                 answer += energy_index_row.today_last_level_describe[last_level_describe_index];
-                answer += "想看看今日能量趋势图么?";
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
                 answer += energy_index_row.month_last_level_describe[last_level_describe_index];
             }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
@@ -415,7 +434,6 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
             }
             else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
                 answer += energy_index_row.now_last_level_describe[last_level_describe_index];
-                answer += "想看看今日能量趋势图么?";
             }
             cb(answer);
         }
