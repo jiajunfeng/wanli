@@ -48,12 +48,17 @@ exports.onVoiceQuery = function(req,res){
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "运程"){
             find = true;
-            analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
-                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                var result = { answer:answer};
-                console.log(answer);
-                res.end(JSON.stringify(result));
-            });
+            try{
+                analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
+                    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                    var result = { answer:answer};
+                    console.log(answer);
+                    res.end(JSON.stringify(result));
+                });
+            }
+            catch(e){
+                console.log(e.name  + ":" +  e.message);
+            }
             break;
         }else if(word_match[m] == "做事"){
             find = true;
@@ -82,7 +87,115 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "方向" || word_match[m] == "最好" || word_match[m] == "最顺"){
+        }else if(word_match[m] == "健康" || word_match[m] == "身体"){
+            find = true;
+            analysis.getHealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "财富" || word_match[m] == "钱财"){
+            find = true;
+            analysis.getWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "败财" || word_match[m] == "破财"){
+            find = true;
+            analysis.getWealthLose(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LOST_WEALTH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "逛街" || word_match[m] == "购物"){
+            find = true;
+            analysis.getShopping(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LOST_WEALTH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "学业" || word_match[m] == "学习" || word_match[m] == "考试"){
+            find = true;
+            analysis.getStudy(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "事业" || word_match[m] == "工作"){
+            find = true;
+            analysis.getCareer(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "求财" || word_match[m] == "挣钱" || word_match[m] == "谈事"){
+            find = true;
+            analysis.getPrayForWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "情感" || word_match[m] == "约会" || word_match[m] == "情绪" ){
+            find = true;
+            analysis.getEmotion(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "会友" || word_match[m] == "朋友" ){
+            find = true;
+            analysis.getConfrere(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "情变" || word_match[m] == "感情" ){
+            find = true;
+            analysis.getFeeling(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "桃花" || word_match[m] == "动情" ){
+            find = true;
+            analysis.getPeach(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "追求" || word_match[m] == "约会" ){
+            find = true;
+            analysis.getChase(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else if(word_match[m] == "方向" || word_match[m] == "位置"){
             find = true;
             var type = 0;
             for(var n = 0; n < word_match.length; ++n){
@@ -113,7 +226,7 @@ exports.onVoiceQuery = function(req,res){
     }
     if(!find){
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,罗盘(我这天逛街向那个方向最顺？),请亲换一个!";
+        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,健康,财富,败财,逛街,学业,事业,求财,情感,会友,情变,桃花,追求,罗盘(我这天逛街向那个方向最顺),请亲换一个!";
         var result = { answer:answer};
         console.log(answer);
         res.end(JSON.stringify(result));
