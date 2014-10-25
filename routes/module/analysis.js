@@ -154,6 +154,10 @@ anylysis.getScore = function(info,time_type,score_type,date){
             break;
         }
     }
+    if(!scores_class || !scores_class_previous){
+        console.log("scores_class or scores_class_previous is null");
+        return [85,85];
+    }
     var scores;
     var scores_previous;
     if(0 == info.flyStarWx){

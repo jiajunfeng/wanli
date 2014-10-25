@@ -12,7 +12,7 @@ exports.onVoiceQuery = function(req,res){
     var uid = parseInt(req.body["uid"]);
     var voice_content = req.body["voice_content"];
     var version = req.body["version"];
-
+    console.log("onVoiceQuery uid=%d",uid);
     var word_list = segment.cutSync(voice_content);
     // just for tutorial, this is always be true
     if (word_list.constructor == Array)
