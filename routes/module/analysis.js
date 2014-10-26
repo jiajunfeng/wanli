@@ -140,15 +140,15 @@ anylysis.getScore = function(info,time_type,score_type,date){
     var previous_previous_star_of_query = query_star[2];
     var scores_class;
     var scores_class_previous;
-    if(star_of_query < 0 || star_of_query > 8){
+    if(star_of_query < 0 || star_of_query > 9){
         console.log("star_of_query value is invalid");
         star_of_query = 1;
     }
-    if(previous_star_of_query < 0 || previous_star_of_query > 8){
+    if(previous_star_of_query < 0 || previous_star_of_query > 9){
         console.log("previous_star_of_query value is invalid");
         previous_star_of_query = 1;
     }
-    if(previous_previous_star_of_query < 0 || previous_previous_star_of_query > 8){
+    if(previous_previous_star_of_query < 0 || previous_previous_star_of_query > 9){
         console.log("previous_previous_star_of_query value is invalid");
         previous_previous_star_of_query = 1;
     }
