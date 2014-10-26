@@ -259,19 +259,22 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
         }else if(luck_socres_previous >= 0 && luck_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = luck_socres + "分," +  luck_index_row.level + ".";
+        var answer = {};
+        answer.score = luck_socres;
+        answer.level = luck_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += luck_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += luck_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += luck_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += luck_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row.now_last_level_describe[last_level_describe_index];
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -301,19 +304,21 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
         }else if(work_socres_previous == "不宜"){
             last_level_describe_index = 2;
         }
-        var answer = work_index_row.level + ",";
+        var answer = {};
+        answer.level = work_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -349,17 +354,22 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
         }else if(energy_socres_previous >= 0 && energy_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = energy_socres + "分," +  energy_index_row.level + ".";
+        var answer = {};
+        answer.score = energy_socres;
+        answer.level = energy_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += energy_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += energy_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += energy_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += energy_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -389,17 +399,21 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
         }else if(travel_index_row.level == "不宜"){
             last_level_describe_index = 2;
         }
-        var answer = travel_index_row.level + ",";
+        var answer = {};
+        answer.level = travel_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -435,17 +449,22 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
         }else if(health_socres_previous >= 0 && health_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = health_socres + "分," +  health_index_row.level + ".";
+        var answer = {};
+        answer.score = health_socres;
+        answer.level = health_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += health_index_row.today_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += health_index_row.month_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += health_index_row.year_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += health_index_row.now_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -481,17 +500,22 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
         }else if(wealth_socres_previous >= 0 && wealth_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = wealth_socres + "分," +  wealth_index_row.level + ".";
+        var answer = {};
+        answer.score = wealth_socres;
+        answer.level = wealth_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += wealth_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += wealth_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += wealth_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += wealth_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -527,17 +551,22 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
         }else if(wealth_lose_socres_previous >= 0 && wealth_lose_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = wealth_lose_socres + "分," +  wealth_lose_index_row.level + ".";
+        var answer = {};
+        answer.score = wealth_lose_socres;
+        answer.level = wealth_lose_index_row.level + ".";
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += wealth_lose_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += wealth_lose_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += wealth_lose_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += wealth_lose_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -567,12 +596,17 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
         }else if(shopping_socres_previous >= 0 && shopping_socres_previous < 59){
             last_level_describe_index = 2;
         }
-        var answer = shopping_socres + "分," +  shopping_index_row.level + ".";
+        var answer = {};
+        answer.score = shopping_socres;
+        answer.level = shopping_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += shopping_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = shopping_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += shopping_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = shopping_index_row.month_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -608,17 +642,22 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
         }else if(study_socres_previous >= 0 && study_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = study_socres + "分," +  study_index_row.level + ".";
+        var answer = {};
+        answer.score = study_socres;
+        answer.level = study_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += study_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += study_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += study_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += study_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -654,17 +693,22 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
         }else if(career_socres_previous >= 0 && career_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = career_socres + "分," +  career_index_row.level + ".";
+        var answer = {};
+        answer.score = career_socres;
+        answer.level = career_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += career_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += career_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += career_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += career_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -694,10 +738,15 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
         }else if(pray_for_wealth_socres_previous >= 0 && pray_for_wealth_socres_previous < 59){
             last_level_describe_index = 2;
         }
-        var answer = pray_for_wealth_socres + "分," +  pray_for_wealth_index_row.level + ".";
+        var answer = {};
+        answer.score = pray_for_wealth_socres;
+        answer.level = pray_for_wealth_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc =  pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -733,17 +782,22 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
         }else if(emotion_socres_previous >= 0 && emotion_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = emotion_socres + "分," +  emotion_index_row.level + ".";
+        var answer = {};
+        answer.score = emotion_socres;
+        answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += emotion_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += emotion_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += emotion_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -779,10 +833,15 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
         }else if(emotion_socres_previous >= 0 && emotion_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = emotion_socres + "分," +  emotion_index_row.level + ".";
+        var answer = {};
+        answer.score = emotion_socres;
+        answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -818,17 +877,22 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
         }else if(emotion_socres_previous >= 0 && emotion_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = emotion_socres + "分," +  emotion_index_row.level + ".";
+        var answer = {};
+        answer.score = emotion_socres;
+        answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += emotion_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += emotion_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += emotion_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -864,17 +928,22 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
         }else if(emotion_socres_previous >= 0 && emotion_socres_previous < 28){
             last_level_describe_index = 5;
         }
-        var answer = emotion_socres + "分," +  emotion_index_row.level + ".";
+        var answer = {};
+        answer.score = emotion_socres;
+        answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer += emotion_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.month_last_level_describe[last_level_describe_index];
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer += emotion_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.year_last_level_describe[last_level_describe_index];
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer += emotion_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row.now_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
@@ -904,10 +973,15 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
         }else if(pray_for_wealth_socres_previous >= 0 && pray_for_wealth_socres_previous < 59){
             last_level_describe_index = 2;
         }
-        var answer = pray_for_wealth_socres + "分," +  pray_for_wealth_index_row.level + ".";
+        var answer = {};
+        answer.score = pray_for_wealth_socres;
+        answer.level = pray_for_wealth_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer += pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
         }
+        var tendency = anylysis.getTendency(info,time_type,score_type);
+        console.log("%j",tendency);
+        answer.tendency = tendency;
         cb(answer);
     });
 };
