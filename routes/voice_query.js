@@ -32,6 +32,7 @@ exports.onVoiceQuery = function(req,res){
             }
         }
     });
+    var is_futher_time = false;
     var time_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "今天" || word_match[m] == "今日"|| word_match[m] == "本日"|| word_match[m] == "当日"){
@@ -42,6 +43,19 @@ exports.onVoiceQuery = function(req,res){
             time_type = consts.TYPE_TIME.TYPE_TIME_THIS_YEAR;
         }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时"){
             time_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
+        }
+    }
+    var futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_TIME_TODAY;
+    for(var m = 0; m < word_match.length; ++m){
+        if(word_match[m] == "哪天" || word_match[m] == "那日"){
+            futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_TODAY;
+            is_futher_time = true;
+        }else if(word_match[m] == "哪月" || word_match[m] == "那月"){
+            futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_MONTH;
+            is_futher_time = true;
+        }else if(word_match[m] == "哪年" || word_match[m] == "那年"){
+            futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_YEAR;
+            is_futher_time = true;
         }
     }
     var find = false;

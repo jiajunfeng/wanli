@@ -8,6 +8,11 @@ module.exports = {
         TYPE_TIME_THIS_YEAR:2,
         TYPE_TIME_HOUR:3
     },
+    TYPE_FUTURE_TIME:{
+        TYPE_FUTURE_TIME_TODAY :0,
+        TYPE_FUTURE_TIME_MONTH :1,
+        TYPE_FUTURE_TIME_YEAR:2
+    },
     TYPE_COMPASS:{
         TYPE_COMPASS_ENERGY:0,
         TYPE_COMPASS_WEALTH:1,

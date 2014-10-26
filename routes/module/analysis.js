@@ -135,9 +135,9 @@ anylysis.getQueryStar = function(info,time_type,date){
 anylysis.getScore = function(info,time_type,score_type,date){
     var yearStar = parseInt(info["flystar"].charAt(2));
     var query_star = anylysis.getQueryStar(info,time_type,date);
-    var star_of_query = query_star[0] - 1;
-    var previous_star_of_query = query_star[1] - 1;
-    var previous_previous_star_of_query = query_star[2] - 1;
+    var star_of_query = query_star[0] ;
+    var previous_star_of_query = query_star[1] ;
+    var previous_previous_star_of_query = query_star[2];
     var scores_class;
     var scores_class_previous;
     if(star_of_query < 0 || star_of_query > 8){
@@ -152,16 +152,16 @@ anylysis.getScore = function(info,time_type,score_type,date){
         console.log("previous_previous_star_of_query value is invalid");
         previous_previous_star_of_query = 1;
     }
-    var all_scores = scores_new[score_type][info.sex][star_of_query];
+    var all_scores = scores_new[score_type][info.sex][star_of_query - 1];
     for(var i = 0; i < all_scores.length; ++i){
-        if(all_scores[i].beforstar == previous_star_of_query){
+        if(all_scores[i].beforstar == previous_star_of_query - 1){
             scores_class = all_scores[i];
             break;
         }
     }
-    var all_scores_previous = scores_new[score_type][info.sex][previous_previous_star_of_query];
+    var all_scores_previous = scores_new[score_type][info.sex][previous_previous_star_of_query - 1];
     for(i = 0; i < all_scores_previous.length; ++i){
-        if(all_scores_previous[i].beforstar == previous_star_of_query){
+        if(all_scores_previous[i].beforstar == previous_star_of_query - 1){
             scores_class_previous = all_scores_previous[i];
             break;
         }
