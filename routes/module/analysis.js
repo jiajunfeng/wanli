@@ -13,6 +13,8 @@ var scores_new = require('../../config/scores_new');
 var compass_fly_star = require('../../config/compass_fly_star');
 var compass = require('../../config/compass');
 
+var directions = ["正南","东南","正东","东北","正北","西北","正西","西南"];
+
 anylysis.getLuck = function(uid,time_type,cb){
     var info = new userInfo();
     info.uid = uid;
@@ -897,7 +899,78 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
     });
 };
 
-anylysis.getCompassMaxScore = function(uid,type,cb){
+anylysis.getCompassText = function(type,score){
+    var text;
+    switch (type){
+        case consts.TYPE_COMPASS.TYPE_COMPASS_ENERGY:{
+            if(score > 90 && score <= 98){
+                text = "超高";
+            }else if(score > 80 && score <= 89){
+                text = "高";
+            }else if(score > 60 && score <= 79){
+                text = "中等";
+            }else if(score > 45 && score <= 59){
+                text = "较低";
+            }else if(score > 29 && score <= 44){
+                text = "很低";
+            }else if(score > 0 && score <= 28){
+                text = "最低";
+            }
+            break;
+        }
+        case consts.TYPE_COMPASS.TYPE_COMPASS_WEALTH:{
+            if(score > 90 && score <= 98){
+                text = "滚滚";
+            }else if(score > 80 && score <= 89){
+                text = "大利";
+            }else if(score > 60 && score <= 79){
+                text = "中等";
+            }else if(score > 45 && score <= 59){
+                text = "小损";
+            }else if(score > 29 && score <= 44){
+                text = "破财";
+            }else if(score > 0 && score <= 28){
+                text = "崩盘";
+            }
+            break;
+        }
+        case consts.TYPE_COMPASS.TYPE_COMPASS_LUCK:{
+            if(score > 90 && score <= 98){
+                text = "大顺";
+            }else if(score > 80 && score <= 89){
+                text = "顺";
+            }else if(score > 60 && score <= 79){
+                text = "一般";
+            }else if(score > 45 && score <= 59){
+                text = "不顺";
+            }else if(score > 29 && score <= 44){
+                text = "堵塞";
+            }else if(score > 0 && score <= 28){
+                text = "崩溃";
+            }
+            break;
+        }
+        case consts.TYPE_COMPASS.TYPE_COMPASS_PEACH:{
+            if(score > 90 && score <= 98){
+                text = "大旺";
+            }else if(score > 80 && score <= 89){
+                text = "旺";
+            }else if(score > 60 && score <= 79){
+                text = "中等";
+            }else if(score > 45 && score <= 59){
+                text = "凋谢";
+            }else if(score > 29 && score <= 44){
+                text = "残破";
+            }else if(score > 0 && score <= 28){
+                text = "落败";
+            }
+            break;
+        }
+    }
+    return text;
+};
+
+anylysis.getCompassScore = function(uid,type,cb){
     anylysis.getInfo(uid,function(info){
         var yearStar = parseInt(info["flystar"].charAt(2));
         info.sjIndex = user.getWx(new Date());
@@ -925,19 +998,39 @@ anylysis.getCompassMaxScore = function(uid,type,cb){
             for(var k = 1; k < luck_compass_scores.length; ++k){
                 if(compass_fly_star_scores[j][0] == luck_compass_scores[k].scores[0]){
                     scores.push(luck_compass_scores[k].scores[j*2 + 1]);
+                    break;
                 }
             }
         }
-        // sort scores
         console.log("%j",scores);
+        cb(scores);
+    });
+};
+
+anylysis.getCompassMax = function(uid,type,cb){
+    anylysis.getCompassScore(uid,type,function(scores){
+        // sort scores
         for(var l = 0; l < scores.length; ++l){
             scores[l] = scores[l]*100 + l;
         }
         scores.sort();
         var index = scores[scores.length-1]%100;
-        var directions = ["正南","东南","正东","东北","正北","西北","正西","西南"];
         var direction = directions[index-1];
-        var answer = direction + "," + ( scores[scores.length-1] - index ) / 100 + "分";
+        var score = ( scores[scores.length-1] - index ) / 100;
+        var text = anylysis.getCompassText(type,score);
+        var answer = direction + "," + score + "分," + text;
+        cb(answer);
+        console.log("%j",answer);
+    });
+};
+
+anylysis.getCompass = function(uid,type,cb){
+    anylysis.getCompassScore(uid,type,function(scores){
+        var answer = [];
+        for(var i = 0; i < scores.length; ++i){
+            answer.push({"score":scores[i],"direction":directions[i],"text":anylysis.getCompassText(type,scores[i])});
+        }
+        console.log("%j",answer);
         cb(answer);
     });
 };
