@@ -154,14 +154,14 @@ anylysis.getScore = function(info,time_type,score_type,date){
     }
     var all_scores = scores_new[score_type][info.sex][star_of_query - 1];
     for(var i = 0; i < all_scores.length; ++i){
-        if(all_scores[i].beforstar == previous_star_of_query - 1){
+        if(all_scores[i].beforstar == previous_star_of_query){
             scores_class = all_scores[i];
             break;
         }
     }
     var all_scores_previous = scores_new[score_type][info.sex][previous_previous_star_of_query - 1];
     for(i = 0; i < all_scores_previous.length; ++i){
-        if(all_scores_previous[i].beforstar == previous_star_of_query - 1){
+        if(all_scores_previous[i].beforstar == previous_star_of_query){
             scores_class_previous = all_scores_previous[i];
             break;
         }
