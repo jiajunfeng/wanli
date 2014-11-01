@@ -239,7 +239,7 @@ exports.onVoiceQuery = function(req,res){
     }
     if(!find){
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,健康,财富,败财,逛街,学业,事业,求财,情感,会友,情变,桃花,追求,罗盘(我这天逛街向那个方向最顺),请亲换一个!";
+        var answer = "此问题暂不支持查询,目前仅支持运程,做事,能量,旅行,健康,财富,败财,逛街,学业,事业,求财,情感,会友,情变,桃花,追求,请亲换一个!";
         var result = { answer:answer};
         console.log(answer);
         res.end(JSON.stringify(result));

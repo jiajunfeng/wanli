@@ -1071,10 +1071,14 @@ anylysis.getCompassScore = function(uid,type,cb){
         var compass_fly_star_row = compass_fly_star[0][info.sex][dayStar -1][hourStar -1];
         var compass_fly_star_scores = [];
         var luck_compass_scores = compass[type][info.sex][yearStar -1];
+
         //  fix luck_compass_scores
         for(var m = 0; m < luck_compass_scores[1].scores.length; ++m){
             if(!(m % 2)){
-                luck_compass_scores[1].scores[m] = luck_compass_scores[1].scores[m]*10%10;
+                var string_tmp = luck_compass_scores[1].scores[m].toString();
+                if(string_tmp.length > 1){
+                    luck_compass_scores[1].scores[m] = luck_compass_scores[1].scores[m]*10%10;
+                }
             }
         }
         for(var i = 1; i < compass_fly_star_row.scores.length; ++i){
@@ -1085,6 +1089,7 @@ anylysis.getCompassScore = function(uid,type,cb){
             for(var k = 1; k < luck_compass_scores.length; ++k){
                 if(compass_fly_star_scores[j][0] == luck_compass_scores[k].scores[0]){
                     scores.push(luck_compass_scores[k].scores[j*2 + 1]);
+                    console.log("loop " +j);
                     break;
                 }
             }
@@ -1114,6 +1119,7 @@ anylysis.getCompassMax = function(uid,type,cb){
 anylysis.getCompass = function(uid,type,cb){
     anylysis.getCompassScore(uid,type,function(scores){
         var answer = [];
+        console.log(scores.length);
         for(var i = 0; i < scores.length; ++i){
             answer.push({"score":scores[i],"direction":directions[i],"text":anylysis.getCompassText(type,scores[i])});
         }
