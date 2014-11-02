@@ -205,7 +205,7 @@ anylysis.getTendency = function(info,time_type,score_type){
         time_interval = 1000 * 60 * 60;
     }
     var tendency = [];
-    for(var i = -4; i < 5; ++i){
+    for(var i = -2; i < 6; ++i){
         var time = Date.now();
         time += i * time_interval;
         var time_tmp = new Date(time);
@@ -260,7 +260,7 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = luck_socres;
+        answer.score = luck_socres + "分.";
         answer.level = luck_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = luck_index_row.today_last_level_describe[last_level_describe_index];
@@ -355,7 +355,7 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = energy_socres;
+        answer.score = energy_socres + "分.";
         answer.level = energy_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = energy_index_row.today_last_level_describe[last_level_describe_index];
@@ -450,7 +450,7 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = health_socres;
+        answer.score = health_socres; + "分."
         answer.level = health_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.level = health_index_row.today_last_level_describe[last_level_describe_index];
@@ -501,7 +501,7 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = wealth_socres;
+        answer.score = wealth_socres + "分.";
         answer.level = wealth_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = wealth_index_row.today_last_level_describe[last_level_describe_index];
@@ -552,7 +552,7 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = wealth_lose_socres;
+        answer.score = wealth_lose_socres + "分.";
         answer.level = wealth_lose_index_row.level + ".";
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = wealth_lose_index_row.today_last_level_describe[last_level_describe_index];
@@ -597,7 +597,7 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
             last_level_describe_index = 2;
         }
         var answer = {};
-        answer.score = shopping_socres;
+        answer.score = shopping_socres + "分.";
         answer.level = shopping_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = shopping_index_row.today_last_level_describe[last_level_describe_index];
@@ -643,7 +643,7 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = study_socres;
+        answer.score = study_socres + "分.";
         answer.level = study_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = study_index_row.today_last_level_describe[last_level_describe_index];
@@ -694,7 +694,7 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = career_socres;
+        answer.score = career_socres + "分.";
         answer.level = career_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = career_index_row.today_last_level_describe[last_level_describe_index];
@@ -739,7 +739,7 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
             last_level_describe_index = 2;
         }
         var answer = {};
-        answer.score = pray_for_wealth_socres;
+        answer.score = pray_for_wealth_socres + "分.";
         answer.level = pray_for_wealth_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc =  pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
@@ -783,7 +783,7 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = emotion_socres;
+        answer.score = emotion_socres + "分.";
         answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
@@ -834,7 +834,7 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = emotion_socres;
+        answer.score = emotion_socres + "分.";
         answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
@@ -878,7 +878,7 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = emotion_socres;
+        answer.score = emotion_socres + "分.";
         answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
@@ -929,7 +929,7 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = emotion_socres;
+        answer.score = emotion_socres + "分.";
         answer.level = emotion_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
@@ -974,7 +974,7 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
             last_level_describe_index = 2;
         }
         var answer = {};
-        answer.score = pray_for_wealth_socres;
+        answer.score = pray_for_wealth_socres + "分.";
         answer.level = pray_for_wealth_index_row.level;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
             answer.desc = pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
