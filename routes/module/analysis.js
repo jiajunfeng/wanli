@@ -98,7 +98,7 @@ anylysis.getQueryStar = function(info,time_type,date){
     var hourStar = user.getClockStar(curDate);
     var dayStar = user.getDayStar(curDate);
     var monthStar = user.getMonthStar(curDate);
-    var yearStar = parseInt(info["flystar"].charAt(2))/*user.getYearStar(curDate)*/;
+    var yearStar = /*parseInt(info["flystar"].charAt(2))*/user.getYearStar(curDate);
     var smallStar = user.getSmallStar(curDate);
     var bigStar = user.getBigStar(curDate);
     if (info.sex == 0) {
