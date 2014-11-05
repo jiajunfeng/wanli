@@ -13,6 +13,8 @@ var scores_new = require('../../config/scores_new');
 var compass_fly_star = require('../../config/compass_fly_star');
 var compass = require('../../config/compass');
 var match = require('../../config/match');
+var scores_new_addition = require('../../config/scores_new_addition');
+
 var directions = ["正南","东南","正东","东北","正北","西北","正西","西南"];
 
 anylysis.getLuck = function(uid,time_type,cb){
@@ -189,7 +191,51 @@ anylysis.getScore = function(info,time_type,score_type,date){
         scores = scores_class.scores;
         scores_previous = scores_class_previous.scores;
     }
-    return [scores[yearStar -1],scores_previous[yearStar-1]];
+
+    //  calc addition
+    var seasons_five_elements = user.getWx(date);
+    var current_stars = star_of_query;
+    var stars_index;
+    var probability = 1;
+    if(consts.TYPE_SCORE.TYPE_SCORE_LUCK == score_type
+        || consts.TYPE_SCORE.TYPE_SCORE_WEALTH == score_type
+        || consts.TYPE_SCORE.TYPE_SCORE_EMOTION == score_type
+        || consts.TYPE_SCORE.TYPE_SCORE_ENERGY == score_type
+        || consts.TYPE_SCORE.TYPE_SCORE_PEACH == score_type
+        ){
+        var score_new_addition_year_star = scores_new_addition[score_type][info.sex][yearStar - 1];
+        var score_new_addition_year_star_stars_meet;
+        var addition;
+        if(consts.TYPE_SCORE.TYPE_SCORE_LUCK == score_type){
+            if(0 == info.flyStarWx){
+                score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet1;
+                addition = score_new_addition_year_star[seasons_five_elements + 1].addition1;
+            }else if(1 == info.flyStarWx){
+                score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet2;
+                addition = score_new_addition_year_star[seasons_five_elements + 1].addition2;
+            }else if(2 == info.flyStarWx){
+                score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet3;
+                addition = score_new_addition_year_star[seasons_five_elements + 1].addition3;
+            }
+        }
+        else{
+            score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet;
+        }
+        if(score_new_addition_year_star_stars_meet && addition){
+            for(var i = 0; i < score_new_addition_year_star_stars_meet.length; ++i){
+                for(var j = 0; j < score_new_addition_year_star_stars_meet[i].length; ++j){
+                    if(score_new_addition_year_star_stars_meet[i][j] == current_stars){
+                        stars_index = i;
+                        break;
+                    }
+                }
+            }
+            probability = addition[stars_index?stars_index:0];
+        }
+    }
+    var number1 = scores[yearStar -1]*probability;
+    var number2 = scores_previous[yearStar-1]*probability;
+    return [number1.toFixed(1),number2.toFixed(1)];
 };
 
 anylysis.getTendency = function(info,time_type,score_type){
@@ -1089,7 +1135,6 @@ anylysis.getCompassScore = function(uid,type,cb){
             for(var k = 1; k < luck_compass_scores.length; ++k){
                 if(compass_fly_star_scores[j][0] == luck_compass_scores[k].scores[0]){
                     scores.push(luck_compass_scores[k].scores[j*2 + 1]);
-                    console.log("loop " +j);
                     break;
                 }
             }
