@@ -753,12 +753,36 @@ operater.addFeedback = function(uid,content,cb){
  * @param cb
  */
 operater.addToContract = function(uid,contracts_uid,contracts_name,cb){
-    var sql = "insert contracts_table(uid,contracts_uid,contracts_name) value('" + uid + "','" + contracts_uid + "','" + contracts_name + "');";
+    //  get the number of friend first, the friend 's number must less than 5
+    var sql = "select contracts_uid from contracts_table where uid='" + uid + "'";
     console.log(sql);
-    mysqlClient.insert(sql, null, function (err) {
-        if (cb) {
-            cb.call(err);
+    mysqlClient.query(sql, null, function (err,res) {
+        var contracts = [];
+        for(var i = 0; i < res.length; ++i){
+            contracts.push(res[i]["contracts_uid"]);
         }
+        if(contracts.length >= 5){
+            cb("通讯录只能保存最重要的5名好友，如要添加，请先移除之前的好友!")
+            return;
+        }
+        //  add ready ?
+        var find = false;
+        for(i = 0; i < contracts.length; ++i){
+            if(contracts_uid == contracts[i]){
+                find = true;
+            }
+        }
+        if(find){
+            cb("请勿重复添加!")
+            return;
+        }
+        sql = "insert contracts_table(uid,contracts_uid,contracts_name) value('" + uid + "','" + contracts_uid + "','" + contracts_name + "');";
+        console.log(sql);
+        mysqlClient.insert(sql, null, function (err) {
+            if (cb) {
+                cb.call(err);
+            }
+        });
     });
 };
 
