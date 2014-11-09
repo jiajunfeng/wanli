@@ -46,6 +46,10 @@ module.exports = {
         TYPE_SCORE_PEACH:6,
         TYPE_SCORE_BLESS:7
     },
+    TYPE_FIXATION:{
+        TYPE_FIXATION_BLESS:0,
+        TYPE_FIXATION_ENERGY:1
+    },
     TYPE_MATCH:{
         TYPE_MATCH_NATURE:0,
         TYPE_MATCH_MARRIAGE:1,

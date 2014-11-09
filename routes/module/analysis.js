@@ -1174,8 +1174,12 @@ anylysis.getCompass = function(uid,type,cb){
     });
 };
 
-anylysis.getHighScores = function(userInfo){
-
+anylysis.getHighScores = function(userInfo,cb){
+    var date = new Date();
+    userInfo.sjIndex = user.getWx(date);
+    userInfo.scwxNum = user.getScwxNum(userInfo);
+    userInfo.fxscore = user.getFxScore(userInfo,true);
+    userInfo.bwxNum = user.getWxNum(userInfo, 2);
     var wxBaseScoreJson = comm.getWxBaseScoreJson();
     userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
     db.getUserLastJxScore(userInfo, function (jxScore) {
@@ -1203,26 +1207,28 @@ anylysis.getHighScores = function(userInfo){
             }
         }
         userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
+        cb(userInfo.hightScore);
     });
 };
 anylysis.getBless = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
-        anylysis.getHighScores(info);
-        var high_score = info.hightScore;
-        var bless_index_rows = fixation_index[0][1];
-        for(var i = 0; i < bless_index_rows.length; ++i){
-            var range = bless_index_rows[i].range;
-            var range_array = range.split('-');
-            var range_high = range_array[0];
-            var range_low = range_array[1];
-            if(high_score < range_high && high_score >= range_low){
-                var answer = {};
-                answer.level = bless_index_rows[i].level
-                answer.desc = bless_index_rows[i].describe;
-                cb(answer);
-                break;
+        anylysis.getHighScores(info,function(high_score){
+            var bless_index_rows = fixation_index[0][0];
+            for(var i = 0; i < bless_index_rows.length; ++i){
+                var range = bless_index_rows[i].range;
+                var range_array = range.split('-');
+                var range_high = parseInt(range_array[1]);
+                var range_low = parseInt(range_array[0]);
+                if(high_score < (range_high) && high_score >= (range_low)){
+                    var answer = {};
+                    answer.score = high_score;
+                    answer.level = bless_index_rows[i].level;
+                    answer.desc = bless_index_rows[i].describe;
+                    cb(answer);
+                    break;
+                }
             }
-        }
+        });
     });
 };
 

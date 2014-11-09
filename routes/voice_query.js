@@ -235,7 +235,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else if(word_match[m] == "福报" || word_match[m] == "命" || word_match[m] == "福气"|| word_match[m] == "成就"){
             find = true;
-            analysis.getBless(uid,consts.TYPE_SCORE.TYPE_SCORE_BLESS,function(answer){
+            analysis.getBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
