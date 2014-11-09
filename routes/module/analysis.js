@@ -14,6 +14,7 @@ var compass_fly_star = require('../../config/compass_fly_star');
 var compass = require('../../config/compass');
 var match = require('../../config/match');
 var scores_new_addition = require('../../config/scores_new_addition');
+var comm = require('../../common');
 
 var directions = ["正南","东南","正东","东北","正北","西北","正西","西南"];
 
@@ -1170,6 +1171,58 @@ anylysis.getCompass = function(uid,type,cb){
         }
         console.log("%j",answer);
         cb(answer);
+    });
+};
+
+anylysis.getHighScores = function(userInfo){
+
+    var wxBaseScoreJson = comm.getWxBaseScoreJson();
+    userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
+    db.getUserLastJxScore(userInfo, function (jxScore) {
+        //  fix userInfo.wxBaseScore
+        /*
+         特殊规定如下：1、3颗财星，不足80分，统一调整80分。
+         2、4颗财星，不足85分，统一调整85分。
+         3、5颗财星，不足92分，统一调整92分。
+         */
+        var wealth_stars = userInfo.wealth_stars;
+        var wealth_stars_three_scores = 80;
+        var wealth_stars_four_scores = 85;
+        var wealth_stars_five_scores = 92;
+        if (wealth_stars == 3) {
+            if (userInfo.wxBaseScore < wealth_stars_three_scores) {
+                userInfo.wxBaseScore = wealth_stars_three_scores;
+            }
+        } else if (wealth_stars == 4) {
+            if (userInfo.wxBaseScore < wealth_stars_four_scores) {
+                userInfo.wxBaseScore = wealth_stars_four_scores;
+            }
+        } else if (wealth_stars == 5) {
+            if (userInfo.wxBaseScore < wealth_stars_five_scores) {
+                userInfo.wxBaseScore = wealth_stars_five_scores;
+            }
+        }
+        userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
+    });
+};
+anylysis.getBless = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        anylysis.getHighScores(info);
+        var high_score = info.hightScore;
+        var bless_index_rows = fixation_index[0][1];
+        for(var i = 0; i < bless_index_rows.length; ++i){
+            var range = bless_index_rows[i].range;
+            var range_array = range.split('-');
+            var range_high = range_array[0];
+            var range_low = range_array[1];
+            if(high_score < range_high && high_score >= range_low){
+                var answer = {};
+                answer.level = bless_index_rows[i].level
+                answer.desc = bless_index_rows[i].describe;
+                cb(answer);
+                break;
+            }
+        }
     });
 };
 

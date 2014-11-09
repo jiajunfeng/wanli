@@ -43,7 +43,8 @@ module.exports = {
         TYPE_SCORE_ENERGY:3,
         TYPE_SCORE_WORK:4,
         TYPE_SCORE_LOST_WEALTH:5,
-        TYPE_SCORE_PEACH:6
+        TYPE_SCORE_PEACH:6,
+        TYPE_SCORE_BLESS:7
     },
     TYPE_MATCH:{
         TYPE_MATCH_NATURE:0,
