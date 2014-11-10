@@ -252,7 +252,7 @@ anylysis.getTendency = function(info,time_type,score_type){
         time_interval = 1000 * 60 * 60;
     }
     var tendency = [];
-    for(var i = -2; i < 6; ++i){
+    for(var i = -2; i < 7; ++i){
         var time = Date.now();
         time += i * time_interval;
         var time_tmp = new Date(time);
