@@ -138,7 +138,7 @@ anylysis.getQueryStar = function(info,time_type,date){
 };
 
 anylysis.getScore = function(info,time_type,score_type,date){
-    var yearStar = /*parseInt(info["flystar"].charAt(2))*/user.getYearStar(date);
+    var yearStar = parseInt(info["flystar"].charAt(2));
     var query_star = anylysis.getQueryStar(info,time_type,date);
     var star_of_query = query_star[0] ;
     var previous_star_of_query = query_star[1] ;
