@@ -190,9 +190,9 @@ anylysis.getScore = function(info,time_type,score_type,date){
             break;
         }
     }
-    var all_scores_previous = scores_new[score_type][info.sex][previous_previous_star_of_query - 1];
+    var all_scores_previous = scores_new[score_type][info.sex][previous_star_of_query - 1];
     for(i = 0; i < all_scores_previous.length; ++i){
-        if(all_scores_previous[i].beforstar == previous_star_of_query){
+        if(all_scores_previous[i].beforstar == previous_previous_star_of_query){
             scores_class_previous = all_scores_previous[i];
             break;
         }
