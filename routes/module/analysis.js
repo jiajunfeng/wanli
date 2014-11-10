@@ -204,10 +204,10 @@ anylysis.getScore = function(info,time_type,score_type,date){
     var scores_previous;
     if(consts.TYPE_SCORE.TYPE_SCORE_LUCK == score_type ||
         consts.TYPE_SCORE.TYPE_SCORE_WORK == score_type){
-        if(0 == info.flyStarWx){
+        if(1 == info.flyStarWx){
             scores = scores_class.scores;
             scores_previous = scores_class_previous.scores;
-        }else if(1 == info.flyStarWx){
+        }else if(0 == info.flyStarWx){
             scores = scores_class.scores2;
             scores_previous = scores_class_previous.scores2;
         }else if(2 == info.flyStarWx){
@@ -235,10 +235,10 @@ anylysis.getScore = function(info,time_type,score_type,date){
         var score_new_addition_year_star_stars_meet;
         var addition;
         if(consts.TYPE_SCORE.TYPE_SCORE_LUCK == score_type){
-            if(0 == info.flyStarWx){
+            if(1 == info.flyStarWx){
                 score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet1;
                 addition = score_new_addition_year_star[seasons_five_elements + 1].addition1;
-            }else if(1 == info.flyStarWx){
+            }else if(0 == info.flyStarWx){
                 score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet2;
                 addition = score_new_addition_year_star[seasons_five_elements + 1].addition2;
             }else if(2 == info.flyStarWx){
