@@ -137,6 +137,32 @@ anylysis.getQueryStar = function(info,time_type,date){
     return [star_of_query,previous_star_of_query,previous_previous_star_of_query];
 };
 
+anylysis.convert_seasons_five_elements = function(seasons_five_elements){
+    var convert_val;
+    switch (seasons_five_elements){
+        case 0:{
+            convert_val = 2;
+            break;
+        }
+        case 1:{
+            convert_val = 3;
+            break;
+        }
+        case 2:{
+            convert_val = 1;
+            break;
+        }
+        case 3:{
+            convert_val = 0;
+            break;
+        }
+        case 4:{
+            convert_val = 4;
+            break;
+        }
+    }
+    return convert_val;
+}
 anylysis.getScore = function(info,time_type,score_type,date){
     var yearStar = parseInt(info["flystar"].charAt(2));
     var query_star = anylysis.getQueryStar(info,time_type,date);
@@ -195,6 +221,7 @@ anylysis.getScore = function(info,time_type,score_type,date){
 
     //  calc addition
     var seasons_five_elements = user.getWx(date);
+    seasons_five_elements = anylysis.convert_seasons_five_elements(seasons_five_elements);
     var current_stars = star_of_query;
     var stars_index;
     var probability = 1;
@@ -1156,7 +1183,7 @@ anylysis.getCompassMax = function(uid,type,cb){
         }
         scores.sort();
         var index = scores[scores.length-1]%100;
-        var direction = directions[index-1];
+        var direction = directions[index];
         var score = ( scores[scores.length-1] - index ) / 100;
         var text = anylysis.getCompassText(type,score);
         var answer = direction + "," + score + "分," + text;
