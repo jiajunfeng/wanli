@@ -234,6 +234,9 @@ anylysis.getScore = function(info,time_type,score_type,date){
             probability = addition[stars_index?stars_index:0];
         }
     }
+    if(time_type == consts.TYPE_TIME.TYPE_TIME_THIS_YEAR){
+        probability = 1;
+    }
     var number1 = scores[yearStar -1]*probability;
     var number2 = scores_previous[yearStar-1]*probability;
     return [number1.toFixed(1),number2.toFixed(1)];
