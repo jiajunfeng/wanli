@@ -1204,12 +1204,57 @@ anylysis.getCompass = function(uid,type,cb){
     });
 };
 
-anylysis.getHighScores = function(userInfo,cb){
-    var date = new Date();
-    userInfo.sjIndex = user.getWx(date);
-    userInfo.scwxNum = user.getScwxNum(userInfo);
-    userInfo.fxscore = user.getFxScore(userInfo,true);
-    userInfo.bwxNum = user.getWxNum(userInfo, 2);
+anylysis.buildUserInfo = function(info){
+    var reqData = {
+        name:			info.name,
+        sex:			parseInt(info.sex),
+        registAddress:	parseInt(info.registAddress)-1,
+        birthAddress:	parseInt(info.birthAddress)-1,
+        year:			parseInt(info.birthday.substr(0, 4)),
+        month:			parseInt(info.birthday.substr(4, 2)),
+        day:			parseInt(info.birthday.substr(6, 2)),
+        clock:			parseInt(info.birthday.substr(8, 2))
+    }
+
+    var userInfo = user.getUserInfo(reqData);
+
+
+    reqData.clock = (reqData.clock + 1) % 24;
+    reqData.clock = Math.floor(reqData.clock / 2);
+
+
+    //查询数据库，获得吉凶值
+    db.getUserLastJxScore(userInfo, function (jxScore) {
+        //  fix userInfo.wxBaseScore
+        /*
+         特殊规定如下：1、3颗财星，不足80分，统一调整80分。
+         2、4颗财星，不足85分，统一调整85分。
+         3、5颗财星，不足92分，统一调整92分。
+         */
+        var wealth_stars = userInfo.wealth_stars;
+        var wealth_stars_three_scores = 80;
+        var wealth_stars_four_scores = 85;
+        var wealth_stars_five_scores = 92;
+        if(wealth_stars == 3){
+            if(userInfo.wxBaseScore < wealth_stars_three_scores){
+                userInfo.wxBaseScore = wealth_stars_three_scores;
+            }
+        }else if(wealth_stars == 4){
+            if(userInfo.wxBaseScore < wealth_stars_four_scores){
+                userInfo.wxBaseScore = wealth_stars_four_scores;
+            }
+        }else if(wealth_stars == 5){
+            if(userInfo.wxBaseScore < wealth_stars_five_scores){
+                userInfo.wxBaseScore = wealth_stars_five_scores;
+            }
+        }
+        userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
+    });
+    return userInfo;
+};
+
+anylysis.getHighScores = function(info,cb){
+    var userInfo = anylysis.buildUserInfo(info);
     var wxBaseScoreJson = comm.getWxBaseScoreJson();
     userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
     db.getUserLastJxScore(userInfo, function (jxScore) {
@@ -1263,27 +1308,10 @@ anylysis.getFixationBless = function(uid,type,cb){
     });
 };
 
-anylysis.buildUserInfo = function(info,cb){
-
-};
-
 anylysis.getFixationEnergy = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
-        //解析生日
-        var strDate = info.birthday;
-        var result = /(\d+).*?(\d+).*?(\d+).*?(\d+)\:(\d+)/g.exec(strDate);
-        //测试功能
-        var reqData = {
-            name:			info.name,
-            sex:			parseInt(info.sex),
-            registAddress:	parseInt(info.registAddress)-1,
-            birthAddress:	parseInt(info.birthAddress)-1,
-            year:			parseInt(info.birthday.substr(0, 4)),
-            month:			parseInt(info.birthday.substr(4, 2)),
-            day:			parseInt(info.birthday.substr(6, 2)),
-            clock:			parseInt(info.birthday.substr(8, 2))
-        }
-        var userInfo = user.getUserInfo(reqData);
+
+        var userInfo = anylysis.buildUserInfo(info);
         var wxBaseScoreJson = comm.getWxBaseScoreJson();
         userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
         var energy_index_rows = fixation_index[0][1];
