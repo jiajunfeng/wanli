@@ -26,7 +26,8 @@ exports.onVoiceQuery = function(req,res){
     word_list.forEach(function(word) {
         for(var i = 0; i < keywords.length; ++i){
             for(var j = 0; j < keywords[i].length; ++j){
-                if(word == keywords[i][j]){
+                if(word == keywords[i][j])
+                {
                     word_match.push(keywords[i][j]);
                 }
             }
@@ -251,7 +252,7 @@ exports.onVoiceQuery = function(req,res){
 
         if((word_match[m] == "福报" || word_match[m] == "命" || word_match[m] == "福气"|| word_match[m] == "成就" || word_match[m] == "海拔高度") && "undefined" !== typeof (fixation_time_type)){
             find = true;
-            analysis.getBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
+            analysis.getFixationBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
@@ -260,7 +261,16 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else  if(word_match[m] == "海拔高度"){
             find = true;
-            analysis.getBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
+            analysis.getFixationBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if(word_match[m] == "能量" && "undefined" !== typeof (fixation_time_type)){
+            find = true;
+            analysis.getFixationEnergy(uid,consts.TYPE_FIXATION.TYPE_FIXATION_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);

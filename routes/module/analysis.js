@@ -1240,7 +1240,8 @@ anylysis.getHighScores = function(userInfo,cb){
         cb(userInfo.hightScore);
     });
 };
-anylysis.getBless = function(uid,type,cb){
+
+anylysis.getFixationBless = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
         anylysis.getHighScores(info,function(high_score){
             var bless_index_rows = fixation_index[0][0];
@@ -1259,6 +1260,47 @@ anylysis.getBless = function(uid,type,cb){
                 }
             }
         });
+    });
+};
+
+anylysis.buildUserInfo = function(info,cb){
+
+};
+
+anylysis.getFixationEnergy = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        //解析生日
+        var strDate = info.birthday;
+        var result = /(\d+).*?(\d+).*?(\d+).*?(\d+)\:(\d+)/g.exec(strDate);
+        //测试功能
+        var reqData = {
+            name:			info.name,
+            sex:			parseInt(info.sex),
+            registAddress:	parseInt(info.registAddress)-1,
+            birthAddress:	parseInt(info.birthAddress)-1,
+            year:			parseInt(info.birthday.substr(0, 4)),
+            month:			parseInt(info.birthday.substr(4, 2)),
+            day:			parseInt(info.birthday.substr(6, 2)),
+            clock:			parseInt(info.birthday.substr(8, 2))
+        }
+        var userInfo = user.getUserInfo(reqData);
+        var wxBaseScoreJson = comm.getWxBaseScoreJson();
+        userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
+        var energy_index_rows = fixation_index[0][1];
+        for(var i = 0; i < energy_index_rows.length; ++i){
+            var range = energy_index_rows[i].range;
+            var range_array = range.split('-');
+            var range_low = parseInt(range_array[1]);
+            var range_high = parseInt(range_array[0]);
+            if(userInfo.wxBaseScore < (range_high) && userInfo.wxBaseScore >= (range_low)){
+                var answer = {};
+                answer.score = userInfo.wxBaseScore;
+                answer.level = energy_index_rows[i].level;
+                answer.desc = energy_index_rows[i].describe;
+                cb(answer);
+                break;
+            }
+        }
     });
 };
 
@@ -2177,3 +2219,4 @@ anylysis.getMatch2 = function(uid,birthday,birthplace,sex,type,cb){
         }
     });
 };
+
