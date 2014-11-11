@@ -8,6 +8,9 @@ module.exports = {
         TYPE_TIME_THIS_YEAR:2,
         TYPE_TIME_HOUR:3
     },
+    FIXATION_TYPE_TIME:{
+        TYPE_TIME_THIS_LISE :0
+    },
     TYPE_FUTURE_TIME:{
         TYPE_FUTURE_TIME_TODAY :0,
         TYPE_FUTURE_TIME_MONTH :1,

@@ -33,16 +33,24 @@ exports.onVoiceQuery = function(req,res){
         }
     });
     var is_futher_time = false;
-    var time_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
+    var time_type;
+    var fixation_time_type;
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "今天" || word_match[m] == "今日"|| word_match[m] == "本日"|| word_match[m] == "当日"){
             time_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
-        }else if(word_match[m] == "今月" || word_match[m] == "这月"|| word_match[m] == "本月"|| word_match[m] == "当月"){
+            break;
+        }else if(word_match[m] == "今月" || word_match[m] == "这月"|| word_match[m] == "本月"|| word_match[m] == "当月" ){
             time_type = consts.TYPE_TIME.TYPE_TIME_THIS_MONTH;
+            break;
         }else if(word_match[m] == "今年" || word_match[m] == "这年"|| word_match[m] == "本年"|| word_match[m] == "当年"){
             time_type = consts.TYPE_TIME.TYPE_TIME_THIS_YEAR;
+            break;
         }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时"){
             time_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
+            break;
+        }else if(word_match[m] == "这辈子" || word_match[m] == "一生"|| word_match[m] == "先天"|| word_match[m] == "一辈子"|| word_match[m] == "命中"){
+            fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE;
+            break;
         }
     }
     var futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_TIME_TODAY;
@@ -50,17 +58,20 @@ exports.onVoiceQuery = function(req,res){
         if(word_match[m] == "哪天" || word_match[m] == "那日"){
             futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_TODAY;
             is_futher_time = true;
+            break;
         }else if(word_match[m] == "哪月" || word_match[m] == "那月"){
             futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_MONTH;
             is_futher_time = true;
+            break;
         }else if(word_match[m] == "哪年" || word_match[m] == "那年"){
             futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_YEAR;
             is_futher_time = true;
+            break;
         }
     }
     var find = false;
     for(var m = 0; m < word_match.length; ++m){
-        if(word_match[m] == "运程"){
+        if(word_match[m] == "运程" && "undefined" !== typeof (time_type)){
             find = true;
             try{
                 analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
@@ -74,7 +85,7 @@ exports.onVoiceQuery = function(req,res){
                 console.log(e.name  + ":" +  e.message);
             }
             break;
-        }else if(word_match[m] == "做事"){
+        }else if(word_match[m] == "做事" && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getWork(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WORK,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -83,7 +94,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "能量"){
+        }else if(word_match[m] == "能量" && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getEnergy(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -92,7 +103,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "旅行"){
+        }else if(word_match[m] == "旅行" && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getTravel(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -101,7 +112,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "健康" || word_match[m] == "身体"){
+        }else if((word_match[m] == "健康" || word_match[m] == "身体") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getHealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -110,7 +121,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "财富" || word_match[m] == "钱财"){
+        }else if((word_match[m] == "财富" || word_match[m] == "钱财") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -119,7 +130,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "败财" || word_match[m] == "破财"){
+        }else if((word_match[m] == "败财" || word_match[m] == "破财") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getWealthLose(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LOST_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -128,7 +139,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "逛街" || word_match[m] == "购物"){
+        }else if((word_match[m] == "逛街" || word_match[m] == "购物") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getShopping(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LOST_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -137,7 +148,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "学业" || word_match[m] == "学习" || word_match[m] == "考试"){
+        }else if((word_match[m] == "学业" || word_match[m] == "学习" || word_match[m] == "考试") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getStudy(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -146,7 +157,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "事业" || word_match[m] == "工作"){
+        }else if((word_match[m] == "事业" || word_match[m] == "工作") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getCareer(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -155,7 +166,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "求财" || word_match[m] == "挣钱" || word_match[m] == "谈事"){
+        }else if((word_match[m] == "求财" || word_match[m] == "挣钱" || word_match[m] == "谈事") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getPrayForWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -164,7 +175,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "情感" || word_match[m] == "约会" || word_match[m] == "情绪" ){
+        }else if((word_match[m] == "情感" || word_match[m] == "约会" || word_match[m] == "情绪") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getEmotion(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -173,7 +184,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "会友" || word_match[m] == "朋友" ){
+        }else if((word_match[m] == "会友" || word_match[m] == "朋友") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getConfrere(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -182,7 +193,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "情变" || word_match[m] == "感情" ){
+        }else if((word_match[m] == "情变" || word_match[m] == "感情") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getFeeling(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -191,7 +202,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "桃花" || word_match[m] == "动情" ){
+        }else if((word_match[m] == "桃花" || word_match[m] == "动情") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getPeach(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -200,7 +211,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "追求" || word_match[m] == "约会" ){
+        }else if((word_match[m] == "追求" || word_match[m] == "约会") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getChase(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -209,7 +220,8 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "方向" || word_match[m] == "位置"){
+        }/*
+        else if(word_match[m] == "方向" || word_match[m] == "位置"){
             find = true;
             var type = 0;
             for(var n = 0; n < word_match.length; ++n){
@@ -233,7 +245,20 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if(word_match[m] == "福报" || word_match[m] == "命" || word_match[m] == "福气"|| word_match[m] == "成就"){
+        }
+        */
+
+
+        if((word_match[m] == "福报" || word_match[m] == "命" || word_match[m] == "福气"|| word_match[m] == "成就" || word_match[m] == "海拔高度") && "undefined" !== typeof (fixation_time_type)){
+            find = true;
+            analysis.getBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if(word_match[m] == "海拔高度"){
             find = true;
             analysis.getBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

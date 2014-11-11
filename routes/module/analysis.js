@@ -316,7 +316,7 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
             if(luck_index_rows.length){
                 var range = luck_index_rows[i].range;
                 var range_array = range.split('-');
-                if(luck_socres <= parseInt(range_array[0]) && luck_socres >=  parseInt(range_array[1])){
+                if(Math.floor(luck_socres) <= parseInt(range_array[0]) && Math.floor(luck_socres) >=  parseInt(range_array[1])){
                     luck_index_row = luck_index_rows[i];
                     break;
                 }
@@ -338,16 +338,16 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = luck_socres + "分。";
-        answer.level = luck_index_row.level;
+        answer.level = luck_index_row ? luck_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = luck_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row?luck_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = luck_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row?luck_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = luck_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row?luck_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = luck_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = luck_index_row?luck_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -382,16 +382,16 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
             last_level_describe_index = 2;
         }
         var answer = {};
-        answer.level = work_index_row.level;
+        answer.level = work_index_row?work_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row?work_index_row.last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row?work_index_row.last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row?work_index_row.last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = work_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = work_index_row?work_index_row.last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -411,7 +411,7 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
             if(energy_index_rows.length){
                 var range = energy_index_rows[i].range;
                 var range_array = range.split('-');
-                if(energy_socres <= parseInt(range_array[0]) && energy_socres >=  parseInt(range_array[1])){
+                if(Math.floor(energy_socres) <= parseInt(range_array[0]) && Math.floor(energy_socres) >=  parseInt(range_array[1])){
                     energy_index_row = energy_index_rows[i];
                     break;
                 }
@@ -433,16 +433,16 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = energy_socres + "分。";
-        answer.level = energy_index_row.level;
+        answer.level = energy_index_row?energy_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = energy_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row?energy_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = energy_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row?energy_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = energy_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row?energy_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = energy_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = energy_index_row?energy_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -462,7 +462,7 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
             if(travel_index_rows.length){
                 var range = travel_index_rows[i].range;
                 var range_array = range.split('-');
-                if(travel_socres <= parseInt(range_array[0]) && travel_socres >=  parseInt(range_array[1])){
+                if(Math.floor(travel_socres) <= parseInt(range_array[0]) && Math.floor(travel_socres) >=  parseInt(range_array[1])){
                     travel_index_row = travel_index_rows[i];
                     break;
                 }
@@ -477,16 +477,16 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
             last_level_describe_index = 2;
         }
         var answer = {};
-        answer.level = travel_index_row.level;
+        answer.level = travel_index_row?travel_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row?travel_index_row.last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row?travel_index_row.last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row?travel_index_row.last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = travel_index_row.last_level_describe[last_level_describe_index];
+            answer.desc = travel_index_row?travel_index_row.last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -506,7 +506,7 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
             if(health_index_rows.length){
                 var range = health_index_rows[i].range;
                 var range_array = range.split('-');
-                if(health_socres <= parseInt(range_array[0]) && health_socres >=  parseInt(range_array[1])){
+                if(Math.floor(health_socres) <= parseInt(range_array[0]) && Math.floor(health_socres) >=  parseInt(range_array[1])){
                     health_index_row = health_index_rows[i];
                     break;
                 }
@@ -528,16 +528,16 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = health_socres; + "分。"
-        answer.level = health_index_row.level;
+        answer.level = health_index_row?health_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.level = health_index_row.today_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row?health_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.level = health_index_row.month_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row?health_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.level = health_index_row.year_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row?health_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.level = health_index_row.now_last_level_describe[last_level_describe_index];
+            answer.level = health_index_row?health_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -557,7 +557,7 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
             if(wealth_index_rows.length){
                 var range = wealth_index_rows[i].range;
                 var range_array = range.split('-');
-                if(wealth_socres <= parseInt(range_array[0]) && wealth_socres >=  parseInt(range_array[1])){
+                if(Math.floor(wealth_socres) <= parseInt(range_array[0]) && Math.floor(wealth_socres) >=  parseInt(range_array[1])){
                     wealth_index_row = wealth_index_rows[i];
                     break;
                 }
@@ -579,16 +579,16 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = wealth_socres + "分。";
-        answer.level = wealth_index_row.level;
+        answer.level = wealth_index_row?wealth_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = wealth_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row?wealth_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = wealth_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row?wealth_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = wealth_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row?wealth_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = wealth_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_index_row?wealth_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -608,7 +608,7 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
             if(wealth_lose_index_rows.length){
                 var range = wealth_lose_index_rows[i].range;
                 var range_array = range.split('-');
-                if(wealth_lose_socres <= parseInt(range_array[0]) && wealth_lose_socres >=  parseInt(range_array[1])){
+                if(Math.floor(wealth_lose_socres) <= parseInt(range_array[0]) && Math.floor(wealth_lose_socres) >=  parseInt(range_array[1])){
                     wealth_lose_index_row = wealth_lose_index_rows[i];
                     break;
                 }
@@ -630,16 +630,16 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = wealth_lose_socres + "分。";
-        answer.level = wealth_lose_index_row.level + ".";
+        answer.level = wealth_lose_index_row?wealth_lose_index_row.level:0 + ".";
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = wealth_lose_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row?wealth_lose_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = wealth_lose_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row?wealth_lose_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = wealth_lose_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row?wealth_lose_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = wealth_lose_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = wealth_lose_index_row?wealth_lose_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -659,7 +659,7 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
             if(shopping_index_rows.length){
                 var range = shopping_index_rows[i].range;
                 var range_array = range.split('-');
-                if(shopping_socres <= parseInt(range_array[0]) && shopping_socres >=  parseInt(range_array[1])){
+                if(Math.floor(shopping_socres) <= parseInt(range_array[0]) && Math.floor(shopping_socres) >=  parseInt(range_array[1])){
                     shopping_index_row = shopping_index_rows[i];
                     break;
                 }
@@ -675,11 +675,11 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = shopping_socres + "分。";
-        answer.level = shopping_index_row.level;
+        answer.level = shopping_index_row?shopping_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = shopping_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = shopping_index_row?shopping_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = shopping_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = shopping_index_row?shopping_index_row.month_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -699,7 +699,7 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
             if(study_index_rows.length){
                 var range = study_index_rows[i].range;
                 var range_array = range.split('-');
-                if(study_socres <= parseInt(range_array[0]) && study_socres >=  parseInt(range_array[1])){
+                if(Math.floor(study_socres) <= parseInt(range_array[0]) && Math.floor(study_socres) >=  parseInt(range_array[1])){
                     study_index_row = study_index_rows[i];
                     break;
                 }
@@ -721,16 +721,16 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = study_socres + "分。";
-        answer.level = study_index_row.level;
+        answer.level = study_index_row?study_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = study_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row?study_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = study_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row?study_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = study_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row?study_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = study_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = study_index_row?study_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -750,7 +750,7 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
             if(career_index_rows.length){
                 var range = career_index_rows[i].range;
                 var range_array = range.split('-');
-                if(career_socres <= parseInt(range_array[0]) && career_socres >=  parseInt(range_array[1])){
+                if(Math.floor(career_socres) <= parseInt(range_array[0]) && Math.floor(career_socres) >=  parseInt(range_array[1])){
                     career_index_row = career_index_rows[i];
                     break;
                 }
@@ -772,16 +772,16 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = career_socres + "分。";
-        answer.level = career_index_row.level;
+        answer.level = career_index_row?career_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = career_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row?career_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = career_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row?career_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = career_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row?career_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = career_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = career_index_row?career_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -801,7 +801,7 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
             if(pray_for_wealth_index_rows.length){
                 var range = pray_for_wealth_index_rows[i].range;
                 var range_array = range.split('-');
-                if(pray_for_wealth_socres <= parseInt(range_array[0]) && pray_for_wealth_socres >=  parseInt(range_array[1])){
+                if(Math.floor(pray_for_wealth_socres) <= parseInt(range_array[0]) && Math.floor(pray_for_wealth_socres) >=  parseInt(range_array[1])){
                     pray_for_wealth_index_row = pray_for_wealth_index_rows[i];
                     break;
                 }
@@ -817,9 +817,9 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = pray_for_wealth_socres + "分。";
-        answer.level = pray_for_wealth_index_row.level;
+        answer.level = pray_for_wealth_index_row?pray_for_wealth_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc =  pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc =  pray_for_wealth_index_row?pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -839,7 +839,7 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
             if(emotion_index_rows.length){
                 var range = emotion_index_rows[i].range;
                 var range_array = range.split('-');
-                if(emotion_socres <= parseInt(range_array[0]) && emotion_socres >=  parseInt(range_array[1])){
+                if(Math.floor(emotion_socres) <= parseInt(range_array[0]) && Math.floor(emotion_socres) >=  parseInt(range_array[1])){
                     emotion_index_row = emotion_index_rows[i];
                     break;
                 }
@@ -861,16 +861,16 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = emotion_socres + "分。";
-        answer.level = emotion_index_row.level;
+        answer.level = emotion_index_row?emotion_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = emotion_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = emotion_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = emotion_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -890,7 +890,7 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
             if(emotion_index_rows.length){
                 var range = emotion_index_rows[i].range;
                 var range_array = range.split('-');
-                if(emotion_socres <= parseInt(range_array[0]) && emotion_socres >=  parseInt(range_array[1])){
+                if(Math.floor(emotion_socres) <= parseInt(range_array[0]) && Math.floor(emotion_socres) >=  parseInt(range_array[1])){
                     emotion_index_row = emotion_index_rows[i];
                     break;
                 }
@@ -912,9 +912,9 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = emotion_socres + "分。";
-        answer.level = emotion_index_row.level;
+        answer.level = emotion_index_row?emotion_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.today_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -934,7 +934,7 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
             if(emotion_index_rows.length){
                 var range = emotion_index_rows[i].range;
                 var range_array = range.split('-');
-                if(emotion_socres <= parseInt(range_array[0]) && emotion_socres >=  parseInt(range_array[1])){
+                if(Math.floor(emotion_socres) <= parseInt(range_array[0]) && Math.floor(emotion_socres) >=  parseInt(range_array[1])){
                     emotion_index_row = emotion_index_rows[i];
                     break;
                 }
@@ -956,16 +956,16 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = emotion_socres + "分。";
-        answer.level = emotion_index_row.level;
+        answer.level = emotion_index_row?emotion_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = emotion_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = emotion_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = emotion_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -985,7 +985,7 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
             if(emotion_index_rows.length){
                 var range = emotion_index_rows[i].range;
                 var range_array = range.split('-');
-                if(emotion_socres <= parseInt(range_array[0]) && emotion_socres >=  parseInt(range_array[1])){
+                if(Math.floor(emotion_socres) <= parseInt(range_array[0]) && Math.floor(emotion_socres) >=  parseInt(range_array[1])){
                     emotion_index_row = emotion_index_rows[i];
                     break;
                 }
@@ -1007,16 +1007,16 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = emotion_socres + "分。";
-        answer.level = emotion_index_row.level;
+        answer.level = emotion_index_row?emotion_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = emotion_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.desc = emotion_index_row.month_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.desc = emotion_index_row.year_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.desc = emotion_index_row.now_last_level_describe[last_level_describe_index];
+            answer.desc = emotion_index_row?emotion_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
@@ -1036,7 +1036,7 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
             if(pray_for_wealth_index_rows.length){
                 var range = pray_for_wealth_index_rows[i].range;
                 var range_array = range.split('-');
-                if(pray_for_wealth_socres <= parseInt(range_array[0]) && pray_for_wealth_socres >=  parseInt(range_array[1])){
+                if(Math.floor(pray_for_wealth_socres) <= parseInt(range_array[0]) && Math.floor(pray_for_wealth_socres) >=  parseInt(range_array[1])){
                     pray_for_wealth_index_row = pray_for_wealth_index_rows[i];
                     break;
                 }
@@ -1052,9 +1052,9 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
         }
         var answer = {};
         answer.score = pray_for_wealth_socres + "分。";
-        answer.level = pray_for_wealth_index_row.level;
+        answer.level = pray_for_wealth_index_row?pray_for_wealth_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.desc = pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index];
+            answer.desc = pray_for_wealth_index_row?pray_for_wealth_index_row.today_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
