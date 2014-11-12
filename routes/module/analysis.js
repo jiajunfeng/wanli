@@ -405,7 +405,7 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var energy_socres = scores[0];
         var energy_socres_previous = scores[1];
-        var energy_index_rows = alteration_index[0][2];
+        var wealth_index_rows = alteration_index[0][2];
         var energy_index_row;
         for(var i = 0; i < energy_index_rows.length; ++i){
             if(energy_index_rows.length){
@@ -1357,7 +1357,7 @@ anylysis.getFixationLuck = function(uid,type,cb){
 anylysis.getFixationWealth = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
         var userInfo = anylysis.buildUserInfo(info);
-        var energy_index_rows = fixation_index[0][type];
+        var wealth_index_rows = fixation_index[0][type];
         db.getUserLastJxScore(userInfo, function (jxScore) {
 
             //  fix userInfo.wxBaseScore
@@ -1443,21 +1443,66 @@ anylysis.getFixationWealth = function(uid,type,cb){
                 }
             }
             var wealth_stars_stores_last = Math.floor((wealth_stars_stores?wealth_stars_stores:100) * (frequency?frequency:1));
-            for(var i = 0; i < energy_index_rows.length; ++i){
-                var range = energy_index_rows[i].range;
+            for(var i = 0; i < wealth_index_rows.length; ++i){
+                var range = wealth_index_rows[i].range;
                 var range_array = range.split('-');
                 var range_high = parseInt(range_array[1]);
                 var range_low = parseInt(range_array[0]);
                 if(wealth_stars_stores_last < (range_high) && wealth_stars_stores_last >= (range_low)){
                     var answer = {};
                     answer.score = userInfo.wealth_stars_stores_last;
-                    answer.level = energy_index_rows[i].level;
-                    answer.desc = energy_index_rows[i].describe;
+                    answer.level = wealth_index_rows[i].level;
+                    answer.desc = wealth_index_rows[i].describe;
                     cb(answer);
                     break;
                 }
             }
         });
+    });
+};
+
+anylysis.getFixationPeach = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        var BigStar = parseInt(info["flystar"].charAt(0));
+        var SmallStar = parseInt(info["flystar"].charAt(1));
+        var yearStar = parseInt(info["flystar"].charAt(2));
+        var monthStar = parseInt(info["flystar"].charAt(3));
+        var dayStar = parseInt(info["flystar"].charAt(4));
+        var hourStar = parseInt(info["flystar"].charAt(5));
+        var data_reference =
+        [
+            {"beforstar":1,"scores":[72,72,52,98,82,98,98,42,94]},
+            {"beforstar":2,"scores":[82,52,28,94,42,52,82,28,72]},
+            {"beforstar":3,"scores":[28,82,94,59,94,59,28,88,52]},
+            {"beforstar":4,"scores":[42,88,72,72,88,42,72,82,59]},
+            {"beforstar":5,"scores":[88,28,59,28,52,72,59,52,28]},
+            {"beforstar":6,"scores":[94,42,88,88,98,82,42,59,82]},
+            {"beforstar":7,"scores":[98,98,82,82,59,28,52,94,42]},
+            {"beforstar":8,"scores":[59,59,98,42,72,88,88,72,98]},
+            {"beforstar":9,"scores":[52,94,42,52,28,94,94,98,88]}
+        ];
+        var peach_index_rows = fixation_index[0][type];
+        var peach_score_total = data_reference[BigStar -1].scores[yearStar -1] +
+            data_reference[SmallStar -1].scores[yearStar -1] +
+            data_reference[monthStar -1].scores[yearStar -1] +
+            data_reference[dayStar -1].scores[yearStar -1] +
+            data_reference[hourStar -1].scores[yearStar -1];
+
+        var peach_score = Math.floor(peach_score_total / 5);
+        for(var i = 0; i < peach_index_rows.length; ++i){
+            var range = peach_index_rows[i].range;
+            var range_array = range.split('-');
+            var range_high = parseInt(range_array[1]);
+            var range_low = parseInt(range_array[0]);
+            if(peach_score < (range_high) && peach_score >= (range_low)){
+                var answer = {};
+                answer.score = peach_score;
+                answer.level = peach_index_rows[i].level;
+                answer.desc = peach_index_rows[i].describe;
+                cb(answer);
+                break;
+            }
+        }
     });
 };
 
