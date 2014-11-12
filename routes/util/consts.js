@@ -9,7 +9,8 @@ module.exports = {
         TYPE_TIME_HOUR:3
     },
     FIXATION_TYPE_TIME:{
-        TYPE_TIME_THIS_LISE :0
+        TYPE_TIME_THIS_LISE :0,
+        TYPE_TIME_IN_THE_PAST :1
     },
     TYPE_FUTURE_TIME:{
         TYPE_FUTURE_TIME_TODAY :0,
@@ -54,7 +55,8 @@ module.exports = {
         TYPE_FIXATION_ENERGY:1,
         TYPE_FIXATION_LUCK:2,
         TYPE_FIXATION_WEALTH:3,
-        TYPE_FIXATION_PEACH:4
+        TYPE_FIXATION_PEACH:4,
+        TYPE_FIXATION_LUCK_LAST_TEN_YEARS:5
     },
     TYPE_MATCH:{
         TYPE_MATCH_NATURE:0,

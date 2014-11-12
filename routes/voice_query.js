@@ -52,6 +52,9 @@ exports.onVoiceQuery = function(req,res){
         }else if(word_match[m] == "这辈子" || word_match[m] == "一生"|| word_match[m] == "先天"|| word_match[m] == "一辈子"|| word_match[m] == "命中"){
             fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE;
             break;
+        }else if(word_match[m] == "过去"){
+            fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_IN_THE_PAST;
+            break;
         }
     }
     var futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_TIME_TODAY;
@@ -277,7 +280,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else  if(word_match[m] == "运程" && "undefined" !== typeof (fixation_time_type)){
+        }else  if(word_match[m] == "运程" && ("undefined" !== typeof (fixation_time_type) && fixation_time_type == consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE) ){
             find = true;
             analysis.getFixationLuck(uid,consts.TYPE_FIXATION.TYPE_FIXATION_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -298,6 +301,15 @@ exports.onVoiceQuery = function(req,res){
         }else  if(word_match[m] == "桃花" && "undefined" !== typeof (fixation_time_type)){
             find = true;
             analysis.getFixationPeach(uid,consts.TYPE_FIXATION.TYPE_FIXATION_PEACH,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if(word_match[m] == "运程" && ("undefined" !== typeof (fixation_time_type)&& fixation_time_type == consts.FIXATION_TYPE_TIME.TYPE_TIME_IN_THE_PAST)){
+            find = true;
+            analysis.getFixationLuckInThePast(uid,consts.TYPE_FIXATION.TYPE_FIXATION_LUCK_LAST_TEN_YEARS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);

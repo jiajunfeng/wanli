@@ -162,7 +162,8 @@ anylysis.convert_seasons_five_elements = function(seasons_five_elements){
         }
     }
     return convert_val;
-}
+};
+
 anylysis.getScore = function(info,time_type,score_type,date){
     var yearStar = parseInt(info["flystar"].charAt(2));
     var query_star = anylysis.getQueryStar(info,time_type,date);
@@ -267,6 +268,60 @@ anylysis.getScore = function(info,time_type,score_type,date){
     var number1 = scores[yearStar -1]*probability;
     var number2 = scores_previous[yearStar-1]*probability;
     return [number1.toFixed(1),number2.toFixed(1)];
+};
+
+anylysis.getScore2 = function(info,time_type,score_type,date){
+    var yearStar = parseInt(info["flystar"].charAt(2));
+    var query_star = anylysis.getQueryStar(info,time_type,date);
+    var star_of_query = query_star[0] ;
+    var previous_star_of_query = query_star[1] ;
+    //     luck for int the past ten years
+    if(info.sex){
+        star_of_query = 7;
+        previous_star_of_query = 3
+    }else{
+        star_of_query = 8;
+        previous_star_of_query = 3
+    }
+    var scores_class;
+    var scores_class_previous;
+    if(star_of_query < 0 || star_of_query > 9){
+        console.log("star_of_query value is invalid");
+        star_of_query = 1;
+    }
+    if(previous_star_of_query < 0 || previous_star_of_query > 9){
+        console.log("previous_star_of_query value is invalid");
+        previous_star_of_query = 1;
+    }
+    var all_scores = scores_new[score_type][info.sex][star_of_query - 1];
+    for(var i = 0; i < all_scores.length; ++i){
+        if(all_scores[i].beforstar == previous_star_of_query){
+            scores_class = all_scores[i];
+            break;
+        }
+    }
+    if(!scores_class ){
+        console.log("scores_class  is null");
+    }
+    var scores;
+    var scores_previous;
+    if(consts.TYPE_SCORE.TYPE_SCORE_LUCK == score_type ||
+        consts.TYPE_SCORE.TYPE_SCORE_WORK == score_type){
+        if(1 == info.flyStarWx){
+            scores = scores_class.scores;
+
+        }else if(0 == info.flyStarWx){
+            scores = scores_class.scores2;
+
+        }else if(2 == info.flyStarWx){
+            scores = scores_class.scores3;
+
+        }
+    }else{
+        scores = scores_class.scores;
+
+    }
+    return scores[yearStar -1];
 };
 
 anylysis.getTendency = function(info,time_type,score_type){
@@ -1505,6 +1560,28 @@ anylysis.getFixationPeach = function(uid,type,cb){
         }
     });
 };
+
+anylysis.getFixationLuckInThePast = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        var luck_in_the_past_index_rows = fixation_index[0][type];
+        var score_luck_in_the_past = anylysis.getScore2(info,consts.TYPE_TIME.TYPE_TIME_THIS_YEAR,consts.TYPE_SCORE.TYPE_SCORE_LUCK,new Date());
+        for(var i = 0; i < luck_in_the_past_index_rows.length; ++i){
+            var range = luck_in_the_past_index_rows[i].range;
+            var range_array = range.split('-');
+            var range_low = parseInt(range_array[1]);
+            var range_high = parseInt(range_array[0]);
+            if(score_luck_in_the_past < (range_high) && score_luck_in_the_past >= (range_low)){
+                var answer = {};
+                answer.score = score_luck_in_the_past;
+                answer.level = luck_in_the_past_index_rows[i].level;
+                answer.desc = luck_in_the_past_index_rows[i].describe;
+                cb(answer);
+                break;
+            }
+        }
+    });
+};
+
 
 anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
     anylysis.getInfo(uid, function (info) {
