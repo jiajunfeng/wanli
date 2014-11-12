@@ -316,6 +316,15 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
+        }else  if(word_match[m] == "情感" && "undefined" !== typeof (fixation_time_type)){
+            find = true;
+            analysis.getFixationMotion(uid,consts.TYPE_FIXATION.TYPE_FIXATION_MOTION,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
         }else {
 
         }

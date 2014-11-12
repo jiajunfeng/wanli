@@ -1582,6 +1582,51 @@ anylysis.getFixationLuckInThePast = function(uid,type,cb){
     });
 };
 
+anylysis.getFixationMotion = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        var BigStar = parseInt(info["flystar"].charAt(0));
+        var SmallStar = parseInt(info["flystar"].charAt(1));
+        var yearStar = parseInt(info["flystar"].charAt(2));
+        var monthStar = parseInt(info["flystar"].charAt(3));
+        var dayStar = parseInt(info["flystar"].charAt(4));
+        var hourStar = parseInt(info["flystar"].charAt(5));
+        var data_reference =
+            [
+                {"beforstar":1,"scores":[72,72,42,98,59,98,98,59,42]},
+                {"beforstar":2,"scores":[52,82,28,52,82,82,72,52,82]},
+                {"beforstar":3,"scores":[28,28,52,59,42,59,28,28,72]},
+                {"beforstar":4,"scores":[42,42,94,94,52,42,88,42,88]},
+                {"beforstar":5,"scores":[59,88,88,42,72,72,59,72,28]},
+                {"beforstar":6,"scores":[94,52,59,28,94,88,42,82,59]},
+                {"beforstar":7,"scores":[98,98,72,88,88,28,82,88,52]},
+                {"beforstar":8,"scores":[82,59,98,72,98,94,94,94,98]},
+                {"beforstar":9,"scores":[88,94,82,82,28,52,52,98,94]}
+            ];
+        var motion_index_rows = fixation_index[0][type];
+        var peach_score_total = data_reference[BigStar -1].scores[yearStar -1] +
+            data_reference[SmallStar -1].scores[yearStar -1] +
+            data_reference[monthStar -1].scores[yearStar -1] +
+            data_reference[dayStar -1].scores[yearStar -1] +
+            data_reference[hourStar -1].scores[yearStar -1];
+
+        var motion_score = Math.floor(peach_score_total / 5);
+        for(var i = 0; i < motion_index_rows.length; ++i){
+            var range = motion_index_rows[i].range;
+            var range_array = range.split('-');
+            var range_high = parseInt(range_array[1]);
+            var range_low = parseInt(range_array[0]);
+            if(motion_score < (range_high) && motion_score >= (range_low)){
+                var answer = {};
+                answer.score = motion_score;
+                answer.level = motion_index_rows[i].level;
+                answer.desc = motion_index_rows[i].describe;
+                cb(answer);
+                break;
+            }
+        }
+    });
+};
+
 
 anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
     anylysis.getInfo(uid, function (info) {
