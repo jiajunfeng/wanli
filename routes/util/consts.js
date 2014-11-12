@@ -52,7 +52,8 @@ module.exports = {
     TYPE_FIXATION:{
         TYPE_FIXATION_BLESS:0,
         TYPE_FIXATION_ENERGY:1,
-        TYPE_FIXATION_LUCK:2
+        TYPE_FIXATION_LUCK:2,
+        TYPE_FIXATION_WEALTH:3
     },
     TYPE_MATCH:{
         TYPE_MATCH_NATURE:0,

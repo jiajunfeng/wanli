@@ -1354,6 +1354,113 @@ anylysis.getFixationLuck = function(uid,type,cb){
     });
 };
 
+anylysis.getFixationWealth = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        var userInfo = anylysis.buildUserInfo(info);
+        var energy_index_rows = fixation_index[0][type];
+        db.getUserLastJxScore(userInfo, function (jxScore) {
+
+            //  fix userInfo.wxBaseScore
+            /*
+             特殊规定如下：1、3颗财星，不足80分，统一调整80分。
+             2、4颗财星，不足85分，统一调整85分。
+             3、5颗财星，不足92分，统一调整92分。
+             */
+            var wealth_stars = userInfo.wealth_stars;
+            var wealth_stars_three_scores = 80;
+            var wealth_stars_four_scores = 85;
+            var wealth_stars_five_scores = 92;
+            if (wealth_stars == 3) {
+                if (userInfo.wxBaseScore < wealth_stars_three_scores) {
+                    userInfo.wxBaseScore = wealth_stars_three_scores;
+                }
+            } else if (wealth_stars == 4) {
+                if (userInfo.wxBaseScore < wealth_stars_four_scores) {
+                    userInfo.wxBaseScore = wealth_stars_four_scores;
+                }
+            } else if (wealth_stars == 5) {
+                if (userInfo.wxBaseScore < wealth_stars_five_scores) {
+                    userInfo.wxBaseScore = wealth_stars_five_scores;
+                }
+            }
+            userInfo.hightScore = (70 * (jxScore + userInfo.wxBaseScore)).toFixed(0);
+
+            var wealth_stars = userInfo.wealth_stars;
+            var wealth_stars_stores;
+            if(0 == wealth_stars){
+                wealth_stars_stores = 50;
+            }else if(1 == wealth_stars){
+                wealth_stars_stores = 65;
+            }else if(2 == wealth_stars){
+                wealth_stars_stores = 70;
+            }else if(3 == wealth_stars){
+                wealth_stars_stores = 80;
+            }else if(4 == wealth_stars || 5 == wealth_stars){
+                wealth_stars_stores = 90;
+            }
+            var hightScoreDivisor = Math.floor(userInfo.hightScore / 70);
+            var reference_data = [
+                [0,50,0.72],
+                [51,52,0.73],
+                [53,54,0.74],
+                [55,56,0.75],
+                [57,58,0.76],
+                [59,60,0.77],
+                [61,62,0.78],
+                [63,64,0.79],
+                [65,66,0.80],
+                [67,68,0.81],
+                [69,70,0.82],
+                [71,72,0.83],
+                [73,74,0.84],
+                [75,76,0.85],
+                [77,78,0.86],
+                [79,80,0.87],
+                [81,82,0.88],
+
+                [93,94,1.12],
+                [95,96,1.13],
+                [97,98,1.14],
+                [99,100,1.15],
+                [101,102,1.16],
+                [103,104,1.17],
+                [105,106,1.18],
+                [107,108,1.19],
+                [109,110,1.20],
+                [111,112,1.21],
+                [113,114,1.22],
+                [115,116,1.23],
+                [117,118,1.24],
+                [119,120,1.25],
+                [121,122,1.26],
+                [123,123,1.27]
+            ];
+            var frequency;
+            for(var m = 0; m < reference_data.length; ++m){
+                if(hightScoreDivisor == reference_data[m][0] || hightScoreDivisor == reference_data[m][1]){
+                    frequency = reference_data[m][2];
+                    break;
+                }
+            }
+            var wealth_stars_stores_last = Math.floor((wealth_stars_stores?wealth_stars_stores:100) * (frequency?frequency:1));
+            for(var i = 0; i < energy_index_rows.length; ++i){
+                var range = energy_index_rows[i].range;
+                var range_array = range.split('-');
+                var range_high = parseInt(range_array[1]);
+                var range_low = parseInt(range_array[0]);
+                if(wealth_stars_stores_last < (range_high) && wealth_stars_stores_last >= (range_low)){
+                    var answer = {};
+                    answer.score = userInfo.wealth_stars_stores_last;
+                    answer.level = energy_index_rows[i].level;
+                    answer.desc = energy_index_rows[i].describe;
+                    cb(answer);
+                    break;
+                }
+            }
+        });
+    });
+};
+
 anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
     anylysis.getInfo(uid, function (info) {
         var days = 10;
