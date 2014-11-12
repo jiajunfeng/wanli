@@ -1289,7 +1289,7 @@ anylysis.getHighScores = function(info,cb){
 anylysis.getFixationBless = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
         anylysis.getHighScores(info,function(high_score){
-            var bless_index_rows = fixation_index[0][0];
+            var bless_index_rows = fixation_index[0][type];
             for(var i = 0; i < bless_index_rows.length; ++i){
                 var range = bless_index_rows[i].range;
                 var range_array = range.split('-');
@@ -1310,11 +1310,10 @@ anylysis.getFixationBless = function(uid,type,cb){
 
 anylysis.getFixationEnergy = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
-
         var userInfo = anylysis.buildUserInfo(info);
         var wxBaseScoreJson = comm.getWxBaseScoreJson();
         userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
-        var energy_index_rows = fixation_index[0][1];
+        var energy_index_rows = fixation_index[0][type];
         for(var i = 0; i < energy_index_rows.length; ++i){
             var range = energy_index_rows[i].range;
             var range_array = range.split('-');
@@ -1329,6 +1328,29 @@ anylysis.getFixationEnergy = function(uid,type,cb){
                 break;
             }
         }
+    });
+};
+
+anylysis.getFixationLuck = function(uid,type,cb){
+    anylysis.getInfo(uid, function (info) {
+        var userInfo = anylysis.buildUserInfo(info);
+        var energy_index_rows = fixation_index[0][type];
+        db.getUserLastJxScore(userInfo, function (jxScore) {
+            for(var i = 0; i < energy_index_rows.length; ++i){
+                var range = energy_index_rows[i].range;
+                var range_array = range.split('-');
+                var range_low = parseInt(range_array[1]);
+                var range_high = parseInt(range_array[0]);
+                if(userInfo.baseZyScore < (range_high) && userInfo.baseZyScore >= (range_low)){
+                    var answer = {};
+                    answer.score = userInfo.baseZyScore;
+                    answer.level = energy_index_rows[i].level;
+                    answer.desc = energy_index_rows[i].describe;
+                    cb(answer);
+                    break;
+                }
+            }
+        });
     });
 };
 
