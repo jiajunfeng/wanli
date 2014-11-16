@@ -836,7 +836,7 @@ operater.getBless = function(uid,cb){
 
 operater.setBless = function(uid,bless,lotus,cb){
     var values = [bless,lotus,uid];
-    var sql = "update user_table set colour= ?, lotus= ? where user_id= ?;"
+    var sql = "update user_table set bless= ?, lotus= ? where user_id= ?;"
     console.log(sql);
     mysqlClient.update(sql, values, function (err) {
         if (cb) {
