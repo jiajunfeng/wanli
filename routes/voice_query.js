@@ -125,7 +125,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if((word_match[m] == "财富" || word_match[m] == "钱财") && "undefined" !== typeof (time_type)){
+        }else if((word_match[m] == "财富" || word_match[m] == "钱财" || word_match[m] == "财运") && "undefined" !== typeof (time_type)){
             find = true;
             analysis.getWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
