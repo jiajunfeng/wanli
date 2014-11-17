@@ -460,7 +460,7 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var energy_socres = scores[0];
         var energy_socres_previous = scores[1];
-        var wealth_index_rows = alteration_index[0][2];
+        var energy_index_rows = alteration_index[0][2];
         var energy_index_row;
         for(var i = 0; i < energy_index_rows.length; ++i){
             if(energy_index_rows.length){
