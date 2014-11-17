@@ -1352,7 +1352,7 @@ anylysis.getFixationBless = function(uid,type,cb){
                 var range_low = parseInt(range_array[0]);
                 if(high_score < (range_high) && high_score >= (range_low)){
                     var answer = {};
-                    answer.score = high_score;
+                    answer.score = high_score + "分。";
                     answer.level = bless_index_rows[i].level;
                     answer.desc = bless_index_rows[i].describe;
                     cb(answer);
@@ -1376,7 +1376,7 @@ anylysis.getFixationEnergy = function(uid,type,cb){
             var range_high = parseInt(range_array[0]);
             if(userInfo.wxBaseScore < (range_high) && userInfo.wxBaseScore >= (range_low)){
                 var answer = {};
-                answer.score = userInfo.wxBaseScore;
+                answer.score = userInfo.wxBaseScore + "分。";
                 answer.level = energy_index_rows[i].level;
                 answer.desc = energy_index_rows[i].describe;
                 cb(answer);
@@ -1398,7 +1398,7 @@ anylysis.getFixationLuck = function(uid,type,cb){
                 var range_high = parseInt(range_array[0]);
                 if(userInfo.baseZyScore < (range_high) && userInfo.baseZyScore >= (range_low)){
                     var answer = {};
-                    answer.score = userInfo.baseZyScore;
+                    answer.score = userInfo.baseZyScore + "分。";
                     answer.level = energy_index_rows[i].level;
                     answer.desc = energy_index_rows[i].describe;
                     cb(answer);
@@ -1505,7 +1505,7 @@ anylysis.getFixationWealth = function(uid,type,cb){
                 var range_low = parseInt(range_array[0]);
                 if(wealth_stars_stores_last < (range_high) && wealth_stars_stores_last >= (range_low)){
                     var answer = {};
-                    answer.score = userInfo.wealth_stars_stores_last;
+                    answer.score = userInfo.wealth_stars_stores_last + "分。";
                     answer.level = wealth_index_rows[i].level;
                     answer.desc = wealth_index_rows[i].describe;
                     cb(answer);
@@ -1551,7 +1551,7 @@ anylysis.getFixationPeach = function(uid,type,cb){
             var range_low = parseInt(range_array[0]);
             if(peach_score < (range_high) && peach_score >= (range_low)){
                 var answer = {};
-                answer.score = peach_score;
+                answer.score = peach_score + "分。";
                 answer.level = peach_index_rows[i].level;
                 answer.desc = peach_index_rows[i].describe;
                 cb(answer);
@@ -1572,7 +1572,7 @@ anylysis.getFixationLuckInThePast = function(uid,type,cb){
             var range_high = parseInt(range_array[0]);
             if(score_luck_in_the_past < (range_high) && score_luck_in_the_past >= (range_low)){
                 var answer = {};
-                answer.score = score_luck_in_the_past;
+                answer.score = score_luck_in_the_past + "分。";
                 answer.level = luck_in_the_past_index_rows[i].level;
                 answer.desc = luck_in_the_past_index_rows[i].describe;
                 cb(answer);
@@ -1617,7 +1617,7 @@ anylysis.getFixationMotion = function(uid,type,cb){
             var range_low = parseInt(range_array[0]);
             if(motion_score < (range_high) && motion_score >= (range_low)){
                 var answer = {};
-                answer.score = motion_score;
+                answer.score = motion_score + "分。";
                 answer.level = motion_index_rows[i].level;
                 answer.desc = motion_index_rows[i].describe;
                 cb(answer);
