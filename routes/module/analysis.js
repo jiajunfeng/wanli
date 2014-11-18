@@ -1219,8 +1219,8 @@ anylysis.getCompassScore = function(uid,type,cb){
         var scores = [];
         for(var j = 0; j < compass_fly_star_scores.length; ++j){
             for(var k = 1; k < luck_compass_scores.length; ++k){
-                if(compass_fly_star_scores[j][0] == luck_compass_scores[k].scores[0]){
-                    scores.push(luck_compass_scores[k].scores[j*2 + 1]);
+                if(compass_fly_star_scores[j][1] == luck_compass_scores[k].scores[0]){
+                    scores.push(luck_compass_scores[k].scores[compass_fly_star_scores[j][0]*2 - 1]);
                     break;
                 }
             }
