@@ -1505,7 +1505,7 @@ anylysis.getFixationWealth = function(uid,type,cb){
                 var range_low = parseInt(range_array[0]);
                 if(wealth_stars_stores_last < (range_high) && wealth_stars_stores_last >= (range_low)){
                     var answer = {};
-                    answer.score = userInfo.wealth_stars_stores_last + "分。";
+                    answer.score = wealth_stars_stores_last + "分。";
                     answer.level = wealth_index_rows[i].level;
                     answer.desc = wealth_index_rows[i].describe;
                     cb(answer);
