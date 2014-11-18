@@ -46,28 +46,28 @@ exports.onVoiceQuery = function(req,res){
         }else if(word_match[m] == "今年" || word_match[m] == "这年"|| word_match[m] == "本年"|| word_match[m] == "当年"){
             time_type = consts.TYPE_TIME.TYPE_TIME_THIS_YEAR;
             break;
-        }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时"){
+        }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时" || word_match[m] == "当下"){
             time_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
             break;
-        }else if(word_match[m] == "这辈子" || word_match[m] == "一生"|| word_match[m] == "先天"|| word_match[m] == "一辈子"|| word_match[m] == "命中"){
+        }else if(word_match[m] == "这辈子" || word_match[m] == "一生"|| word_match[m] == "先天"|| word_match[m] == "一辈子"|| word_match[m] == "命中" || word_match[m] == "此生" || word_match[m] == "这生"){
             fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE;
             break;
-        }else if(word_match[m] == "过去"){
+        }else if(word_match[m] == "过去" || word_match[m] == "十年" || word_match[m] == "去年" || word_match[m] == "一年"){
             fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_IN_THE_PAST;
             break;
         }
     }
     var futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_TIME_TODAY;
     for(var m = 0; m < word_match.length; ++m){
-        if(word_match[m] == "哪天" || word_match[m] == "那日"){
+        if(word_match[m] == "哪天" || word_match[m] == "那日" || word_match[m] == "哪日" || word_match[m] == "那天" || word_match[m] == "何日" || word_match[m] == "何时"){
             futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_TODAY;
             is_futher_time = true;
             break;
-        }else if(word_match[m] == "哪月" || word_match[m] == "那月"){
+        }else if(word_match[m] == "哪月" || word_match[m] == "那月" || word_match[m] == "何日"){
             futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_MONTH;
             is_futher_time = true;
             break;
-        }else if(word_match[m] == "哪年" || word_match[m] == "那年"){
+        }else if(word_match[m] == "哪年" || word_match[m] == "那年" || word_match[m] == "何年"){
             futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_FUTURE_TIME_YEAR;
             is_futher_time = true;
             break;
@@ -179,7 +179,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if((word_match[m] == "情感" || word_match[m] == "约会" || word_match[m] == "情绪") && "undefined" !== typeof (time_type) ){
+        }else if((word_match[m] == "情感" ||  word_match[m] == "情绪") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getEmotion(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -206,7 +206,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else if((word_match[m] == "桃花" || word_match[m] == "动情") && "undefined" !== typeof (time_type) ){
+        }else if((word_match[m] == "桃花" || word_match[m] == "动情" || word_match[m] == "爱情" || word_match[m] == "婚姻" || word_match[m] == "姻缘") && "undefined" !== typeof (time_type) ){
             find = true;
             analysis.getPeach(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -253,7 +253,7 @@ exports.onVoiceQuery = function(req,res){
         */
 
 
-        if((word_match[m] == "福报" || word_match[m] == "命" || word_match[m] == "福气"|| word_match[m] == "成就" || word_match[m] == "海拔高度") && "undefined" !== typeof (fixation_time_type)){
+        if((word_match[m] == "福报" || word_match[m] == "命" || word_match[m] == "命运" || word_match[m] == "运气" || word_match[m] == "福气"|| word_match[m] == "成就" || word_match[m] == "海拔高度") && "undefined" !== typeof (fixation_time_type)){
             find = true;
             analysis.getFixationBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -289,7 +289,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else  if(word_match[m] == "财富" && "undefined" !== typeof (fixation_time_type)){
+        }else  if((word_match[m] == "财富" || word_match[m] == "财运") && "undefined" !== typeof (fixation_time_type)){
             find = true;
             analysis.getFixationWealth(uid,consts.TYPE_FIXATION.TYPE_FIXATION_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
