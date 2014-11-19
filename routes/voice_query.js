@@ -280,9 +280,9 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else  if(word_match[m] == "运程" && ("undefined" !== typeof (fixation_time_type) && fixation_time_type == consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE) ){
+        }else  if((word_match[m] == "运程"|| word_match[m] == "助运") && ("undefined" !== typeof (fixation_time_type) && fixation_time_type == consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE) ){
             find = true;
-            analysis.getFixationLuck(uid,consts.TYPE_FIXATION.TYPE_FIXATION_ENERGY,function(answer){
+            analysis.getFixationLuck(uid,consts.TYPE_FIXATION.TYPE_FIXATION_LUCK,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);

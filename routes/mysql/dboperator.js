@@ -26,8 +26,8 @@ function fixStar(star) {
 }
 
 operater.addUser = function(info,cb){
-    var sql = "insert into user_table(user_id, name, sex, birthday,staryear, birthAddress, regAddress,regTime,passwd,viplevel,flystar,sjWs,birthWs,yueNum,yangSum,clockWs,gz,ts,sp,queNum,sjIndex) values('"
-        + info.uid + "','" + info.name + "'," + info.sex + ",'" + info.birthday + "','" + user.getStarYear(new Date(info.birthday.substr(0, 4) + "/" + info.birthday.substr(4, 2) + "/" + info.birthday.substr(6, 2))).substr(2, 2) + "'," + info.birthAddress + ","
+    var sql = "insert into user_table(user_id, openid,name, sex, birthday,staryear, birthAddress, regAddress,regTime,passwd,viplevel,flystar,sjWs,birthWs,yueNum,yangSum,clockWs,gz,ts,sp,queNum,sjIndex) values('"
+        + info.uid + "','" + (info.openid ? info.openid : "openid") + "','" + info.name + "'," + info.sex + ",'" + info.birthday + "','" + user.getStarYear(new Date(info.birthday.substr(0, 4) + "/" + info.birthday.substr(4, 2) + "/" + info.birthday.substr(6, 2))).substr(2, 2) + "'," + info.birthAddress + ","
         + info.registAddress + ",'" + info.regTime + "','" + info.password + "'," + info.vipLevel + ",'" + info.flystar + "'," + (info.sjWS ? "1" : "0") + "," + info.birthWS + ","
         + info.starNum + "," + info.yangSum + "," + (info.clockWS ? "1" : "0") + ",'" + info.gz + "','" + info.ts + "','" + info.sp + "','" + info.queNum + "'," + info.sjIndex + ");";
 
@@ -842,5 +842,13 @@ operater.setBless = function(uid,bless,lotus,cb){
         if (cb) {
             cb.call(err);
         }
+    });
+};
+
+operater.getUserIdByOpenId = function(openid,cb){
+    var sql = "select user_id from user_table where openid='" + openid + "'";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        cb(err,res[0]["user_id"])
     });
 };

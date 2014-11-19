@@ -5,6 +5,8 @@ alter table `user_table` Add column bless int not null default 15 AFTER `colour`
 
 alter table `user_table` Add column lotus int not null default 5 AFTER `bless`;
 
+alter table `user_table` Add column openid char(64) not null default "" AFTER `user_id`;
+
 CREATE TABLE `feedback_table` (
 id INT(11) NOT NULL AUTO_INCREMENT,
 uid INT(11),
