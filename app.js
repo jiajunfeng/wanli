@@ -32,6 +32,7 @@ var add_bless = require('./routes/add_bless.js');
 var reg_4_wechat = require('./routes/reg_4_wechat.js');
 var modify_info_4_wechat = require('./routes/modify_info_4_wechat.js');
 var voice_query_4_wechat = require('./routes/voice_query_4_wechat.js');
+var user_query_4_wechat = require('./routes/user_query_4_wechat.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -87,6 +88,7 @@ app.post('/add_bless', add_bless.onAddBless);
 app.post('/reg_4_wechat', reg_4_wechat.onRegForWeChat);
 app.post('/modify_info_4_wechat', modify_info_4_wechat.onModifyForWeChat);
 app.post('/voice_query_4_wechat', voice_query_4_wechat.onVoiceQueryForWeChat);
+app.post('/user_query_4_wechat', user_query_4_wechat.onUserQueryForWeChat);
 
 userManager.GetInstance();
 
