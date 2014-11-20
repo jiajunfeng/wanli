@@ -74,8 +74,7 @@ function pushMsg(client) {
 }
 
 function sendMsg(userInfo, msg) {
-    console.log("Send Msg to " + userInfo.userid + " msg=" + msg);
-
+    push_logger.debug("Send Msg to " + userInfo.userid + " msg=" + msg);
     //var token = '40679ad3 7e38ee2c 2d5c58a0 ce801cad e97e5004 b6043dfc 945ab46f 483ff5fa'; //长度为64的设备Token
     //console.log("token=" + userInfo.token);
     //IOS发送推送通知
@@ -158,7 +157,6 @@ function checkMsg(userInfo,ttType) {
                     var msgs = mainMsg["msg"];
                     var msgStr = msgs[Math.floor(Math.random() * msgs.length)];
                     sendMsg(userInfo, msgStr.replace("（日）", "月"));
-                    push_logger.debug(msgStr.replace("（日）", "月"));
                     return true;
                 }
             }
@@ -254,7 +252,6 @@ function checkMsg(userInfo,ttType) {
                 var msgstrss = msg["msg"];
                 var msgStr = msgstrss[Math.floor(Math.random() * msgstrss.length)];
                 sendMsg(userInfo, msgStr.replace("（日）", "日"));
-                push_logger.debug(msgStr.replace("（日）", "月"));
                 return true;
             }
         }
