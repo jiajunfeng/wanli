@@ -13,6 +13,7 @@
 	"connect-flash":"*",
 	"apn":"1.5.2",
 	"cron":"1.0.4",
-    "nodejieba ":"0.2.4"
+    "nodejieba ":"0.2.4",
+    "log4js":"0.6.14"
   }
 }

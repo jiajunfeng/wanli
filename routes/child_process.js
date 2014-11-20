@@ -10,7 +10,10 @@ var userManager = require('./userManager.js');
 var apn = require('apn');
 var userInfo = require('./userInfo.js').userInfo;
 var Push = require('./baidu_pushserver.js');
-
+var log4js = require('log4js');
+var log_json = require('../config/log.json');
+log4js.configure(log_json);
+var push_logger = log4js.getLogger('push-logger');
 
 var child_process = require('child_process');
 var apn = require('apn');
@@ -155,6 +158,7 @@ function checkMsg(userInfo,ttType) {
                     var msgs = mainMsg["msg"];
                     var msgStr = msgs[Math.floor(Math.random() * msgs.length)];
                     sendMsg(userInfo, msgStr.replace("（日）", "月"));
+                    push_logger.debug(msgStr.replace("（日）", "月"));
                     return true;
                 }
             }
@@ -250,6 +254,7 @@ function checkMsg(userInfo,ttType) {
                 var msgstrss = msg["msg"];
                 var msgStr = msgstrss[Math.floor(Math.random() * msgstrss.length)];
                 sendMsg(userInfo, msgStr.replace("（日）", "日"));
+                push_logger.debug(msgStr.replace("（日）", "月"));
                 return true;
             }
         }
@@ -332,9 +337,7 @@ function pushMsgToUsers(cb) {
                 userInfo.yearstar = parseInt(userInfo.flystar.charAt(2));
                 onRowReady(userInfo);
             }
-            
-
-            console.log("get push msg user count = " + res.length);
+            push_logger.debug("get push msg user count = " + res.length);
         }
 
     });
