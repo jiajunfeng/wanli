@@ -336,7 +336,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else  if(word_match[m] == "忠告" && "undefined" !== typeof (fixation_time_type)){
+        }else  if(word_match[m] == "忠告"/* && "undefined" !== typeof (fixation_time_type)*/){
             find = true;
             analysis.getInfo(uid,function(info){
                 var answer = {};
