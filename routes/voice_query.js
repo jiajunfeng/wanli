@@ -349,7 +349,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else  if(word_match[m] == "性格" && "undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR){
+        }else  if(word_match[m] == "性格特点"  && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR){
             find = true;
             analysis.getInfoAll(uid,function(info){
                 var answer = {};
@@ -362,7 +362,7 @@ exports.onVoiceQuery = function(req,res){
                 res.end(JSON.stringify(result));
             });
             break;
-        }else  if(word_match[m] == "性格" && "undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MINOR){
+        }else  if(word_match[m] == "性格特点" && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MINOR){
             find = true;
             analysis.getInfoAll(uid,function(info){
                 var answer = {};
