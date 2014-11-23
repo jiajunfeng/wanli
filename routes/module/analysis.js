@@ -91,6 +91,19 @@ anylysis.getInfo = function(uid,cb){
     });
 };
 
+anylysis.getInfoAll = function(uid,cb){
+    var info = new userInfo();
+    info.uid = uid;
+    db.getUserInfo(info,function (err){
+        if (err) {
+            console.log(err + " getInfo");
+        }
+        else {
+            cb(info);
+        }
+    });
+};
+
 anylysis.getQueryStar = function(info,time_type,date){
     info.sjIndex = user.getWx(date);
     info.scwxNum = user.getScwxNum(info);
