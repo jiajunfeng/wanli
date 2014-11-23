@@ -62,10 +62,10 @@ exports.onVoiceQuery = function(req,res){
             //break;
         }else if(word_match[m] == "主要"){
             fixation_base_embellish = consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR;
-            break;
+            //break;
         }else if( word_match[m] == "次要"){
             fixation_base_embellish = consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MINOR;
-            break;
+            //break;
         }
     }
     var futher_time_type = consts.TYPE_FUTURE_TIME.TYPE_TIME_TODAY;
