@@ -36,6 +36,8 @@ exports.onVoiceQuery = function(req,res){
     var is_futher_time = false;
     var time_type;
     var fixation_time_type;
+    var fixation_base_type;
+    var fixation_base_embellish;
     for(var m = 0; m < word_match.length; ++m){
         if(word_match[m] == "今天" || word_match[m] == "今日"|| word_match[m] == "本日"|| word_match[m] == "当日"){
             time_type = consts.TYPE_TIME.TYPE_TIME_TODAY;
@@ -49,11 +51,20 @@ exports.onVoiceQuery = function(req,res){
         }else if(word_match[m] == "当时" || word_match[m] == "现在"|| word_match[m] == "这时"|| word_match[m] == "本时"|| word_match[m] == "此时" || word_match[m] == "当下"){
             time_type = consts.TYPE_TIME.TYPE_TIME_HOUR;
             break;
-        }else if(word_match[m] == "这辈子" || word_match[m] == "一生"|| word_match[m] == "先天"|| word_match[m] == "一辈子"|| word_match[m] == "命中" || word_match[m] == "此生" || word_match[m] == "这生"){
+        }else if(word_match[m] == "这辈子" || word_match[m] == "一生"|| word_match[m] == "先天"|| word_match[m] == "一辈子"|| word_match[m] == "命中" || word_match[m] == "此生" || word_match[m] == "这生" || word_match[m] == "人生"){
             fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_THIS_LISE;
             break;
         }else if(word_match[m] == "过去" || word_match[m] == "十年" || word_match[m] == "去年" || word_match[m] == "一年"){
             fixation_time_type = consts.FIXATION_TYPE_TIME.TYPE_TIME_IN_THE_PAST;
+            break;
+        }else if(word_match[m] == "特点" || word_match[m] == "不足"){
+            fixation_base_type = consts.FIXATION_TYPE_BASE.TYPE_TIME_NATURE;
+            break;
+        }else if(word_match[m] == "主要"){
+            fixation_base_embellish = consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR;
+            break;
+        }else if( word_match[m] == "次要"){
+            fixation_base_embellish = consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MINOR;
             break;
         }
     }
@@ -319,6 +330,72 @@ exports.onVoiceQuery = function(req,res){
         }else  if(word_match[m] == "情感" && "undefined" !== typeof (fixation_time_type)){
             find = true;
             analysis.getFixationMotion(uid,consts.TYPE_FIXATION.TYPE_FIXATION_MOTION,function(answer){
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if(word_match[m] == "忠告" && "undefined" !== typeof (fixation_time_type)){
+            find = true;
+            analysis.getInfo(uid,function(info){
+                var answer = {};
+                answer.score = "";
+                answer.level = "";
+                answer.desc = info.rsjy;
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if(word_match[m] == "性格" && "undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR){
+            find = true;
+            analysis.getInfo(uid,function(info){
+                var answer = {};
+                answer.score = "";
+                answer.level = "";
+                answer.desc = info.td;
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if(word_match[m] == "性格" && "undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MINOR){
+            find = true;
+            analysis.getInfo(uid,function(info){
+                var answer = {};
+                answer.score = "";
+                answer.level = "";
+                answer.desc = info.baseXg;
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }else  if("undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR){
+            find = true;
+            analysis.getInfo(uid,function(info){
+                var answer = {};
+                answer.score = "";
+                answer.level = "";
+                answer.desc = info.mainBz;
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                var result = { answer:answer};
+                console.log(answer);
+                res.end(JSON.stringify(result));
+            });
+            break;
+        }
+        else  if("undefined" !== typeof (fixation_base_type)){
+            find = true;
+            analysis.getInfo(uid,function(info){
+                var answer = {};
+                answer.score = "";
+                answer.level = "";
+                answer.desc = info.qd;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
