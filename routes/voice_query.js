@@ -59,7 +59,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else if(word_match[m] == "特点" || word_match[m] == "不足"){
             fixation_base_type = consts.FIXATION_TYPE_BASE.TYPE_TIME_NATURE;
-            break;
+            //break;
         }else if(word_match[m] == "主要"){
             fixation_base_embellish = consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR;
             break;
