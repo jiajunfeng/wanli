@@ -338,7 +338,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else  if(word_match[m] == "忠告" && "undefined" !== typeof (fixation_time_type)){
             find = true;
-            analysis.getInfo(uid,function(info){
+            analysis.getInfoAll(uid,function(info){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
@@ -351,7 +351,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else  if(word_match[m] == "性格" && "undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR){
             find = true;
-            analysis.getInfo(uid,function(info){
+            analysis.getInfoAll(uid,function(info){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
@@ -364,7 +364,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else  if(word_match[m] == "性格" && "undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MINOR){
             find = true;
-            analysis.getInfo(uid,function(info){
+            analysis.getInfoAll(uid,function(info){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
@@ -377,7 +377,7 @@ exports.onVoiceQuery = function(req,res){
             break;
         }else  if("undefined" !== typeof (fixation_base_type) && fixation_base_embellish ==consts.FIXATION_TYPE_BASE_EMBELLISH.TYPE_TIME_NATURE_EMBELLISH_MAJOR){
             find = true;
-            analysis.getInfo(uid,function(info){
+            analysis.getInfoAll(uid,function(info){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
@@ -391,7 +391,7 @@ exports.onVoiceQuery = function(req,res){
         }
         else  if("undefined" !== typeof (fixation_base_type)){
             find = true;
-            analysis.getInfo(uid,function(info){
+            analysis.getInfoAll(uid,function(info){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
