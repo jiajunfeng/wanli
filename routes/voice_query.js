@@ -355,7 +355,7 @@ exports.onVoiceQuery = function(req,res){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
-                answer.desc = info.td;
+                answer.desc = info.baseXg;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
@@ -368,7 +368,7 @@ exports.onVoiceQuery = function(req,res){
                 var answer = {};
                 answer.score = "";
                 answer.level = "";
-                answer.desc = info.baseXg;
+                answer.desc = info.td;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
                 console.log(answer);
