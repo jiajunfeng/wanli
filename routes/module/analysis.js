@@ -278,6 +278,9 @@ anylysis.getScore = function(info,time_type,score_type,date){
     if(time_type == consts.TYPE_TIME.TYPE_TIME_THIS_YEAR){
         probability = 1;
     }
+    if(consts.TYPE_SCORE.TYPE_SCORE_WORK == score_type){
+        return [scores[yearStar -1],scores_previous[yearStar-1]];
+    }
     var number1 = scores[yearStar -1]*probability;
     var number2 = scores_previous[yearStar-1]*probability;
     return [number1.toFixed(1),number2.toFixed(1)];
@@ -595,17 +598,17 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
             last_level_describe_index = 5;
         }
         var answer = {};
-        answer.score = health_socres; + "分。"
+        answer.score = health_socres + "分。"
         answer.level = health_index_row?health_index_row.level:0;
         if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
-            answer.level = health_index_row?health_index_row.today_last_level_describe[last_level_describe_index]:"";
+            answer.desc = health_index_row?health_index_row.today_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
-            answer.level = health_index_row?health_index_row.month_last_level_describe[last_level_describe_index]:"";
+            answer.desc = health_index_row?health_index_row.month_last_level_describe[last_level_describe_index]:"";
         }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
-            answer.level = health_index_row?health_index_row.year_last_level_describe[last_level_describe_index]:"";
+            answer.desc = health_index_row?health_index_row.year_last_level_describe[last_level_describe_index]:"";
         }
         else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-            answer.level = health_index_row?health_index_row.now_last_level_describe[last_level_describe_index]:"";
+            answer.desc = health_index_row?health_index_row.now_last_level_describe[last_level_describe_index]:"";
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
