@@ -7,6 +7,7 @@ var db = require('./mysql/dboperator');
 var userInfo = require('./userInfo.js').userInfo;
 var analysis = require('./module/analysis');
 var consts = require('./util/consts');
+var mongodb = require("./nosql/mongodb");
 
 exports.onVoiceQuery = function(req,res){
     var uid = parseInt(req.body["uid"]);
@@ -92,7 +93,7 @@ exports.onVoiceQuery = function(req,res){
                 analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
                     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                     var result = { answer:answer};
-                    console.log(answer);
+                    mongodb.voice_query_log(uid,voice_content,answer);
                     res.end(JSON.stringify(result));
                 });
             }
@@ -105,7 +106,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getWork(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WORK,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -114,7 +115,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getEnergy(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -123,7 +124,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getTravel(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -132,7 +133,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getHealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -141,7 +142,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -150,7 +151,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getWealthLose(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LOST_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -159,7 +160,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getShopping(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LOST_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -168,7 +169,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getStudy(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -177,7 +178,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getCareer(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -186,7 +187,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getPrayForWealth(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -195,7 +196,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getEmotion(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -204,7 +205,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getConfrere(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_EMOTION,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -213,7 +214,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFeeling(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -222,7 +223,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getPeach(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -231,7 +232,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getChase(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -269,7 +270,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -278,7 +279,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationBless(uid,consts.TYPE_FIXATION.TYPE_FIXATION_BLESS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -287,7 +288,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationEnergy(uid,consts.TYPE_FIXATION.TYPE_FIXATION_ENERGY,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -296,7 +297,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationLuck(uid,consts.TYPE_FIXATION.TYPE_FIXATION_LUCK,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -305,7 +306,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationWealth(uid,consts.TYPE_FIXATION.TYPE_FIXATION_WEALTH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -314,7 +315,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationPeach(uid,consts.TYPE_FIXATION.TYPE_FIXATION_PEACH,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -323,7 +324,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationLuckInThePast(uid,consts.TYPE_FIXATION.TYPE_FIXATION_LUCK_LAST_TEN_YEARS,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -332,7 +333,7 @@ exports.onVoiceQuery = function(req,res){
             analysis.getFixationMotion(uid,consts.TYPE_FIXATION.TYPE_FIXATION_MOTION,function(answer){
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -345,7 +346,7 @@ exports.onVoiceQuery = function(req,res){
                 answer.desc = info.rsjy;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -358,7 +359,7 @@ exports.onVoiceQuery = function(req,res){
                 answer.desc = info.baseXg;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -371,7 +372,7 @@ exports.onVoiceQuery = function(req,res){
                 answer.desc = info.td;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -384,7 +385,7 @@ exports.onVoiceQuery = function(req,res){
                 answer.desc = info.mainBz;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -398,7 +399,7 @@ exports.onVoiceQuery = function(req,res){
                 answer.desc = info.qd;
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 var result = { answer:answer};
-                console.log(answer);
+                mongodb.voice_query_log(uid,voice_content,answer);
                 res.end(JSON.stringify(result));
             });
             break;
@@ -413,7 +414,7 @@ exports.onVoiceQuery = function(req,res){
         answer.level = "";
         answer.desc = "对不住，这事真不知道。";
         var result = { answer:answer};
-        console.log(answer);
+        mongodb.voice_query_log(uid,voice_content,answer);
         res.end(JSON.stringify(result));
     }
 };
