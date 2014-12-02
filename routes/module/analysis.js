@@ -1675,6 +1675,10 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                         tendency_energy_to_be_choose.push(tendency_energy[tendency_work_to_be_choose[j]]*100 + tendency_work_to_be_choose[j]);
                     }
                 }
+                if(0 == tendency_energy_to_be_choose.length){
+                    cb(date);
+                    return;
+                }
                 tendency_energy_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_energy_to_be_choose.length,n < 3; ++n){
                     var days_index_to_be_choose = tendency_energy_to_be_choose[tendency_energy_to_be_choose.length - n - 1]%100;
@@ -1685,10 +1689,6 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                         break;
                     }
                 }
-                console.log(tendency_work);
-                console.log(tendency_luck);
-                console.log(tendency_energy);
-                console.log(days_index_to_be_choose);
                 break;
             }
             case consts.TYPE_SELECT_DATE.TYPE_SELECT_DATE_WEALTH:
@@ -1702,6 +1702,10 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     if(tendency_wealth[i] >= 90 && tendency_wealth[i] <= 98){
                         tendency_wealth_to_be_choose.push(tendency_wealth[i]*100 + i);
                     }
+                }
+                if(0 == tendency_wealth_to_be_choose.length){
+                    cb(date);
+                    return;
                 }
                 tendency_wealth_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_wealth_to_be_choose.length,n < 3; ++n){
@@ -1725,6 +1729,10 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                         tendency_peach_to_be_choose.push(tendency_peach[i]*100 + i);
                     }
                 }
+                if(0 == tendency_peach_to_be_choose.length){
+                    cb(date);
+                    return;
+                }
                 tendency_peach_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_peach_to_be_choose.length,n < 3; ++n){
                     var days_index_to_be_choose = tendency_peach_to_be_choose[tendency_peach_to_be_choose.length - n - 1]%100;
@@ -1746,6 +1754,10 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     if(tendency_luck[i] >= 90 && tendency_luck[i] <= 98){
                         tendency_luck_to_be_choose.push(tendency_luck[i]*100 + i);
                     }
+                }
+                if(0 == tendency_luck_to_be_choose.length){
+                    cb(date);
+                    return;
                 }
                 tendency_luck_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_luck_to_be_choose.length,n < 3; ++n){
@@ -1769,6 +1781,10 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                         tendency_meet_friend_to_be_choose.push(tendency_meet_friend[i]*100 + i);
                     }
                 }
+                if(0 == tendency_meet_friend_to_be_choose.length){
+                    cb(date);
+                    return;
+                }
                 tendency_meet_friend_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_meet_friend_to_be_choose.length,n < 3; ++n){
                     var days_index_to_be_choose = tendency_meet_friend_to_be_choose[tendency_meet_friend_to_be_choose.length - n - 1]%100;
@@ -1791,6 +1807,10 @@ anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
                     if(tendency_trip[i] >= 90 && tendency_trip[i] <= 98){
                         tendency_trip_to_be_choose.push(tendency_trip[i]*100 + i);
                     }
+                }
+                if(0 == tendency_trip_to_be_choose.length){
+                    cb(date);
+                    return;
                 }
                 tendency_trip_to_be_choose.sort(function(a,b){return a<b?1:-1});
                 for(var n = 0; n < tendency_trip_to_be_choose.length,n < 3; ++n){
