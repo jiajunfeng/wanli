@@ -262,6 +262,7 @@ anylysis.getScore = function(info,time_type,score_type,date){
         }
         else{
             score_new_addition_year_star_stars_meet = score_new_addition_year_star[0].stars_meet;
+            addition = score_new_addition_year_star[seasons_five_elements + 1].addition;
         }
         if(score_new_addition_year_star_stars_meet && addition){
             for(var i = 0; i < score_new_addition_year_star_stars_meet.length; ++i){
@@ -281,6 +282,7 @@ anylysis.getScore = function(info,time_type,score_type,date){
     if(consts.TYPE_SCORE.TYPE_SCORE_WORK == score_type){
         return [scores[yearStar -1],scores_previous[yearStar-1]];
     }
+    console.log("getScore probability:" + probability);
     var number1 = scores[yearStar -1]*probability;
     var number2 = scores_previous[yearStar-1]*probability;
     return [number1.toFixed(1),number2.toFixed(1)];
