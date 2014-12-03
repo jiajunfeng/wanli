@@ -15,7 +15,7 @@ exports.onSelectDate = function(req,res){
         if(date.length){
             result.desc = "算的真不容易呀！根据你本人的命理，最合适的日期是：";
         }else{
-            result.desc = "报歉，只期间没算出合适的日子，随缘吧。";
+            result.desc = "报歉，此期间没算出合适的日子，随缘吧。";
         }
         console.log(result);
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
