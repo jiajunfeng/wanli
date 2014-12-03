@@ -12,7 +12,12 @@ exports.onSelectDate = function(req,res){
     var result = { error: "" };
     analysis.getSelectDate(uid,select_date_type,days_type,function(date){
         result.date = date;
-        result.desc = "算的真不容易呀！根据你本人的命理，最合适的日期是：";
+        if(date.length){
+            result.desc = "算的真不容易呀！根据你本人的命理，最合适的日期是：";
+        }else{
+            result.desc = "期间没有合适的日子。";
+        }
+        console.log(result);
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(result));
     });
