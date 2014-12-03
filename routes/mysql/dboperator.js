@@ -830,7 +830,7 @@ operater.getBless = function(uid,cb){
     var sql = "select bless from user_table where user_id='" + uid + "'";
     console.log(sql);
     mysqlClient.query(sql, null, function (err,res) {
-        cb(err,res[0]["bless"])
+        cb(err,res[0]?res[0]["bless"]:0)
     });
 };
 
@@ -849,6 +849,6 @@ operater.getUserIdByOpenId = function(openid,cb){
     var sql = "select user_id from user_table where openid='" + openid + "'";
     console.log(sql);
     mysqlClient.query(sql, null, function (err,res) {
-        cb(err,res[0]["user_id"])
+        cb(err,res[0] ?res[0]["user_id"]:0);
     });
 };
