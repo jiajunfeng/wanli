@@ -33,6 +33,8 @@ var reg_4_wechat = require('./routes/reg_4_wechat.js');
 var modify_info_4_wechat = require('./routes/modify_info_4_wechat.js');
 var voice_query_4_wechat = require('./routes/voice_query_4_wechat.js');
 var user_query_4_wechat = require('./routes/user_query_4_wechat.js');
+var push_4_index = require('./routes/push_4_index.js');
+var push_4_friend = require('./routes/push_4_friend.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -89,6 +91,8 @@ app.post('/reg_4_wechat', reg_4_wechat.onRegForWeChat);
 app.post('/modify_info_4_wechat', modify_info_4_wechat.onModifyForWeChat);
 app.post('/voice_query_4_wechat', voice_query_4_wechat.onVoiceQueryForWeChat);
 app.post('/user_query_4_wechat', user_query_4_wechat.onUserQueryForWeChat);
+app.post('/push_4_index', push_4_index.onPushForIndex);
+app.post('/push_4_friend', push_4_friend.onPushForFriend);
 
 userManager.GetInstance();
 

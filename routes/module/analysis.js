@@ -84,6 +84,7 @@ anylysis.getInfo = function(uid,cb){
     db.getUserBaseInfo(info,function (err){
         if (err) {
             console.log(err + " getInfo");
+            cb(null);
         }
         else {
             cb(info);
