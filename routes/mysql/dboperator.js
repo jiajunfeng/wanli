@@ -138,6 +138,7 @@ operater.getUserInfo = function(info, cb){
                 info.starNum = res[0]['starNum'];
                 info.yangSum = res[0]['yangSum'];
                 info.queNum = res[0]['queNum'];
+                info.login_count = res[0]['login_count'];
                 info.colour = res[0]['colour'];
                 info.bless = res[0]['bless'];
                 info.lotus = res[0]['lotus'];
@@ -179,6 +180,10 @@ operater.getUserBaseInfo = function(info, cb){
                 info.starNum = res[0]['starNum'];
                 info.yangSum = res[0]['yangSum'];
                 info.queNum = res[0]['queNum'];
+                info.login_count = res[0]['login_count'];
+                info.lotus = res[0]['lotus'];
+                info.bless = res[0]['bless'];
+                info.colour = res[0]['colour'];
                 cb(err);
             }
         }
@@ -850,5 +855,16 @@ operater.getUserIdByOpenId = function(openid,cb){
     console.log(sql);
     mysqlClient.query(sql, null, function (err,res) {
         cb(err,res[0] ?res[0]["user_id"]:0);
+    });
+};
+
+operater.setLoginCount = function(uid,login_count){
+    var values = [login_count,uid];
+    var sql = "update user_table set login_count= ?  where user_id= ?;"
+    console.log(sql);
+    mysqlClient.update(sql, values, function (err) {
+        if(err){
+            console.log(err);
+        }
     });
 };

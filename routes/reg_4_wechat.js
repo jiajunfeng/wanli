@@ -2,8 +2,8 @@
  * Created by King Lee on 14-11-19.
  */
 var crypto = require('crypto');
-var db = require('./mysql/dboperator')
-var tools = require('./tools/tools')
+var db = require('./mysql/dboperator');
+var tools = require('./tools/tools');
 var log = require('../common').log;
 var userInfo = require('./userInfo.js').userInfo;
 var userManager = require('./userManager.js');
