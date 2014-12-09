@@ -36,6 +36,7 @@ var user_query_4_wechat = require('./routes/user_query_4_wechat.js');
 var push_4_index = require('./routes/push_4_index.js');
 var push_4_friend = require('./routes/push_4_friend.js');
 var push_4_login = require('./routes/push_4_login.js');
+var attention = require('./routes/attention.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -95,6 +96,7 @@ app.post('/user_query_4_wechat', user_query_4_wechat.onUserQueryForWeChat);
 app.post('/push_4_index', push_4_index.onPushForIndex);
 app.post('/push_4_friend', push_4_friend.onPushForFriend);
 app.post('/push_4_login', push_4_login.onPushForLogin);
+app.post('/attentions', attention.onAttention);
 
 userManager.GetInstance();
 

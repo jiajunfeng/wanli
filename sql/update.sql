@@ -9,6 +9,8 @@ alter table `user_table` Add column openid char(64) not null default "" AFTER `u
 
 alter table `user_table` Add column login_count int not null default 0 AFTER `lotus`;
 
+alter table `contracts_table` Add column attention_flag int not null default 0 AFTER `contracts_name`;
+
 CREATE TABLE `feedback_table` (
 id INT(11) NOT NULL AUTO_INCREMENT,
 uid INT(11),
