@@ -381,6 +381,10 @@ anylysis.getTendencyFuture = function(info,days,score_type){
 
 anylysis.getLuck2 = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var luck_socres = scores[0];
         var luck_socres_previous = scores[1];
@@ -432,6 +436,10 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
 
 anylysis.getWork = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var work_socres = scores[0];
         var work_socres_previous = scores[1];
@@ -476,6 +484,10 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
 
 anylysis.getEnergy = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var energy_socres = scores[0];
         var energy_socres_previous = scores[1];
@@ -527,6 +539,10 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
 
 anylysis.getTravel = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var travel_socres = scores[0];
         var travel_socres_previous = scores[1];
@@ -571,6 +587,10 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
 
 anylysis.getHealth = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var health_socres = scores[0];
         var health_socres_previous = scores[1];
@@ -622,6 +642,10 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
 
 anylysis.getWealth = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var wealth_socres = scores[0];
         var wealth_socres_previous = scores[1];
@@ -673,6 +697,10 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
 
 anylysis.getWealthLose = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var wealth_lose_socres = scores[0];
         var wealth_lose_socres_previous = scores[1];
@@ -724,6 +752,10 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
 
 anylysis.getShopping = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var shopping_socres = scores[0];
         var shopping_socres_previous = scores[1];
@@ -764,6 +796,10 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
 
 anylysis.getStudy = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var study_socres = scores[0];
         var study_socres_previous = scores[1];
@@ -815,6 +851,10 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
 
 anylysis.getCareer = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var career_socres = scores[0];
         var career_socres_previous = scores[1];
@@ -866,6 +906,10 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
 
 anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var pray_for_wealth_socres = scores[0];
         var pray_for_wealth_socres_previous = scores[1];
@@ -904,6 +948,10 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
 
 anylysis.getEmotion = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -955,6 +1003,10 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
 
 anylysis.getConfrere = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -999,6 +1051,10 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
 
 anylysis.getFeeling = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -1050,6 +1106,10 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
 
 anylysis.getPeach = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -1101,6 +1161,10 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
 
 anylysis.getChase = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var pray_for_wealth_socres = scores[0];
         var pray_for_wealth_socres_previous = scores[1];
@@ -1210,6 +1274,10 @@ anylysis.getCompassText = function(type,score){
 
 anylysis.getCompassScore = function(uid,type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var yearStar = parseInt(info["flystar"].charAt(2));
         info.sjIndex = user.getWx(new Date());
         info.scwxNum = user.getScwxNum(info);
@@ -1384,6 +1452,10 @@ anylysis.getFixationBless = function(uid,type,cb){
 
 anylysis.getFixationEnergy = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var userInfo = anylysis.buildUserInfo(info);
         var wxBaseScoreJson = comm.getWxBaseScoreJson();
         userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
@@ -1407,6 +1479,10 @@ anylysis.getFixationEnergy = function(uid,type,cb){
 
 anylysis.getFixationLuck = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var userInfo = anylysis.buildUserInfo(info);
         var energy_index_rows = fixation_index[0][type];
         db.getUserLastJxScore(userInfo, function (jxScore) {
@@ -1430,6 +1506,10 @@ anylysis.getFixationLuck = function(uid,type,cb){
 
 anylysis.getFixationWealth = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var userInfo = anylysis.buildUserInfo(info);
         var wealth_index_rows = fixation_index[0][type];
         db.getUserLastJxScore(userInfo, function (jxScore) {
@@ -1537,6 +1617,10 @@ anylysis.getFixationWealth = function(uid,type,cb){
 
 anylysis.getFixationPeach = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var BigStar = parseInt(info["flystar"].charAt(0));
         var SmallStar = parseInt(info["flystar"].charAt(1));
         var yearStar = parseInt(info["flystar"].charAt(2));
@@ -1582,6 +1666,10 @@ anylysis.getFixationPeach = function(uid,type,cb){
 
 anylysis.getFixationLuckInThePast = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var luck_in_the_past_index_rows = fixation_index[0][type];
         var score_luck_in_the_past = anylysis.getScore2(info,consts.TYPE_TIME.TYPE_TIME_THIS_YEAR,consts.TYPE_SCORE.TYPE_SCORE_LUCK,new Date());
         for(var i = 0; i < luck_in_the_past_index_rows.length; ++i){
@@ -1603,6 +1691,10 @@ anylysis.getFixationLuckInThePast = function(uid,type,cb){
 
 anylysis.getFixationMotion = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var BigStar = parseInt(info["flystar"].charAt(0));
         var SmallStar = parseInt(info["flystar"].charAt(1));
         var yearStar = parseInt(info["flystar"].charAt(2));
@@ -1649,6 +1741,10 @@ anylysis.getFixationMotion = function(uid,type,cb){
 
 anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var days = 10;
         if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
             days = 10;
@@ -1904,6 +2000,10 @@ anylysis.getStarMonthNum = function(birthday){
 anylysis.getMatch = function(uid,target_uid,type,cb){
     var answer ;
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         anylysis.getInfo(target_uid,function(target_info){
 
             var BigStar = parseInt(info["flystar"].charAt(0));
@@ -2246,6 +2346,10 @@ anylysis.getMatch2 = function(uid,birthday,birthplace,sex,type,cb){
         birthday = birthday.toString();
     }
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("此用户不存在");
+            return;
+        }
         var year =  parseInt(birthday.substr(0, 4));
         var month = parseInt(birthday.substr(4, 2));
         var day = parseInt(birthday.substr(6, 2));
