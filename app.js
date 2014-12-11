@@ -38,6 +38,8 @@ var push_4_index = require('./routes/push_4_index.js');
 var push_4_friend = require('./routes/push_4_friend.js');
 var push_4_login = require('./routes/push_4_login.js');
 var attention = require('./routes/attention.js');
+var get_energy = require('./routes/get_energy.js');
+var get_support_question = require('./routes/get_support_question.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -99,6 +101,8 @@ app.post('/push_4_index', push_4_index.onPushForIndex);
 app.post('/push_4_friend', push_4_friend.onPushForFriend);
 app.post('/push_4_login', push_4_login.onPushForLogin);
 app.post('/attentions', attention.onAttention);
+app.post('/get_energy', get_energy.onGetEnergy);
+app.post('/get_support_question', get_support_question.onGetSupportQuestion);
 
 userManager.GetInstance();
 
