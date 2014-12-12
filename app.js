@@ -40,6 +40,8 @@ var push_4_login = require('./routes/push_4_login.js');
 var attention = require('./routes/attention.js');
 var get_energy = require('./routes/get_energy.js');
 var get_support_question = require('./routes/get_support_question.js');
+var give_away_bless = require('./routes/give_away_bless.js');
+var get_bless = require('./routes/get_bless.js');
 
 var segment = require("nodejieba");
 segment.loadDict("./node_modules/nodejieba/dict/jieba.dict.utf8", "./node_modules/nodejieba/dict/hmm_model.utf8");
@@ -103,6 +105,8 @@ app.post('/push_4_login', push_4_login.onPushForLogin);
 app.post('/attentions', attention.onAttention);
 app.post('/get_energy', get_energy.onGetEnergy);
 app.post('/get_support_question', get_support_question.onGetSupportQuestion);
+app.post('/give_away_bless', give_away_bless.onGiveAwayBless);
+app.post('/get_bless', get_bless.onGetBless);
 
 userManager.GetInstance();
 

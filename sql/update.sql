@@ -3,6 +3,8 @@ alter table `user_table` Add column colour int not null default 0 AFTER `sex`;
 
 alter table `user_table` Add column bless int not null default 15 AFTER `colour`;
 
+alter table `user_table` Add column give_away_bless char(128) not null default "[]" AFTER `bless`;
+
 alter table `user_table` Add column lotus int not null default 5 AFTER `bless`;
 
 alter table `user_table` Add column openid char(64) not null default "" AFTER `user_id`;

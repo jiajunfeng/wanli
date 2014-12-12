@@ -929,3 +929,56 @@ operater.getAttentions = function(uid,cb){
         }
     });
 };
+
+operater.GiveAwayBless = function(uid,name,target_uid,bless,cb){
+    var sql = "select give_away_bless from user_table where user_id='" + target_uid + "';";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        if(res){
+            var give_away_bless = res[0]?res[0]["give_away_bless"]:"[]";
+            if(give_away_bless){
+                give_away_bless = JSON.parse(give_away_bless);
+                var new_give_away_bless = {};
+                new_give_away_bless.uid = uid;
+                new_give_away_bless.name = name;
+                new_give_away_bless.bless = bless;
+                give_away_bless.push(new_give_away_bless);
+                var values = [JSON.stringify(give_away_bless),target_uid];
+                var sql = "update user_table set give_away_bless= ? where user_id= ?;"
+                console.log(sql);
+                mysqlClient.insert(sql, values, function (err) {
+                    if (cb) {
+                        cb.call(err);
+                    }
+                });
+            }
+        }
+        else{
+            if(err){
+                cb(err);
+            }
+        }
+    });
+};
+
+operater.GetBless = function(uid,cb){
+    var sql = "select give_away_bless from user_table where user_id='" + uid + "';";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        if(err){
+            cb(err);
+        }
+        if(res){
+            cb(err,res[0] ?res[0]["give_away_bless"]:0);
+        }
+    });
+
+    var values = [uid];
+    var sql = "update user_table set give_away_bless= '[]'  where user_id= ?;";
+    console.log(sql);
+    mysqlClient.update(sql, values, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+};
