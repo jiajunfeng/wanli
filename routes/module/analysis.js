@@ -361,7 +361,8 @@ anylysis.getTendency = function(info,time_type,score_type){
         time += i * time_interval;
         var time_tmp = new Date(time);
         var scores = anylysis.getScore(info,time_type,score_type,time_tmp);
-        tendency.push(scores[0]);
+        var date = time_tmp.getFullYear() + "/" + (time_tmp.getMonth() + 1) + "/" + time_tmp.getDate();
+        tendency.push([scores[0],date]);
     }
     return tendency;
 };
