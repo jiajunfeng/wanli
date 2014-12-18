@@ -353,18 +353,29 @@ anylysis.getTendency = function(info,time_type,score_type){
         time_interval = 1000 * 60 * 60 * 24 * 365;
     }
     else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-        time_interval = 1000 * 60 * 60;
+        time_interval = 1000 * 60 * 60 * 2;
     }
     var tendency = [];
+    var tendency_time = [];
+    var hours = ["子时","丑时","寅时","卯时","辰时","巳时","午时","未时","申时","酉时","戌时","亥时"];
     for(var i = -2; i < 7; ++i){
         var time = Date.now();
         time += i * time_interval;
         var time_tmp = new Date(time);
         var scores = anylysis.getScore(info,time_type,score_type,time_tmp);
-        var date = time_tmp.getFullYear() + "/" + (time_tmp.getMonth() + 1) + "/" + time_tmp.getDate();
-        tendency.push([scores[0],date]);
+        if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+            tendency_time.push(time_tmp.getDate() + "日");
+        }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+            tendency_time.push((time_tmp.getMonth() + 1) + "月");
+        }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+            tendency_time.push(time_tmp.getFullYear() + "年");
+        }
+        else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+            tendency_time.push(hours[((time_tmp.getHours() + 1 + 1) / 2) - 1]);
+        }
+        tendency.push([scores[0]]);
     }
-    return tendency;
+    return [tendency,tendency_time];
 };
 
 anylysis.getTendencyFuture = function(info,days,score_type){
@@ -430,7 +441,8 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -478,7 +490,8 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -533,7 +546,8 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -581,7 +595,8 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -636,7 +651,8 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -691,7 +707,8 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -746,7 +763,8 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -790,7 +808,8 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -845,7 +864,8 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -900,7 +920,8 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -942,7 +963,8 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -997,7 +1019,8 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -1045,7 +1068,8 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -1100,7 +1124,8 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -1155,7 +1180,8 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -1197,7 +1223,8 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
