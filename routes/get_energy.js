@@ -11,7 +11,7 @@ exports.onGetEnergy = function(req,res){
     var result = { error: "" };
     analysis.getInfo(uid,function(info){
         if(!info){
-            cb("没有这个账号");
+            console.log("没有这个账号");
             return;
         }
         var scores = analysis.getScore(info,consts.TYPE_TIME.TYPE_TIME_TODAY,consts.TYPE_SCORE.TYPE_SCORE_ENERGY,new Date());
