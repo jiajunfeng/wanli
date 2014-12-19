@@ -13,7 +13,14 @@ var user = require('./user.js');
 //当用户点击登陆按钮时被触发
 exports.onModifyForWeChat = function (req, res) {
     log("---- user modify info ------");
+    var result = { error: "" };
     db.getUserIdByOpenId(req.body['openid'],function(err,user_id){
+        if(0 == user_id){
+            result.error = "此用户不存在";
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify(result));
+            return;
+        }
         var info = new userInfo();
         info.uid = user_id;
         info.name = req.body['name'];
