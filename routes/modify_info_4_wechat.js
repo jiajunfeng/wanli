@@ -24,7 +24,7 @@ exports.onModifyForWeChat = function (req, res) {
 
         //构建轴向数据
         var dateStr = info.birthday;
-        var clock = parseInt(dateStr.substr(8, 2));
+        var clock = parseInt(dateStr?dateStr.substr(8, 2):0);
         //如果是忘记时辰，就给默认成子时
         if (clock > 11 || clock == 0) {
             clock = 0;
