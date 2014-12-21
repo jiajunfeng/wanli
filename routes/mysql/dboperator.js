@@ -937,7 +937,11 @@ operater.GiveAwayBless = function(uid,name,target_uid,bless,cb){
         if(res){
             var give_away_bless = res[0]?res[0]["give_away_bless"]:"[]";
             if(give_away_bless){
-                give_away_bless = JSON.parse(give_away_bless);
+                try{
+                    give_away_bless = JSON.parse(give_away_bless);
+                }catch(e){
+                    give_away_bless = [];
+                }
                 var new_give_away_bless = {};
                 new_give_away_bless.uid = uid;
                 new_give_away_bless.name = name;
