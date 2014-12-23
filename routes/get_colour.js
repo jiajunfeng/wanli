@@ -15,6 +15,9 @@ exports.onGetColour = function(req,res){
         if (err) {
             result.err = err;
             console.log(err + " getUserBaseInfo");
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify(result));
+            return;
         }
         var year_star = parseInt(info["flystar"].charAt(2));
         var sex = info.sex;
