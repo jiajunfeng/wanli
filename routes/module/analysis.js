@@ -353,17 +353,29 @@ anylysis.getTendency = function(info,time_type,score_type){
         time_interval = 1000 * 60 * 60 * 24 * 365;
     }
     else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
-        time_interval = 1000 * 60 * 60;
+        time_interval = 1000 * 60 * 60 * 2;
     }
     var tendency = [];
+    var tendency_time = [];
+    var hours = ["子时","丑时","寅时","卯时","辰时","巳时","午时","未时","申时","酉时","戌时","亥时"];
     for(var i = -2; i < 7; ++i){
         var time = Date.now();
         time += i * time_interval;
         var time_tmp = new Date(time);
         var scores = anylysis.getScore(info,time_type,score_type,time_tmp);
-        tendency.push(scores[0]);
+        if(consts.TYPE_TIME.TYPE_TIME_TODAY == time_type){
+            tendency_time.push(time_tmp.getDate() + "日");
+        }else if(consts.TYPE_TIME.TYPE_TIME_THIS_MONTH == time_type){
+            tendency_time.push((time_tmp.getMonth() + 1) + "月");
+        }else if(consts.TYPE_TIME.TYPE_TIME_THIS_YEAR == time_type){
+            tendency_time.push(time_tmp.getFullYear() + "年");
+        }
+        else if(consts.TYPE_TIME.TYPE_TIME_HOUR == time_type){
+            tendency_time.push(hours[((time_tmp.getHours() + 1 + 1) / 2) - 1]);
+        }
+        tendency.push([scores[0]]);
     }
-    return tendency;
+    return [tendency,tendency_time];
 };
 
 anylysis.getTendencyFuture = function(info,days,score_type){
@@ -381,6 +393,10 @@ anylysis.getTendencyFuture = function(info,days,score_type){
 
 anylysis.getLuck2 = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var luck_socres = scores[0];
         var luck_socres_previous = scores[1];
@@ -425,13 +441,18 @@ anylysis.getLuck2 = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getWork = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var work_socres = scores[0];
         var work_socres_previous = scores[1];
@@ -469,13 +490,18 @@ anylysis.getWork = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getEnergy = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var energy_socres = scores[0];
         var energy_socres_previous = scores[1];
@@ -520,13 +546,18 @@ anylysis.getEnergy = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getTravel = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var travel_socres = scores[0];
         var travel_socres_previous = scores[1];
@@ -564,13 +595,18 @@ anylysis.getTravel = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getHealth = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var health_socres = scores[0];
         var health_socres_previous = scores[1];
@@ -615,13 +651,18 @@ anylysis.getHealth = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getWealth = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var wealth_socres = scores[0];
         var wealth_socres_previous = scores[1];
@@ -666,13 +707,18 @@ anylysis.getWealth = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getWealthLose = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var wealth_lose_socres = scores[0];
         var wealth_lose_socres_previous = scores[1];
@@ -717,13 +763,18 @@ anylysis.getWealthLose = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getShopping = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var shopping_socres = scores[0];
         var shopping_socres_previous = scores[1];
@@ -757,13 +808,18 @@ anylysis.getShopping = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getStudy = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var study_socres = scores[0];
         var study_socres_previous = scores[1];
@@ -808,13 +864,18 @@ anylysis.getStudy = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getCareer = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var career_socres = scores[0];
         var career_socres_previous = scores[1];
@@ -859,13 +920,18 @@ anylysis.getCareer = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var pray_for_wealth_socres = scores[0];
         var pray_for_wealth_socres_previous = scores[1];
@@ -897,13 +963,18 @@ anylysis.getPrayForWealth = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getEmotion = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -948,13 +1019,18 @@ anylysis.getEmotion = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getConfrere = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -992,13 +1068,18 @@ anylysis.getConfrere = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getFeeling = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -1043,13 +1124,18 @@ anylysis.getFeeling = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getPeach = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var emotion_socres = scores[0];
         var emotion_socres_previous = scores[1];
@@ -1094,13 +1180,18 @@ anylysis.getPeach = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
 
 anylysis.getChase = function(uid,time_type,score_type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var scores = anylysis.getScore(info,time_type,score_type,new Date());
         var pray_for_wealth_socres = scores[0];
         var pray_for_wealth_socres_previous = scores[1];
@@ -1132,7 +1223,8 @@ anylysis.getChase = function(uid,time_type,score_type,cb){
         }
         var tendency = anylysis.getTendency(info,time_type,score_type);
         console.log("%j",tendency);
-        answer.tendency = tendency;
+        answer.tendency = tendency[0];
+        answer.tendency_time = tendency[1];
         cb(answer);
     });
 };
@@ -1210,6 +1302,10 @@ anylysis.getCompassText = function(type,score){
 
 anylysis.getCompassScore = function(uid,type,cb){
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var yearStar = parseInt(info["flystar"].charAt(2));
         info.sjIndex = user.getWx(new Date());
         info.scwxNum = user.getScwxNum(info);
@@ -1384,6 +1480,10 @@ anylysis.getFixationBless = function(uid,type,cb){
 
 anylysis.getFixationEnergy = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var userInfo = anylysis.buildUserInfo(info);
         var wxBaseScoreJson = comm.getWxBaseScoreJson();
         userInfo.wxBaseScore = wxBaseScoreJson[parseInt(userInfo.sex)][userInfo.flystar.substr(0, 3)][userInfo.bwxNum.toString()];
@@ -1407,6 +1507,10 @@ anylysis.getFixationEnergy = function(uid,type,cb){
 
 anylysis.getFixationLuck = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var userInfo = anylysis.buildUserInfo(info);
         var energy_index_rows = fixation_index[0][type];
         db.getUserLastJxScore(userInfo, function (jxScore) {
@@ -1430,6 +1534,10 @@ anylysis.getFixationLuck = function(uid,type,cb){
 
 anylysis.getFixationWealth = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var userInfo = anylysis.buildUserInfo(info);
         var wealth_index_rows = fixation_index[0][type];
         db.getUserLastJxScore(userInfo, function (jxScore) {
@@ -1537,6 +1645,10 @@ anylysis.getFixationWealth = function(uid,type,cb){
 
 anylysis.getFixationPeach = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var BigStar = parseInt(info["flystar"].charAt(0));
         var SmallStar = parseInt(info["flystar"].charAt(1));
         var yearStar = parseInt(info["flystar"].charAt(2));
@@ -1582,6 +1694,10 @@ anylysis.getFixationPeach = function(uid,type,cb){
 
 anylysis.getFixationLuckInThePast = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var luck_in_the_past_index_rows = fixation_index[0][type];
         var score_luck_in_the_past = anylysis.getScore2(info,consts.TYPE_TIME.TYPE_TIME_THIS_YEAR,consts.TYPE_SCORE.TYPE_SCORE_LUCK,new Date());
         for(var i = 0; i < luck_in_the_past_index_rows.length; ++i){
@@ -1603,6 +1719,10 @@ anylysis.getFixationLuckInThePast = function(uid,type,cb){
 
 anylysis.getFixationMotion = function(uid,type,cb){
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var BigStar = parseInt(info["flystar"].charAt(0));
         var SmallStar = parseInt(info["flystar"].charAt(1));
         var yearStar = parseInt(info["flystar"].charAt(2));
@@ -1649,6 +1769,10 @@ anylysis.getFixationMotion = function(uid,type,cb){
 
 anylysis.getSelectDate = function (uid, select_date_type, days_type, cb) {
     anylysis.getInfo(uid, function (info) {
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         var days = 10;
         if(days_type == consts.TYPE_SELECT_DAYS.TYPE_SELECT_DAYS_TEN){
             days = 10;
@@ -1904,6 +2028,10 @@ anylysis.getStarMonthNum = function(birthday){
 anylysis.getMatch = function(uid,target_uid,type,cb){
     var answer ;
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("没有这个账号");
+            return;
+        }
         anylysis.getInfo(target_uid,function(target_info){
 
             var BigStar = parseInt(info["flystar"].charAt(0));
@@ -2246,6 +2374,10 @@ anylysis.getMatch2 = function(uid,birthday,birthplace,sex,type,cb){
         birthday = birthday.toString();
     }
     anylysis.getInfo(uid,function(info){
+        if(!info){
+            cb("此用户不存在");
+            return;
+        }
         var year =  parseInt(birthday.substr(0, 4));
         var month = parseInt(birthday.substr(4, 2));
         var day = parseInt(birthday.substr(6, 2));

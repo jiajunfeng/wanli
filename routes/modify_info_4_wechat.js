@@ -13,7 +13,14 @@ var user = require('./user.js');
 //当用户点击登陆按钮时被触发
 exports.onModifyForWeChat = function (req, res) {
     log("---- user modify info ------");
+    var result = { error: "" };
     db.getUserIdByOpenId(req.body['openid'],function(err,user_id){
+        if(0 == user_id){
+            result.error = "此用户不存在";
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify(result));
+            return;
+        }
         var info = new userInfo();
         info.uid = user_id;
         info.name = req.body['name'];
@@ -24,7 +31,7 @@ exports.onModifyForWeChat = function (req, res) {
 
         //构建轴向数据
         var dateStr = info.birthday;
-        var clock = parseInt(dateStr.substr(8, 2));
+        var clock = parseInt(dateStr?dateStr.substr(8, 2):0);
         //如果是忘记时辰，就给默认成子时
         if (clock > 11 || clock == 0) {
             clock = 0;

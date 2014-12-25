@@ -142,6 +142,8 @@ operater.getUserInfo = function(info, cb){
                 info.colour = res[0]['colour'];
                 info.bless = res[0]['bless'];
                 info.lotus = res[0]['lotus'];
+                info.day_star = user.getDayStar(new Date());
+                info.year_star = parseInt(info["flystar"].charAt(2));
 
                 //注册信息获取完毕，获取其他信息
                 operater.getBaseNum(info, cb);
@@ -769,10 +771,10 @@ operater.addToContract = function(uid,contracts_uid,contracts_name,cb){
             contracts.push(res[i]["contracts_uid"]);
         }
         if(contracts.length >= 5){
-            cb("通讯录只能保存最重要的5名好友，如要添加，请先移除之前的好友!")
+            cb("通讯录只能保存最重要的5名好友，如要添加，请先移除之前的好友!");
             return;
         }
-        //  add ready ?
+        //  add already ?
         var find = false;
         for(i = 0; i < contracts.length; ++i){
             if(contracts_uid == contracts[i]){
@@ -860,10 +862,126 @@ operater.getUserIdByOpenId = function(openid,cb){
 
 operater.setLoginCount = function(uid,login_count){
     var values = [login_count,uid];
-    var sql = "update user_table set login_count= ?  where user_id= ?;"
+    var sql = "update user_table set login_count= ?  where user_id= ?;";
     console.log(sql);
     mysqlClient.update(sql, values, function (err) {
         if(err){
+            console.log(err);
+        }
+    });
+};
+
+operater.addToAttention = function(uid,attention_uid,cb){
+    var sql = "select attention_uid,attention_flag from contracts_table where uid='" + uid + "'";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        var contracts = [];
+        for(var i = 0; i < res.length; ++i){
+            if(res[i]["attention_flag"]){
+                contracts.push(res[i]["contracts_uid"]);
+            }
+        }
+        //  add already ?
+        var find = false;
+        for(i = 0; i < contracts.length; ++i){
+            if(attention_uid == contracts[i]){
+                find = true;
+            }
+        }
+        if(find){
+            cb("请勿重复添加关注!");
+            return;
+        }
+        var values = [uid,attention_uid];
+        var sql = "update contracts_table set attention_flag= 1  where user_id= ? and contracts_uid= ?;";
+        console.log(sql);
+        mysqlClient.update(sql, values, function (err) {
+            if (cb) {
+                cb.call(err);
+            }
+        });
+    });
+};
+
+operater.delAttention = function(uid,contracts_uid,cb){
+    var values = [uid,contracts_uid];
+    var sql = "update contracts_table set attention_flag= 0  where user_id= ? and contracts_uid= ?;";
+    console.log(sql);
+    mysqlClient.update(sql, values, function (err) {
+        if (cb) {
+            cb.call(err);
+        }
+    });
+};
+
+operater.getAttentions = function(uid,cb){
+    var sql = "select contracts_uid,attention_flag from contracts_table where uid='" + uid + "'";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        var contracts = [];
+        for(var i = 0; i < res.length; ++i){
+            if(res[i]["attention_flag"]){
+                contracts.push(res[i]["contracts_uid"]);
+            }
+        }
+        if (cb) {
+            cb(err,contracts)
+        }
+    });
+};
+
+operater.GiveAwayBless = function(uid,name,target_uid,bless,cb){
+    var sql = "select give_away_bless from user_table where user_id='" + target_uid + "';";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        if(res){
+            var give_away_bless = res[0]?res[0]["give_away_bless"]:"[]";
+            if(give_away_bless){
+                try{
+                    give_away_bless = JSON.parse(give_away_bless);
+                }catch(e){
+                    give_away_bless = [];
+                }
+                var new_give_away_bless = {};
+                new_give_away_bless.uid = uid;
+                new_give_away_bless.name = name;
+                new_give_away_bless.bless = bless;
+                give_away_bless.push(new_give_away_bless);
+                var values = [JSON.stringify(give_away_bless),target_uid];
+                var sql = "update user_table set give_away_bless= ? where user_id= ?;"
+                console.log(sql);
+                mysqlClient.insert(sql, values, function (err) {
+                    if (cb) {
+                        cb.call(err);
+                    }
+                });
+            }
+        }
+        else{
+            if(err){
+                cb(err);
+            }
+        }
+    });
+};
+
+operater.GetBless = function(uid,cb){
+    var sql = "select give_away_bless from user_table where user_id='" + uid + "';";
+    console.log(sql);
+    mysqlClient.query(sql, null, function (err,res) {
+        if(err){
+            cb(err);
+        }
+        if(res){
+            cb(err,res[0] ?res[0]["give_away_bless"]:0);
+        }
+    });
+
+    var values = [uid];
+    var sql = "update user_table set give_away_bless= '[]'  where user_id= ?;";
+    console.log(sql);
+    mysqlClient.update(sql, values, function (err) {
+        if (err) {
             console.log(err);
         }
     });
