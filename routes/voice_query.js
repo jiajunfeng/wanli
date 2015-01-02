@@ -90,7 +90,7 @@ exports.onVoiceQuery = function(req,res){
         if(word_match[m] == "运程" && "undefined" !== typeof (time_type)){
             find = true;
             try{
-                analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
+                    analysis.getLuck2(uid,time_type,consts.TYPE_SCORE.TYPE_SCORE_LUCK,function(answer){
                     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                     var result = { answer:answer};
                     mongodb.voice_query_log(uid,voice_content,answer);
